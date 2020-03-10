@@ -19,7 +19,7 @@ const DeleteAlbumContainer = () => {
   const location = useLocation();
   const { id } = useParams();
   const [query, setQuery] = useState('');
-  const [state] = useStateMachine(`/api/albums/${id}`);
+  const [state] = useStateMachine(`/api/albums/${id}`, true);
   const { data, status } = state;
   const options = {
     apiFunc: Api.delete,
