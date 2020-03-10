@@ -1,0 +1,51 @@
+{
+  "name": "perfect-albums-web",
+  "version": "1.0.0",
+  "description": "React frontend",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/index.html -p 3333 --open",
+    "build": "parcel build src/index.html",
+    "deploy": "npm run build && mv dist/index.html dist/200.html && cd dist && surge --domain perfectalbums.surge.sh",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "keywords": [],
+  "author": "Tony Rinaldi",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "bootstrap": "^4.3.1",
+    "js-cookie": "^2.2.1",
+    "parcel-bundler": "^1.12.4",
+    "react": "^16.12.0",
+    "react-bootstrap": "^1.0.0-beta.16",
+    "react-dom": "^16.11.0",
+    "react-router-dom": "^5.1.2"
+  },
+  "browserslist": [
+    "last 1 Chrome version"
+  ],
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.0",
+    "@testing-library/react": "^9.3.0",
+    "@testing-library/react-hooks": "^3.2.1",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-react-app": "^5.2.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-config-standard-jsx": "^8.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.5.0",
+    "eslint-plugin-standard": "^4.0.1",
+    "jest": "^24.9.0",
+    "react-test-renderer": "^16.12.0"
+  }
+}

@@ -1,0 +1,114 @@
+:root {
+  --black: #212529;
+  --gray: #6C757D;
+  --progress-height: 7.5px;
+  --progress-margin: 10px;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.album-title {
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+
+.alert-container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.alert {
+  margin-top: 16px;
+  min-width: 33%;
+  z-index: 99;
+}
+
+.alert-show {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s, opacity 0s;
+}
+
+.alert-hide {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 1s, opacity .5s;
+}
+
+.btn-group-toggle > .btn {
+  cursor: pointer;
+}
+
+.link {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.link:hover {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+}
+
+.sign-out {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.success {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.error {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.container {
+  padding-bottom: 15px;
+}
+
+button[type='submit'] {
+  min-width: 5rem;
+}
+
+.page-link {
+  color: var(--black);
+}
+
+.page-link:hover {
+  color: var(--black);
+}
+
+.page-item.active .page-link {
+  background-color: var(--black);
+  border-color: var(--black);
+}
+
+th[data-value] {
+  cursor: pointer;
+}
+
+.progress {
+  border-radius: 0;
+  height: var(--progress-height);
+}
+
+.progress-bar {
+  background-color: var(--gray);
+}
+
+.progress-margin {
+  margin-bottom: var(--progress-margin);
+}
+
+.no-loader {
+  margin-top: calc(var(--progress-height) + var(--progress-margin));
+}
