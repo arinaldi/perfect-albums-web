@@ -12,6 +12,7 @@ test('NewReleases renders with data by year', () => {
       data={mockNewReleasesData}
       error={null}
       handleCreateOpen={jest.fn}
+      handleEditOpen={jest.fn}
       handleDeleteOpen={jest.fn}
       refresh={jest.fn}
       status={STATE_STATUSES.SUCCESS}

@@ -12,6 +12,7 @@ test('CreateReleaseModal renders with data', () => {
   const { getByText, getAllByText, getByLabelText } = render(
     <CreateReleaseModal
       isOpen
+      header='Create'
       release={release}
       isValidated
       isSaving={false}
@@ -19,7 +20,7 @@ test('CreateReleaseModal renders with data', () => {
       handleClose={jest.fn}
       handleSubmit={jest.fn}
       error=''
-    />
+    />,
   );
   const titleHeader = getByText('Create Release');
   const artistInput = getByLabelText('Artist');

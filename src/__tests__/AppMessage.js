@@ -6,7 +6,7 @@ import { ALERT_TYPES, MESSAGES } from '../constants';
 
 test('AppMessage renders error message', () => {
   const { getByText } = render(
-    <AppMessage type={ALERT_TYPES.ERROR} message={MESSAGES.ERROR} />
+    <AppMessage type={ALERT_TYPES.ERROR} message={MESSAGES.ERROR} />,
   );
   const div = getByText(MESSAGES.ERROR);
 
@@ -18,7 +18,7 @@ test('AppMessage renders error message', () => {
 test('AppMessage renders success message', () => {
   const message = 'OK';
   const { getByText } = render(
-    <AppMessage type={ALERT_TYPES.SUCCESS} message={message} />
+    <AppMessage type={ALERT_TYPES.SUCCESS} message={message} />,
   );
   const div = getByText(message);
 

@@ -14,7 +14,7 @@ const renderProviders = (user) => render(
         <NavBar />
       </MemoryRouter>
     </DispatchContext.Provider>
-  </StateContext.Provider>
+  </StateContext.Provider>,
 );
 
 test('NavBar renders when not authenticated', () => {

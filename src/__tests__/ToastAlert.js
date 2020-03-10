@@ -13,7 +13,7 @@ const renderProviders = (toast) => render(
     <DispatchContext.Provider value={jest.fn()}>
       <ToastAlert />
     </DispatchContext.Provider>
-  </StateContext.Provider>
+  </StateContext.Provider>,
 );
 
 test('ToastAlert renders as hidden', () => {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
+import PropTypes from 'prop-types';
 
 import { mockAdminData } from '../__mocks__';
 import mockApi from '../utils/api';
@@ -36,4 +37,6 @@ test('useSubmit handles successful data posting', async () => {
     isSaving: false,
     isValidated: false,
   });
+
+  wrapper.propTypes = { children: PropTypes.object };
 });

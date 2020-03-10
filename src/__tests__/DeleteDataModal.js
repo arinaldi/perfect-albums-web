@@ -17,7 +17,7 @@ test('DeleteDataModal renders with data', () => {
       handleClose={jest.fn}
       handleDelete={jest.fn}
       error=''
-    />
+    />,
   );
   const titleHeader = getByText('Delete Song');
   const confirmText = getByText(`Are you sure you want to delete ${artist} – ${title}?`);

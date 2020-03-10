@@ -1,0 +1,71 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:react/recommended",
+    "standard",
+    "standard-jsx"
+  ],
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }
+  },
+  "plugins": [
+    "import",
+    "jsx-a11y",
+    "node",
+    "promise",
+    "react",
+    "react-hooks",
+    "standard"
+  ],
+  "rules": {
+    "comma-dangle": ["error", "always-multiline"],
+    "eol-last": "error",
+    "indent": ["error", 2],
+    "import/order": [
+      "error",
+      { "groups": ["builtin", "external", "parent", "sibling", "index"] }
+    ],
+    "jsx-quotes": "error",
+    "no-console": "warn",
+    "no-unused-vars": [
+      "error",
+      { "varsIgnorePattern": "should|expect" }
+    ],
+    "quotes": ["error", "single"],
+    "react/jsx-fragments": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "semi": ["error", "always"],
+    "space-before-function-paren": "error",
+    "spaced-comment": "error"
+  },
+  "settings": {
+    "react": {
+      "version": "16.12"
+    }
+  },
+  "globals": {
+    "afterAll": false,
+    "afterEach": false,
+    "beforeAll": false,
+    "beforeEach": false,
+    "context": false,
+    "describe": false,
+    "expect": false,
+    "it": false,
+    "jest": false,
+    "test": false
+  }
+}

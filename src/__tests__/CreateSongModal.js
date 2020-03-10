@@ -18,7 +18,7 @@ test('CreateSongModal renders with data', () => {
       handleClose={jest.fn}
       handleSubmit={jest.fn}
       error=''
-    />
+    />,
   );
   const titleHeader = getByText('Create Song');
   const artistInput = getByLabelText('Artist');

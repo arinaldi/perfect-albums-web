@@ -10,7 +10,7 @@ test('SignIn renders with username and password inputs', () => {
       password=''
       handleChange={jest.fn}
       handleSubmit={jest.fn}
-    />
+    />,
   );
   const titleHeader = getByText('Sign In');
   const usernameInput = getByLabelText(/username/i);
