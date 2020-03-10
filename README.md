@@ -1,4 +1,5 @@
 # Perfect Albums
+Built with React.
 
 ### Frontend
 
