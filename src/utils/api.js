@@ -5,9 +5,7 @@ import {
 } from '../constants';
 import { getToken } from './storage';
 
-const BASE_URL = process.env.NODE_ENV === 'production'
-  ? 'https://perfectalbums.herokuapp.com'
-  : 'http://localhost:3001';
+const BASE_URL = process.env.API_URL;
 
 const getHeaders = (withAuth = false) => {
   const headers = { 'Content-Type': 'application/json' };
