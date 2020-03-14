@@ -26,7 +26,7 @@ const TopAlbums = (props) => {
   return (
     <Fragment>
       <Container>
-        <Row>
+        <Row style={{ marginBottom: '8px' }}>
           <Col>
             <h3>Top Albums</h3>
           </Col>

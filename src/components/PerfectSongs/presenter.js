@@ -16,7 +16,7 @@ const songRows = data.songs.map((song, index) => (
         target='_blank'
         rel='noopener noreferrer'
       >
-        Link
+        Listen
       </a>
     </td>
   </tr>
@@ -25,13 +25,13 @@ const songRows = data.songs.map((song, index) => (
 const PerfectSongs = () => (
   <ErrorBoundary>
     <Container className='no-loader'>
-      <h3>Perfect Songs</h3>
+      <h3 style={{ marginBottom: '16px' }}>Perfect Songs</h3>
       <Table striped hover>
         <thead>
           <tr>
             <th>Artist</th>
             <th>Song</th>
-            <th>Listen</th>
+            <th />
           </tr>
         </thead>
         <tbody data-testid='table-body'>

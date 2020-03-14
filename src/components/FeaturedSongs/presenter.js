@@ -24,7 +24,7 @@ const FeaturedSongs = (props) => {
 
   return (
     <Container>
-      <Row>
+      <Row style={{ marginBottom: '8px' }}>
         <Col>
           <h3>Featured Songs</h3>
         </Col>

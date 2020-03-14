@@ -1,7 +1,7 @@
 import React from 'react';
+import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
+import Badge from 'react-bootstrap/Badge';
 import PropTypes from 'prop-types';
 
 const AlbumCol = (props) => {
@@ -9,27 +9,18 @@ const AlbumCol = (props) => {
 
   return (
     <Col xs={12} md={6} lg={4}>
-      <OverlayTrigger
-        placement='right'
-        overlay={
-          <Tooltip>
-            <h5 style={{ marginBottom: 0 }}>
+      <Row>
+        <Col>
+          <h4>{year}</h4>
+        </Col>
+        <Col xs='auto'>
+          <h4>
+            <Badge variant='light'>
               {total}
-            </h5>
-          </Tooltip>
-        }
-      >
-        <h4
-          id={year}
-          style={{
-            cursor: 'zoom-in',
-            display: 'inline-block',
-            paddingRight: '8px',
-          }}
-        >
-          {year}
-        </h4>
-      </OverlayTrigger>
+            </Badge>
+          </h4>
+        </Col>
+      </Row>
       <ul data-testid={`list-${year}`}>
         {data.map((album, index) => (
           <li key={index}>

@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import PropTypes from 'prop-types';
 
 import { useAppState } from '../Provider';
+import { ICONS } from '../../constants';
 
 const CardWrapper = (props) => {
   const { song, handleDeleteOpen } = props;
@@ -39,7 +40,7 @@ const CardWrapper = (props) => {
               style={{ color: '#007bff', cursor: 'pointer' }}
               onClick={handleClick}
             >
-              Delete
+              {ICONS.X}
             </Card.Link>
           )}
         </Card.Body>
