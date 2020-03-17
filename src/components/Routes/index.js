@@ -24,16 +24,16 @@ import AuthRoute from '../AuthRoute';
 const AppRoutes = () => (
   <ErrorBoundary>
     <Switch>
-      <Route path='/albums'><TopAlbums /></Route>
+      <Route path='/top-albums'><TopAlbums /></Route>
       <Route path='/perfect-songs'><PerfectSongs /></Route>
       <Route path='/featured-songs'><FeaturedSongs /></Route>
       <Route path='/new-releases'><NewReleases /></Route>
+      <AuthRoute path='/admin/new'><CreateAlbum /></AuthRoute>
+      <AuthRoute path='/admin/edit/:id'><EditAlbum /></AuthRoute>
+      <AuthRoute path='/admin/delete/:id'><DeleteAlbum /></AuthRoute>
       <AuthRoute path='/admin'><Admin /></AuthRoute>
-      <AuthRoute path='/new'><CreateAlbum /></AuthRoute>
-      <AuthRoute path='/edit/:id'><EditAlbum /></AuthRoute>
-      <AuthRoute path='/delete/:id'><DeleteAlbum /></AuthRoute>
       <Route path='/signin'><SignIn /></Route>
-      <Route><Redirect to='/albums' /></Route>
+      <Route><Redirect to='/top-albums' /></Route>
     </Switch>
   </ErrorBoundary>
 );

@@ -151,7 +151,7 @@ const Admin = (props) => {
                 </Button>
                 <Button
                   variant='outline-dark'
-                  onClick={() => history.push(`/new?${searchText}`)}
+                  onClick={() => history.push(`/admin/new?${searchText}`)}
                 >
                   New
                 </Button>

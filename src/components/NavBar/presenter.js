@@ -21,7 +21,7 @@ const NavBar = () => {
       <Navbar.Toggle aria-controls='responsive-navbar-nav' />
       <Navbar.Collapse id='responsive-navbar-nav'>
         <Nav className='mr-auto navbar-nav'>
-          <LinkWrapper to='/albums' label='Top Albums' />
+          <LinkWrapper to='/top-albums' label='Top Albums' />
           <LinkWrapper to='/perfect-songs' label='Perfect Songs' />
           <LinkWrapper to='/featured-songs' label='Featured Songs' />
           <LinkWrapper to='/new-releases' label='New Releases' />

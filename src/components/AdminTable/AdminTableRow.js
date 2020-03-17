@@ -14,7 +14,7 @@ const AdminTableRow = (props) => {
   const { id, artist, title, year, cd, aotd, favorite } = item;
 
   const navigate = path => {
-    history.push(`/${path}/${id}?${searchText}`);
+    history.push(`/admin/${path}/${id}?${searchText}`);
   };
 
   return (
