@@ -10,7 +10,7 @@ test('FeaturedSongs renders with data', () => {
   const { getByText, getByTestId } = render(
     <FeaturedSongs
       cancel={jest.fn}
-      data={mockFeaturedSongsData}
+      data={{ songs: mockFeaturedSongsData }}
       handleCreateOpen={jest.fn}
       handleDeleteOpen={jest.fn}
       refresh={jest.fn}
