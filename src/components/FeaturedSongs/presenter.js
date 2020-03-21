@@ -5,22 +5,18 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import PropTypes from 'prop-types';
 
-import { STATE_STATUSES } from '../../constants';
 import { useAppState } from '../Provider';
 import AppMessage from '../AppMessage/presenter';
 import CardWrapper from './CardWrapper';
 
 const FeaturedSongs = (props) => {
   const {
-    cancel,
     data,
+    error,
     handleCreateOpen,
     handleDeleteOpen,
-    refresh,
-    status,
   } = props;
   const { user: { isAuthenticated } } = useAppState();
-  const isLoading = status === STATE_STATUSES.LOADING;
 
   return (
     <Container>
@@ -30,13 +26,13 @@ const FeaturedSongs = (props) => {
         </Col>
         {isAuthenticated && (
           <Col xs='auto'>
-            <Button
+            {/* <Button
               variant='outline-dark'
               onClick={isLoading ? cancel : refresh}
               style={{ marginRight: '5px' }}
             >
               {isLoading ? 'Cancel' : 'Refresh'}
-            </Button>
+            </Button> */}
             <Button
               variant='outline-dark'
               onClick={handleCreateOpen}
@@ -46,10 +42,10 @@ const FeaturedSongs = (props) => {
           </Col>
         )}
       </Row>
-      {status === STATE_STATUSES.FAILURE && <AppMessage />}
-      {data && (
+      {error && <AppMessage />}
+      {data && data.songs && (
         <Row data-testid='card-row'>
-          {data.map(song => (
+          {data.songs.map(song => (
             <CardWrapper
               key={song.id}
               song={song}
@@ -64,11 +60,11 @@ const FeaturedSongs = (props) => {
 
 FeaturedSongs.propTypes = {
   cancel: PropTypes.func.isRequired,
-  data: PropTypes.array,
+  data: PropTypes.object,
+  error: PropTypes.object,
   handleCreateOpen: PropTypes.func.isRequired,
   handleDeleteOpen: PropTypes.func.isRequired,
   refresh: PropTypes.func.isRequired,
-  status: PropTypes.string.isRequired,
 };
 
 export default FeaturedSongs;

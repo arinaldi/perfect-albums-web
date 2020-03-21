@@ -17,6 +17,9 @@ afterAll(() => {
   mockApi.post.mockClear();
 });
 
+const wrapper = ({ children }) => <Provider>{children}</Provider>;
+wrapper.propTypes = { children: PropTypes.object };
+
 test('useSubmit handles successful data posting', async () => {
   mockApi.post.mockImplementation(() => Promise.resolve({
     json: () => Promise.resolve(mockAdminData[0]),
@@ -28,7 +31,6 @@ test('useSubmit handles successful data posting', async () => {
     path: '/api/albums',
     successMessage: 'OK',
   };
-  const wrapper = ({ children }) => <Provider>{children}</Provider>;
   const { result } = renderHook(() => useSubmit(options), { wrapper });
   const state = result.current;
 
@@ -37,6 +39,4 @@ test('useSubmit handles successful data posting', async () => {
     isSaving: false,
     isValidated: false,
   });
-
-  wrapper.propTypes = { children: PropTypes.object };
 });

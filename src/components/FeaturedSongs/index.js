@@ -1,12 +1,8 @@
 import React from 'react';
+import { useQuery } from '@apollo/react-hooks';
 
-import useStateMachine from '../../hooks/useStateMachine';
-import {
-  DISPATCH_TYPES,
-  MODAL_TYPES,
-  STATE_EVENTS,
-  STATE_STATUSES,
-} from '../../constants';
+import { DISPATCH_TYPES, MODAL_TYPES } from '../../constants';
+import { GET_SONGS } from '../../queries';
 import { useAppDispatch } from '../Provider';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
@@ -14,37 +10,34 @@ import FeaturedSongs from './presenter';
 
 const FeaturedSongsContainer = () => {
   const appDispatch = useAppDispatch();
-  const [state, dispatch] = useStateMachine('/api/songs');
-  const { data, status } = state;
+  const { data, error, loading } = useQuery(GET_SONGS);
 
   const cancel = () => {
-    dispatch({ type: STATE_EVENTS.CANCEL });
+    // GQL fn?
   };
 
   const refresh = () => {
-    dispatch({ type: STATE_EVENTS.FETCH });
+    // GQL fn?
   };
 
   const handleCreateOpen = () => {
     appDispatch({
       payload: {
-        callback: refresh,
         type: MODAL_TYPES.FEATURED_SONGS_CREATE,
       },
       type: DISPATCH_TYPES.OPEN_MODAL,
     });
   };
 
-  const handleDeleteOpen = (data) => {
+  const handleDeleteOpen = (song) => {
     appDispatch({
       payload: {
-        callback: refresh,
         data: {
-          ...data,
+          ...song,
           dataType: 'Song',
           path: 'songs',
         },
-        type: MODAL_TYPES.DATA_DELETE,
+        type: MODAL_TYPES.FEATURED_SONGS_DELETE,
       },
       type: DISPATCH_TYPES.OPEN_MODAL,
     });
@@ -52,14 +45,14 @@ const FeaturedSongsContainer = () => {
 
   return (
     <ErrorBoundary>
-      <ProgressLoader isVisible={status === STATE_STATUSES.LOADING} />
+      <ProgressLoader isVisible={loading} />
       <FeaturedSongs
         cancel={cancel}
         data={data}
+        error={error}
         handleCreateOpen={handleCreateOpen}
         handleDeleteOpen={handleDeleteOpen}
         refresh={refresh}
-        status={status}
       />
     </ErrorBoundary>
   );

@@ -5,6 +5,7 @@ import { useAppState } from '../Provider';
 import CreateReleaseModal from '../CreateReleaseModal';
 import EditReleaseModal from '../EditReleaseModal';
 import CreateSongModal from '../CreateSongModal';
+import DeleteSongModal from '../DeleteSongModal';
 import DeleteDataModal from '../DeleteDataModal';
 
 const ModalContainer = () => {
@@ -17,6 +18,8 @@ const ModalContainer = () => {
     return <EditReleaseModal />;
   case MODAL_TYPES.FEATURED_SONGS_CREATE:
     return <CreateSongModal />;
+  case MODAL_TYPES.FEATURED_SONGS_DELETE:
+    return <DeleteSongModal />;
   case MODAL_TYPES.DATA_DELETE:
     return <DeleteDataModal />;
   default:

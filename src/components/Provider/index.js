@@ -24,7 +24,7 @@ const Provider = (props) => {
 
       if (token) {
         try {
-          const res = await Api.get('/api/auth', true);
+          const res = await Api.get('/api/auth', { withAuth: true });
 
           if (res.status === 200) {
             dispatch({
