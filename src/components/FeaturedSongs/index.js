@@ -10,14 +10,17 @@ import FeaturedSongs from './presenter';
 
 const FeaturedSongsContainer = () => {
   const appDispatch = useAppDispatch();
-  const { data, error, loading } = useQuery(GET_SONGS);
-
-  const cancel = () => {
-    // GQL fn?
-  };
+  const {
+    data,
+    error,
+    loading,
+    networkStatus,
+    refetch,
+  } = useQuery(GET_SONGS, { notifyOnNetworkStatusChange: true });
+  const isLoading = loading || networkStatus === 4;
 
   const refresh = () => {
-    // GQL fn?
+    refetch();
   };
 
   const handleCreateOpen = () => {
@@ -45,13 +48,13 @@ const FeaturedSongsContainer = () => {
 
   return (
     <ErrorBoundary>
-      <ProgressLoader isVisible={loading} />
+      <ProgressLoader isVisible={isLoading} />
       <FeaturedSongs
-        cancel={cancel}
         data={data}
         error={error}
         handleCreateOpen={handleCreateOpen}
         handleDeleteOpen={handleDeleteOpen}
+        isLoading={isLoading}
         refresh={refresh}
       />
     </ErrorBoundary>

@@ -15,6 +15,8 @@ const FeaturedSongs = (props) => {
     error,
     handleCreateOpen,
     handleDeleteOpen,
+    isLoading,
+    refresh,
   } = props;
   const { user: { isAuthenticated } } = useAppState();
 
@@ -26,13 +28,14 @@ const FeaturedSongs = (props) => {
         </Col>
         {isAuthenticated && (
           <Col xs='auto'>
-            {/* <Button
+            <Button
               variant='outline-dark'
-              onClick={isLoading ? cancel : refresh}
+              disabled={isLoading}
+              onClick={refresh}
               style={{ marginRight: '5px' }}
             >
-              {isLoading ? 'Cancel' : 'Refresh'}
-            </Button> */}
+              Refresh
+            </Button>
             <Button
               variant='outline-dark'
               onClick={handleCreateOpen}
@@ -59,11 +62,11 @@ const FeaturedSongs = (props) => {
 };
 
 FeaturedSongs.propTypes = {
-  cancel: PropTypes.func.isRequired,
   data: PropTypes.object,
   error: PropTypes.object,
   handleCreateOpen: PropTypes.func.isRequired,
   handleDeleteOpen: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
   refresh: PropTypes.func.isRequired,
 };
 
