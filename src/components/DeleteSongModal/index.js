@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 
+import useGqlSubmit from '../../hooks/useGqlSubmit';
 import { GET_SONGS } from '../../queries';
 import { DELETE_SONG } from '../../mutations';
-import {
-  DISPATCH_TYPES,
-  MESSAGES,
-  TOAST_TYPES,
-} from '../../constants';
+import { DISPATCH_TYPES, MESSAGES } from '../../constants';
 import { useApp } from '../Provider';
 import DeleteDataModal from '../DeleteDataModal/presenter';
 
@@ -26,7 +23,6 @@ const DeleteSongContainer = () => {
       },
     },
   );
-  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleClose = () => {
     dispatch({
@@ -34,34 +30,18 @@ const DeleteSongContainer = () => {
     });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setIsDeleting(true);
-
-    try {
-      await deleteSong({
-        variables: { id: data.id },
-      });
-
-      handleClose();
-      dispatch({
-        payload: {
-          message: `${MESSAGES.SONG_PREFIX} deleted`,
-          type: TOAST_TYPES.SUCCESS,
-        },
-        type: DISPATCH_TYPES.OPEN_TOAST,
-      });
-    } catch (err) {
-      setIsDeleting(false);
-      dispatch({
-        payload: {
-          message: err.message || MESSAGES.ERROR,
-          type: TOAST_TYPES.ERROR,
-        },
-        type: DISPATCH_TYPES.OPEN_TOAST,
-      });
-    }
+  const submitFunc = async () => {
+    await deleteSong({
+      variables: { id: data.id },
+    });
   };
+
+  const options = {
+    callback: handleClose,
+    submitFunc,
+    successMessage: `${MESSAGES.SONG_PREFIX} deleted`,
+  };
+  const { handleSubmit, isSaving } = useGqlSubmit(options);
 
   return (
     <DeleteDataModal
@@ -69,7 +49,7 @@ const DeleteSongContainer = () => {
       dataType={data.dataType}
       artist={data.artist}
       title={data.title}
-      isDeleting={isDeleting}
+      isDeleting={isSaving}
       handleClose={handleClose}
       handleDelete={handleSubmit}
     />
