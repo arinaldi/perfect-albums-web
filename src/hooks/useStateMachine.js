@@ -1,5 +1,6 @@
 import { useEffect, useReducer } from 'react';
 
+import { useAppDispatch } from '../components/Provider';
 import Api from '../utils/api';
 import { dataReducer, dataInitialState } from '../reducers/data';
 import {
@@ -8,6 +9,7 @@ import {
 } from '../constants';
 
 const useStateMachine = (path, withAuth = false) => {
+  const appDispatch = useAppDispatch();
   const [state, dispatch] = useReducer(dataReducer, dataInitialState);
   const { status } = state;
   const controller = new AbortController();
@@ -18,7 +20,11 @@ const useStateMachine = (path, withAuth = false) => {
 
   useEffect(() => {
     if (status === STATE_STATUSES.LOADING) {
-      Api.get(path, withAuth, { signal: controller.signal })
+      Api.get(path, {
+        dispatch: appDispatch,
+        options: { signal: controller.signal },
+        withAuth,
+      })
         .then(res => res.json())
         .then(data => {
           dispatch({ type: STATE_EVENTS.RESOLVE, data });
@@ -32,7 +38,7 @@ const useStateMachine = (path, withAuth = false) => {
         controller.abort();
       };
     }
-  }, [controller, path, status, withAuth]);
+  }, [appDispatch, controller, path, status, withAuth]);
 
   return [state, dispatch];
 };

@@ -1,11 +1,10 @@
 import {
+  BASE_URL,
   DISPATCH_TYPES,
   MESSAGES,
   TOAST_TYPES,
 } from '../constants';
 import { getToken } from './storage';
-
-const BASE_URL = process.env.API_URL;
 
 const getHeaders = (withAuth = false) => {
   const headers = { 'Content-Type': 'application/json' };
@@ -43,12 +42,12 @@ const handleResponse = (res, dispatch) => {
 };
 
 const Api = {
-  get: (endpoint, withAuth = false, options = {}) => (
+  get: (endpoint, { dispatch, options = {}, withAuth = false }) => (
     fetch(`${BASE_URL}${endpoint}`, {
       ...options,
       method: 'GET',
       headers: getHeaders(withAuth),
-    }).then(res => handleResponse(res))
+    }).then(res => handleResponse(res, dispatch))
   ),
   post: (endpoint, { data, dispatch }) => (
     fetch(`${BASE_URL}${endpoint}`, {

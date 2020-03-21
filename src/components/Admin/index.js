@@ -6,6 +6,7 @@ import Api from '../../utils/api';
 import useDebounce from '../../hooks/useDebounce';
 import { PER_PAGE, SORT_DIRECTION } from '../../constants';
 
+import { useAppDispatch } from '../Provider';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import AppMessage from '../AppMessage/presenter';
@@ -25,6 +26,7 @@ const AdminContainer = () => {
   const [direction, setDirection] = useState('');
   const searchInput = useRef(null);
   const debouncedSearch = useDebounce(searchText, 500);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (location.search) {
@@ -40,7 +42,10 @@ const AdminContainer = () => {
 
       try {
         const url = `/api/albums?page=${currentPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
-        const res = await Api.get(url, true);
+        const res = await Api.get(url, {
+          dispatch,
+          withAuth: true,
+        });
         const { count, data: albums } = await res.json();
 
         setData(albums);
@@ -61,6 +66,7 @@ const AdminContainer = () => {
     debouncedSearch,
     currentPage,
     direction,
+    dispatch,
     location.search,
     perPage,
     sort,

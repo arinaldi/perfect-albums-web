@@ -19,9 +19,9 @@ const useSubmit = (options) => {
   const [isValidated, setIsValidated] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const form = e.currentTarget;
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
 
     if (form.checkValidity()) {
       setIsSaving(true);
