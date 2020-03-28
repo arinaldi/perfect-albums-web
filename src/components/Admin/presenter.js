@@ -115,7 +115,7 @@ const Admin = (props) => {
     <Container>
       <Row>
         <Col xs={12}>
-          <Row style={{ marginBottom: '8px' }}>
+          <Row style={{ marginBottom: '10px' }}>
             <Col>
               <h3>Admin</h3>
             </Col>

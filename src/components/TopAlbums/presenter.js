@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
+import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import PropTypes from 'prop-types';
 
-import { sortDesc } from '../../utils';
-import { STATE_STATUSES } from '../../constants';
+import { formatFavorites, sortDesc } from '../../utils';
 import { useAppState } from '../Provider';
 import AppMessage from '../AppMessage/presenter';
 import AlbumCol from './AlbumCol';
@@ -15,45 +15,54 @@ import TopLink from './TopLink';
 
 const TopAlbums = (props) => {
   const {
-    cancel,
     data,
+    error,
+    isLoading,
     refresh,
-    status,
   } = props;
   const { user: { isAuthenticated } } = useAppState();
-  const isLoading = status === STATE_STATUSES.LOADING;
 
   return (
     <Fragment>
       <Container>
-        <Row style={{ marginBottom: '8px' }}>
+        <Row style={{ marginBottom: '10px' }}>
           <Col>
-            <h3>Top Albums</h3>
+            <h3>Top Albums
+              {data && data.favorites && (
+                <Badge variant='light' style={{ marginLeft: '5px' }}>
+                  {data.favorites.length.toLocaleString()}
+                </Badge>
+              )}
+            </h3>
           </Col>
           <Col xs='auto'>
             {isAuthenticated && (
               <Button
                 variant='outline-dark'
-                onClick={isLoading ? cancel : refresh}
+                disabled={isLoading}
+                onClick={refresh}
                 style={{ marginRight: '5px' }}
               >
-                {isLoading ? 'Cancel' : 'Refresh'}
+                Refresh
               </Button>
             )}
             <DecadeSelector />
           </Col>
         </Row>
-        {status === STATE_STATUSES.FAILURE && <AppMessage />}
-        {data && (
+        {error && <AppMessage />}
+        {data && data.favorites && (
           <Row>
-            {Object.keys(data).sort(sortDesc).map(year => (
-              <AlbumCol
-                key={year}
-                data={data[year]}
-                year={year}
-                total={data[year].length}
-              />
-            ))}
+            {Object
+              .entries(formatFavorites(data.favorites))
+              .sort(sortDesc)
+              .map(([year, favorites]) => (
+                <AlbumCol
+                  key={year}
+                  data={favorites}
+                  year={year}
+                  total={favorites.length}
+                />
+              ))}
           </Row>
         )}
       </Container>
@@ -63,10 +72,10 @@ const TopAlbums = (props) => {
 };
 
 TopAlbums.propTypes = {
-  cancel: PropTypes.func.isRequired,
   data: PropTypes.object,
+  error: PropTypes.object,
+  isLoading: PropTypes.bool,
   refresh: PropTypes.func.isRequired,
-  status: PropTypes.string.isRequired,
 };
 
 export default TopAlbums;

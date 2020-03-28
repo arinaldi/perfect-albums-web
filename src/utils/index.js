@@ -11,7 +11,7 @@ export const sortByDate = (a, b) => {
   return 0;
 };
 
-export const sortDesc = (a, b) => b - a;
+export const sortDesc = (a, b) => b[0] - a[0];
 
 export const getQuery = (query) => decodeURI(query.substring(1));
 
@@ -28,4 +28,20 @@ export const formatDate = (isoString) => {
   const day = date.getUTCDate();
 
   return `${year}-${addZeroPrefix(month)}-${addZeroPrefix(day)}`;
+};
+
+export const formatFavorites = (albums) => {
+  const results = {};
+
+  albums.forEach(({ artist, title, year }) => {
+    const album = { artist, title };
+
+    if (results[year]) {
+      results[year].push(album);
+    } else {
+      results[year] = [album];
+    }
+  });
+
+  return results;
 };
