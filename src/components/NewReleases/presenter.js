@@ -26,7 +26,7 @@ const NewReleases = (props) => {
 
   return (
     <Container>
-      <Row style={{ marginBottom: '8px' }}>
+      <Row style={{ marginBottom: '10px' }}>
         <Col>
           <h3>New Releases</h3>
         </Col>

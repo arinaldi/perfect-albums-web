@@ -1,34 +1,34 @@
 import React from 'react';
+import { useQuery } from '@apollo/react-hooks';
 
-import useStateMachine from '../../hooks/useStateMachine';
-import {
-  STATE_EVENTS,
-  STATE_STATUSES,
-} from '../../constants';
+import { STATE_STATUSES } from '../../constants';
+import { GET_FAVORITES } from '../../queries';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import TopAlbums from './presenter';
 
 const TopAlbumsContainer = () => {
-  const [state, dispatch] = useStateMachine('/api/favorites');
-  const { data, status } = state;
-
-  const cancel = () => {
-    dispatch({ type: STATE_EVENTS.CANCEL });
-  };
+  const {
+    data,
+    error,
+    loading,
+    networkStatus,
+    refetch,
+  } = useQuery(GET_FAVORITES, { notifyOnNetworkStatusChange: true });
+  const isLoading = loading || networkStatus === 4;
 
   const refresh = () => {
-    dispatch({ type: STATE_EVENTS.FETCH });
+    refetch();
   };
 
   return (
     <ErrorBoundary>
       <ProgressLoader isVisible={status === STATE_STATUSES.LOADING} />
       <TopAlbums
-        cancel={cancel}
         data={data}
+        error={error}
+        isLoading={isLoading}
         refresh={refresh}
-        status={status}
       />
     </ErrorBoundary>
   );
