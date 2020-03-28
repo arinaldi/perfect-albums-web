@@ -1,7 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
-import { STATE_STATUSES } from '../../constants';
 import { GET_FAVORITES } from '../../queries';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
@@ -23,7 +22,7 @@ const TopAlbumsContainer = () => {
 
   return (
     <ErrorBoundary>
-      <ProgressLoader isVisible={status === STATE_STATUSES.LOADING} />
+      <ProgressLoader isVisible={isLoading} />
       <TopAlbums
         data={data}
         error={error}
