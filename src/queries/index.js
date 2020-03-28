@@ -3,7 +3,6 @@ import { gql } from 'apollo-boost';
 export const GET_FAVORITES = gql`
 {
   favorites {
-    id
     artist
     title
     year
