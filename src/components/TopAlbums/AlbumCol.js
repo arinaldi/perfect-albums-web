@@ -11,7 +11,7 @@ const AlbumCol = (props) => {
     <Col xs={12} md={6} lg={4}>
       <Row>
         <Col>
-          <h4>{year}</h4>
+          <h4 id={year}>{year}</h4>
         </Col>
         <Col xs='auto'>
           <h4>
