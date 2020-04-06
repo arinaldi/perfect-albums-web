@@ -7,15 +7,13 @@ import render from '../__test-utils__';
 import mockApi from '../utils/api';
 
 jest.mock('../utils/api', () => {
-  return {
-    post: jest.fn(() => Promise.resolve({
-      json: () => Promise.resolve({ token: 'token' }),
-    })),
-  };
+  return jest.fn(() => Promise.resolve({
+    json: () => Promise.resolve({ token: 'token' }),
+  }));
 });
 
 afterAll(() => {
-  mockApi.post.mockClear();
+  mockApi.mockClear();
 });
 
 test('SignInContainer submits credentials', async () => {
@@ -32,10 +30,10 @@ test('SignInContainer submits credentials', async () => {
   fireEvent.change(passwordInput, { target: { value: password } });
   fireEvent.click(submitButton);
 
-  expect(mockApi.post).toHaveBeenCalledTimes(1);
-  expect(mockApi.post).toHaveBeenCalledWith(
+  expect(mockApi).toHaveBeenCalledTimes(1);
+  expect(mockApi).toHaveBeenCalledWith(
     '/api/signin',
-    { data: { username, password } },
+    { body: { username, password } },
   );
 
   await wait(() => {

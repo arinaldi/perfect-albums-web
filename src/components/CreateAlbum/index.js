@@ -5,7 +5,6 @@ import React, {
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { getQuery } from '../../utils';
-import Api from '../../utils/api';
 import useSubmit from '../../hooks/useSubmit';
 import { MESSAGES } from '../../constants';
 import ErrorBoundary from '../ErrorBoundary';
@@ -25,9 +24,9 @@ const CreateAlbumContainer = () => {
   });
   const [query, setQuery] = useState('');
   const options = {
-    apiFunc: Api.post,
+    body: album,
     callbacks: [() => history.push(`/admin?${query}`)],
-    data: album,
+    method: 'POST',
     path: '/api/albums',
     successMessage: `${MESSAGES.ALBUM_PREFIX} created`,
   };

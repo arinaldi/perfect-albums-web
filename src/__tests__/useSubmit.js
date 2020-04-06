@@ -7,27 +7,23 @@ import mockApi from '../utils/api';
 import useSubmit from '../hooks/useSubmit';
 import { Provider } from '../components/Provider';
 
-jest.mock('../utils/api', () => {
-  return {
-    post: jest.fn(),
-  };
-});
+jest.mock('../utils/api', () => jest.fn());
 
 afterAll(() => {
-  mockApi.post.mockClear();
+  mockApi.mockClear();
 });
 
 const wrapper = ({ children }) => <Provider>{children}</Provider>;
 wrapper.propTypes = { children: PropTypes.object };
 
 test('useSubmit handles successful data posting', async () => {
-  mockApi.post.mockImplementation(() => Promise.resolve({
+  mockApi.mockImplementation(() => Promise.resolve({
     json: () => Promise.resolve(mockAdminData[0]),
   }));
   const options = {
-    apiFunc: mockApi.post,
+    body: mockAdminData[0],
     callbacks: [jest.fn],
-    data: mockAdminData[0],
+    method: 'POST',
     path: '/api/albums',
     successMessage: 'OK',
   };

@@ -6,16 +6,6 @@ import {
 } from '../constants';
 import { getToken } from './storage';
 
-const getHeaders = (withAuth = false) => {
-  const headers = { 'Content-Type': 'application/json' };
-
-  if (withAuth) {
-    headers.authorization = `Bearer ${getToken()}`;
-  }
-
-  return headers;
-};
-
 const handleResponse = (res, dispatch) => {
   return new Promise((resolve, reject) => {
     if (res.status === 401) {
@@ -41,34 +31,31 @@ const handleResponse = (res, dispatch) => {
   });
 };
 
-const Api = {
-  get: (endpoint, { dispatch, options = {}, withAuth = false }) => (
-    fetch(`${BASE_URL}${endpoint}`, {
-      ...options,
-      method: 'GET',
-      headers: getHeaders(withAuth),
-    }).then(res => handleResponse(res, dispatch))
-  ),
-  post: (endpoint, { data, dispatch }) => (
-    fetch(`${BASE_URL}${endpoint}`, {
-      method: 'POST',
-      headers: getHeaders(true),
-      body: JSON.stringify(data),
-    }).then(res => handleResponse(res, dispatch))
-  ),
-  put: (endpoint, { data, dispatch }) => (
-    fetch(`${BASE_URL}${endpoint}`, {
-      method: 'PUT',
-      headers: getHeaders(true),
-      body: JSON.stringify(data),
-    }).then(res => handleResponse(res, dispatch))
-  ),
-  delete: (endpoint, { dispatch }) => (
-    fetch(`${BASE_URL}${endpoint}`, {
-      method: 'DELETE',
-      headers: getHeaders(true),
-    }).then(res => handleResponse(res, dispatch))
-  ),
+const api = (endpoint, options = {}) => {
+  const { body, dispatch, ...customConfig } = options;
+  const token = getToken();
+  const headers = { 'Content-Type': 'application/json' };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  const config = {
+    method: body ? 'POST' : 'GET',
+    ...customConfig,
+    headers: {
+      ...headers,
+      ...customConfig.headers,
+    },
+  };
+
+  if (body) {
+    config.body = JSON.stringify(body);
+  }
+
+  return window
+    .fetch(`${BASE_URL}${endpoint}`, config)
+    .then(res => handleResponse(res, dispatch));
 };
 
-export default Api;
+export default api;

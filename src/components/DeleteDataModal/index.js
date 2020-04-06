@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { DISPATCH_TYPES } from '../../constants';
-import Api from '../../utils/api';
 import useSubmit from '../../hooks/useSubmit';
 import { useApp } from '../Provider';
 import DeleteDataModal from './presenter';
@@ -17,9 +16,9 @@ const DeleteDataContainer = () => {
   };
 
   const options = {
-    apiFunc: Api.delete,
+    body: null,
     callbacks: [closeModal, callback],
-    data: null,
+    method: 'DELETE',
     path: `/api/${data.path}/${data.id}`,
     successMessage: `${data.dataType} successfully deleted`,
   };

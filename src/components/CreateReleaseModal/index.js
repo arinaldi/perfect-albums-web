@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import Api from '../../utils/api';
 import useSubmit from '../../hooks/useSubmit';
 import { DISPATCH_TYPES, MESSAGES } from '../../constants';
 import { useApp } from '../Provider';
@@ -33,9 +32,9 @@ const CreateReleaseContainer = () => {
   };
 
   const options = {
-    apiFunc: Api.post,
+    body: release,
     callbacks: [handleClose, state.modal.callback],
-    data: release,
+    method: 'POST',
     path: '/api/releases',
     successMessage: `${MESSAGES.RELEASE_PREFIX} created`,
   };

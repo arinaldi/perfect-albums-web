@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { DISPATCH_TYPES } from '../../constants';
-import Api from '../../utils/api';
+import api from '../../utils/api';
 import { useApp } from '../Provider';
 import ErrorBoundary from '../ErrorBoundary';
 import AppMessage from '../AppMessage/presenter';
@@ -31,9 +31,7 @@ const SignInContainer = () => {
     setIsSubmitting(true);
 
     try {
-      const res = await Api.post('/api/signin', {
-        data: credentials,
-      });
+      const res = await api('/api/signin', { body: credentials });
       const data = await res.json();
 
       setIsSubmitting(false);

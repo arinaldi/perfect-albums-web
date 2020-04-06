@@ -7,21 +7,17 @@ import mockApi from '../utils/api';
 import useStateMachine from '../hooks/useStateMachine';
 import { Provider } from '../components/Provider';
 
-jest.mock('../utils/api', () => {
-  return {
-    get: jest.fn(),
-  };
-});
+jest.mock('../utils/api', () => jest.fn());
 
 afterAll(() => {
-  mockApi.get.mockClear();
+  mockApi.mockClear();
 });
 
 const wrapper = ({ children }) => <Provider>{children}</Provider>;
 wrapper.propTypes = { children: PropTypes.object };
 
 test('useStateMachine handles successful data fetching', async () => {
-  mockApi.get.mockImplementation(() => Promise.resolve({
+  mockApi.mockImplementation(() => Promise.resolve({
     json: () => Promise.resolve(mockTopAlbumsData),
   }));
   const { result, waitForNextUpdate } = renderHook(() => useStateMachine('/top-albums', false), { wrapper });
@@ -36,7 +32,7 @@ test('useStateMachine handles successful data fetching', async () => {
 });
 
 test('useStateMachine handles error from data fetching', async () => {
-  mockApi.get.mockImplementation(() => Promise.reject(new Error('error message')));
+  mockApi.mockImplementation(() => Promise.reject(new Error('error message')));
   const { result, waitForNextUpdate } = renderHook(() => useStateMachine('/top-albums', false), { wrapper });
   await waitForNextUpdate();
   const [state] = result.current;

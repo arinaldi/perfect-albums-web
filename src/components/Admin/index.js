@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { getQuery } from '../../utils';
-import Api from '../../utils/api';
+import api from '../../utils/api';
 import useDebounce from '../../hooks/useDebounce';
 import { PER_PAGE, SORT_DIRECTION } from '../../constants';
 
@@ -42,10 +42,7 @@ const AdminContainer = () => {
 
       try {
         const url = `/api/albums?page=${currentPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
-        const res = await Api.get(url, {
-          dispatch,
-          withAuth: true,
-        });
+        const res = await api(url, { dispatch });
         const { count, data: albums } = await res.json();
 
         setData(albums);

@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
-import Api from '../../utils/api';
+import api from '../../utils/api';
 import { getToken } from '../../utils/storage';
 import { providerReducer, providerInitialState } from '../../reducers/provider';
 import { DISPATCH_TYPES } from '../../constants';
@@ -24,7 +24,7 @@ const Provider = (props) => {
 
       if (token) {
         try {
-          const res = await Api.get('/api/auth', { withAuth: true });
+          const res = await api('/api/auth');
 
           if (res.status === 200) {
             dispatch({

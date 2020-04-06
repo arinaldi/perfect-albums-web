@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import api from '../utils/api';
 import {
   DISPATCH_TYPES,
   MESSAGES,
@@ -9,9 +10,9 @@ import { useAppDispatch } from '../components/Provider';
 
 const useSubmit = (options) => {
   const {
-    apiFunc,
+    body,
     callbacks,
-    data,
+    method,
     path,
     successMessage,
   } = options;
@@ -27,7 +28,7 @@ const useSubmit = (options) => {
       setIsSaving(true);
 
       try {
-        await apiFunc(path, { data, dispatch });
+        await api(path, { body, dispatch, method });
         setIsSaving(false);
 
         callbacks.forEach(cb => {

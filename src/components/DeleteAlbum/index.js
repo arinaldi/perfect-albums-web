@@ -5,7 +5,6 @@ import React, {
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { getQuery } from '../../utils';
-import Api from '../../utils/api';
 import useStateMachine from '../../hooks/useStateMachine';
 import useSubmit from '../../hooks/useSubmit';
 import { MESSAGES, STATE_STATUSES } from '../../constants';
@@ -19,12 +18,12 @@ const DeleteAlbumContainer = () => {
   const location = useLocation();
   const { id } = useParams();
   const [query, setQuery] = useState('');
-  const [state] = useStateMachine(`/api/albums/${id}`, true);
+  const [state] = useStateMachine(`/api/albums/${id}`);
   const { data, status } = state;
   const options = {
-    apiFunc: Api.delete,
+    body: null,
     callbacks: [() => history.push(`/admin?${query}`)],
-    data: null,
+    method: 'DELETE',
     path: `/api/albums/${id}`,
     successMessage: `${MESSAGES.ALBUM_PREFIX} deleted`,
   };

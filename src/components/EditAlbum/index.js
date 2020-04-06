@@ -5,7 +5,6 @@ import React, {
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { getQuery } from '../../utils';
-import Api from '../../utils/api';
 import useStateMachine from '../../hooks/useStateMachine';
 import useSubmit from '../../hooks/useSubmit';
 import { MESSAGES, STATE_STATUSES } from '../../constants';
@@ -26,13 +25,13 @@ const EditAlbumContainer = () => {
     favorite: false,
   });
   const [query, setQuery] = useState('');
-  const [state] = useStateMachine(`/api/albums/${id}`, true);
+  const [state] = useStateMachine(`/api/albums/${id}`);
   const { data, status } = state;
   const isLoading = status === STATE_STATUSES.LOADING;
   const options = {
-    apiFunc: Api.put,
+    body: album,
     callbacks: [() => history.push(`/admin?${query}`)],
-    data: album,
+    method: 'PUT',
     path: `/api/albums/${id}`,
     successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,
   };

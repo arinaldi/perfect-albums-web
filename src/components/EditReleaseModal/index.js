@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import Api from '../../utils/api';
 import { formatDate } from '../../utils';
 import useSubmit from '../../hooks/useSubmit';
 import { DISPATCH_TYPES, MESSAGES } from '../../constants';
@@ -43,9 +42,9 @@ const EditReleaseContainer = () => {
   };
 
   const options = {
-    apiFunc: Api.put,
+    body: release,
     callbacks: [handleClose, callback],
-    data: release,
+    method: 'PUT',
     path: `/api/releases/${data.id}`,
     successMessage: `${MESSAGES.RELEASE_PREFIX} edited`,
   };
