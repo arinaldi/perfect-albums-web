@@ -1,10 +1,9 @@
 import React from 'react';
 
-import CreateAlbum from '../components/CreateAlbum/presenter';
-
-import render from '../__test-utils__';
-import { mockAdminData } from '../__mocks__';
-import { STATE_STATUSES } from '../constants';
+import CreateAlbum from '../../src/components/CreateAlbum/presenter';
+import { STATE_STATUSES } from '../../src/constants';
+import render from '../utils';
+import { mockAdminData } from '../mocks';
 
 const { artist, title, year, cd, aotd, favorite } = mockAdminData[0];
 

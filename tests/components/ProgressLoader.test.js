@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import ProgressLoader from '../components/ProgressLoader/presenter';
+import ProgressLoader from '../../src/components/ProgressLoader/presenter';
 
 test('ProgressLoader renders as visible', () => {
   const { container } = render(<ProgressLoader isVisible />);

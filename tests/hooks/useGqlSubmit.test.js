@@ -2,8 +2,8 @@ import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import PropTypes from 'prop-types';
 
-import useGqlSubmit from '../hooks/useGqlSubmit';
-import { Provider } from '../components/Provider';
+import useGqlSubmit from '../../src/hooks/useGqlSubmit';
+import { Provider } from '../../src/components/Provider';
 
 const wrapper = ({ children }) => <Provider>{children}</Provider>;
 wrapper.propTypes = { children: PropTypes.object };

@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 
-import useDebounce from '../hooks/useDebounce';
+import useDebounce from '../../src/hooks/useDebounce';
 
 test('useDebounce handles value input', async () => {
   const value = 'test';

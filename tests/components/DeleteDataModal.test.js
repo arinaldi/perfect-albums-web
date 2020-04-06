@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import DeleteDataModal from '../components/DeleteDataModal/presenter';
-import { mockFeaturedSongsData } from '../__mocks__';
+import DeleteDataModal from '../../src/components/DeleteDataModal/presenter';
+import { mockFeaturedSongsData } from '../mocks';
 
 const { artist, title } = mockFeaturedSongsData[0];
 

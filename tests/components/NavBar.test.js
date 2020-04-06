@@ -2,8 +2,8 @@ import React from 'react';
 import { cleanup, render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import { DispatchContext, StateContext } from '../components/Provider';
-import NavBar from '../components/NavBar/presenter';
+import { DispatchContext, StateContext } from '../../src/components/Provider';
+import NavBar from '../../src/components/NavBar/presenter';
 
 afterEach(cleanup);
 

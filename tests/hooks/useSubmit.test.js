@@ -2,12 +2,12 @@ import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import PropTypes from 'prop-types';
 
-import { mockAdminData } from '../__mocks__';
-import mockApi from '../utils/api';
-import useSubmit from '../hooks/useSubmit';
-import { Provider } from '../components/Provider';
+import mockApi from '../../src/utils/api';
+import useSubmit from '../../src/hooks/useSubmit';
+import { Provider } from '../../src/components/Provider';
+import { mockAdminData } from '../mocks';
 
-jest.mock('../utils/api', () => jest.fn());
+jest.mock('../../src/utils/api', () => jest.fn());
 
 afterAll(() => {
   mockApi.mockClear();

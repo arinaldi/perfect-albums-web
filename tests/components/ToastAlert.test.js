@@ -1,10 +1,9 @@
 import React from 'react';
 import { cleanup, render } from '@testing-library/react';
 
-import { DispatchContext, StateContext } from '../components/Provider';
-import ToastAlert from '../components/ToastAlert/presenter';
-
-import { MESSAGES, TOAST_TYPES } from '../constants';
+import { DispatchContext, StateContext } from '../../src/components/Provider';
+import ToastAlert from '../../src/components/ToastAlert/presenter';
+import { MESSAGES, TOAST_TYPES } from '../../src/constants';
 
 afterEach(cleanup);
 

@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import PropTypes from 'prop-types';
 
-import { Provider } from '../components/Provider';
+import { Provider } from '../src/components/Provider';
 
 const Providers = ({ children, route }) => (
   <Provider>

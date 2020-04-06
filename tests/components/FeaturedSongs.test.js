@@ -1,10 +1,9 @@
 import React from 'react';
 
-import FeaturedSongs from '../components/FeaturedSongs/presenter';
-
-import render from '../__test-utils__';
-import { mockFeaturedSongsData } from '../__mocks__';
-import { STATE_STATUSES } from '../constants';
+import FeaturedSongs from '../../src/components/FeaturedSongs/presenter';
+import { STATE_STATUSES } from '../../src/constants';
+import render from '../utils';
+import { mockFeaturedSongsData } from '../mocks';
 
 test('FeaturedSongs renders with data', () => {
   const { getByText, getByTestId } = render(

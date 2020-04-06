@@ -1,12 +1,11 @@
 import React from 'react';
 import { fireEvent, wait } from '@testing-library/react';
 
-import SignInContainer from '../components/SignIn';
+import SignInContainer from '../../src/components/SignIn';
+import mockApi from '../../src/utils/api';
+import render from '../utils';
 
-import render from '../__test-utils__';
-import mockApi from '../utils/api';
-
-jest.mock('../utils/api', () => {
+jest.mock('../../src/utils/api', () => {
   return jest.fn(() => Promise.resolve({
     json: () => Promise.resolve({ token: 'token' }),
   }));

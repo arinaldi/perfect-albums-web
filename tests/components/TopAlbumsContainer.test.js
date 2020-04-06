@@ -1,20 +1,20 @@
 import React from 'react';
 import { MockedProvider } from '@apollo/react-testing';
 
-import render from '../__test-utils__';
-import { mockFeaturedSongsData } from '../__mocks__';
+import TopAlbumsContainer from '../../src/components/TopAlbums';
+import { GET_FAVORITES } from '../../src/queries';
+import render from '../utils';
+import { mockTopAlbumsData } from '../mocks';
 
-import FeaturedSongsContainer from '../components/FeaturedSongs';
-import { GET_SONGS } from '../queries';
 
 const mocks = [
   {
     request: {
-      query: GET_SONGS,
+      query: GET_FAVORITES,
     },
     result: {
       data: {
-        songs: mockFeaturedSongsData,
+        favorites: mockTopAlbumsData,
       },
     },
   },
@@ -23,7 +23,7 @@ const mocks = [
 test('renders without error', () => {
   render(
     <MockedProvider mocks={mocks} addTypename={false}>
-      <FeaturedSongsContainer />
+      <TopAlbumsContainer />
     </MockedProvider>,
   );
 });

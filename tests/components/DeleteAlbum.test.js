@@ -1,10 +1,9 @@
 import React from 'react';
 
-import DeleteAlbum from '../components/DeleteAlbum/presenter';
-
-import render from '../__test-utils__';
-import { mockAdminData } from '../__mocks__';
-import { STATE_STATUSES } from '../constants';
+import DeleteAlbum from '../../src/components/DeleteAlbum/presenter';
+import { STATE_STATUSES } from '../../src/constants';
+import render from '../utils';
+import { mockAdminData } from '../mocks';
 
 const { artist, title } = mockAdminData[0];
 

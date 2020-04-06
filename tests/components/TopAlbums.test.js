@@ -1,9 +1,9 @@
 import React from 'react';
 
-import TopAlbums from '../components/TopAlbums/presenter';
-import render from '../__test-utils__';
-import { mockTopAlbumsData } from '../__mocks__';
-import { STATE_STATUSES } from '../constants';
+import TopAlbums from '../../src/components/TopAlbums/presenter';
+import { STATE_STATUSES } from '../../src/constants';
+import render from '../utils';
+import { mockTopAlbumsData } from '../mocks';
 
 test('TopAlbums renders with data by year', () => {
   const { getByText, getByTestId } = render(

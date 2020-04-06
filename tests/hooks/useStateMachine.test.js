@@ -2,12 +2,12 @@ import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import PropTypes from 'prop-types';
 
-import { mockTopAlbumsData } from '../__mocks__';
-import mockApi from '../utils/api';
-import useStateMachine from '../hooks/useStateMachine';
-import { Provider } from '../components/Provider';
+import { mockTopAlbumsData } from '../mocks';
+import mockApi from '../../src/utils/api';
+import useStateMachine from '../../src/hooks/useStateMachine';
+import { Provider } from '../../src/components/Provider';
 
-jest.mock('../utils/api', () => jest.fn());
+jest.mock('../../src/utils/api', () => jest.fn());
 
 afterAll(() => {
   mockApi.mockClear();

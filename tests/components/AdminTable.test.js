@@ -1,9 +1,8 @@
 import React from 'react';
 
-import AdminTable from '../components/AdminTable/presenter';
-
-import render from '../__test-utils__';
-import { mockAdminData } from '../__mocks__';
+import AdminTable from '../../src/components/AdminTable/presenter';
+import render from '../utils';
+import { mockAdminData } from '../mocks';
 
 test('AdminTable renders with data', () => {
   const { container, getByTestId } = render(

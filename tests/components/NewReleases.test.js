@@ -1,9 +1,9 @@
 import React from 'react';
 
-import NewReleases from '../components/NewReleases/presenter';
-import render from '../__test-utils__';
-import { mockNewReleasesData, releaseLabels } from '../__mocks__';
-import { STATE_STATUSES } from '../constants';
+import NewReleases from '../../src/components/NewReleases/presenter';
+import { STATE_STATUSES } from '../../src/constants';
+import render from '../utils';
+import { mockNewReleasesData, releaseLabels } from '../mocks';
 
 test('NewReleases renders with data by year', () => {
   const { getByText, getByTestId } = render(

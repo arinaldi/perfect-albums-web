@@ -1,9 +1,8 @@
 import React from 'react';
 
-import Admin from '../components/Admin/presenter';
-
-import render from '../__test-utils__';
-import { mockAdminData } from '../__mocks__';
+import Admin from '../../src/components/Admin/presenter';
+import render from '../utils';
+import { mockAdminData } from '../mocks';
 
 test('Admin renders with data', () => {
   const { getByText } = render(

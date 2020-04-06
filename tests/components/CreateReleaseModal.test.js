@@ -1,9 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import CreateReleaseModal from '../components/CreateReleaseModal/presenter';
-
-import { releaseLabels, mockNewReleasesData } from '../__mocks__';
+import CreateReleaseModal from '../../src/components/CreateReleaseModal/presenter';
+import { releaseLabels, mockNewReleasesData } from '../mocks';
 
 const release = mockNewReleasesData[releaseLabels.two][0];
 const { artist, title } = release;

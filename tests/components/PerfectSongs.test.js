@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import PerfectSongs from '../components/PerfectSongs/presenter';
-import data from '../data/songs';
+import PerfectSongs from '../../src/components/PerfectSongs/presenter';
+import data from '../../src/data/songs';
 
 test('PerfectSongs renders with all data', () => {
   const { getByText, getByTestId } = render(<PerfectSongs />);
