@@ -24,17 +24,15 @@ const Provider = (props) => {
 
       if (token) {
         try {
-          const res = await api('/api/auth');
+          const { status } = await api('/api/auth');
 
-          if (res.status === 200) {
+          if (status === 200) {
             dispatch({
               payload: token,
               type: DISPATCH_TYPES.SIGN_IN_USER,
             });
           } else {
-            dispatch({
-              type: DISPATCH_TYPES.SIGN_OUT_USER,
-            });
+            throw new Error();
           }
         } catch (err) {
           dispatch({

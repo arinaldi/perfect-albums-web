@@ -19,19 +19,22 @@ const useStateMachine = (path) => {
   }, []);
 
   useEffect(() => {
-    if (status === STATE_STATUSES.LOADING) {
-      api(path, {
-        dispatch: appDispatch,
-        options: { signal: controller.signal },
-      })
-        .then(res => res.json())
-        .then(data => {
-          dispatch({ type: STATE_EVENTS.RESOLVE, data });
-        })
-        .catch(error => {
-          if (error.name === 'AbortError') return;
-          dispatch({ type: STATE_EVENTS.REJECT, error });
+    const fetchData = async () => {
+      try {
+        const { data } = await api(path, {
+          dispatch: appDispatch,
+          options: { signal: controller.signal },
         });
+
+        dispatch({ type: STATE_EVENTS.RESOLVE, data });
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+        dispatch({ type: STATE_EVENTS.REJECT, error });
+      }
+    };
+
+    if (status === STATE_STATUSES.LOADING) {
+      fetchData();
 
       return () => {
         controller.abort();

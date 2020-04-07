@@ -6,32 +6,41 @@ import {
 } from '../constants';
 import { getToken } from './storage';
 
-const handleResponse = (res, dispatch) => {
-  return new Promise((resolve, reject) => {
-    if (res.status === 401) {
-      if (res.url.includes('signin')) {
-        reject(new Error(MESSAGES.SIGNIN));
-      } else {
-        reject(new Error(MESSAGES.UNAUTHORIZED));
-        dispatch({
-          type: DISPATCH_TYPES.SIGN_OUT_USER,
-        });
-        dispatch({
-          payload: {
-            message: MESSAGES.UNAUTHORIZED,
-            type: TOAST_TYPES.ERROR,
-          },
-          type: DISPATCH_TYPES.OPEN_TOAST,
-        });
-      }
-    } else if (!res.ok) {
-      reject(new Error(MESSAGES.ERROR));
-    }
-    resolve(res);
+const logout = (dispatch) => {
+  dispatch({
+    type: DISPATCH_TYPES.SIGN_OUT_USER,
+  });
+  dispatch({
+    payload: {
+      message: MESSAGES.UNAUTHORIZED,
+      type: TOAST_TYPES.ERROR,
+    },
+    type: DISPATCH_TYPES.OPEN_TOAST,
   });
 };
 
-const api = (endpoint, options = {}) => {
+const handleResponse = async (response, dispatch) => {
+  const { status, url } = response;
+
+  if (status === 401) {
+    if (url.includes('signin')) {
+      return Promise.reject(new Error(MESSAGES.SIGNIN));
+    } else {
+      logout(dispatch);
+      return Promise.reject(new Error(MESSAGES.UNAUTHORIZED));
+    }
+  }
+
+  const data = await response.json();
+
+  if (response.ok) {
+    return { data, status };
+  } else {
+    return Promise.reject(data);
+  }
+};
+
+const api = async (endpoint, options = {}) => {
   const { body, dispatch, ...customConfig } = options;
   const token = getToken();
   const headers = { 'Content-Type': 'application/json' };
@@ -53,9 +62,8 @@ const api = (endpoint, options = {}) => {
     config.body = JSON.stringify(body);
   }
 
-  return window
-    .fetch(`${BASE_URL}${endpoint}`, config)
-    .then(res => handleResponse(res, dispatch));
+  const response = await window.fetch(`${BASE_URL}${endpoint}`, config);
+  return handleResponse(response, dispatch);
 };
 
 export default api;

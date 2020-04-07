@@ -5,11 +5,11 @@ import SignInContainer from '../../src/components/SignIn';
 import mockApi from '../../src/utils/api';
 import render from '../utils';
 
-jest.mock('../../src/utils/api', () => {
-  return jest.fn(() => Promise.resolve({
-    json: () => Promise.resolve({ token: 'token' }),
-  }));
-});
+jest.mock('../../src/utils/api', () => (
+  jest.fn(() => Promise.resolve({
+    data: { token: 'token' },
+  }))
+));
 
 afterAll(() => {
   mockApi.mockClear();

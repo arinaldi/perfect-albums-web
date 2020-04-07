@@ -18,7 +18,7 @@ wrapper.propTypes = { children: PropTypes.object };
 
 test('useStateMachine handles successful data fetching', async () => {
   mockApi.mockImplementation(() => Promise.resolve({
-    json: () => Promise.resolve(mockTopAlbumsData),
+    data: mockTopAlbumsData,
   }));
   const { result, waitForNextUpdate } = renderHook(() => useStateMachine('/top-albums', false), { wrapper });
   await waitForNextUpdate();
