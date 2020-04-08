@@ -5,24 +5,22 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import PropTypes from 'prop-types';
 
-import { sortByDate } from '../../utils';
-import { STATE_STATUSES } from '../../constants';
+import { formatReleases, sortByDate } from '../../utils';
 import { useAppState } from '../Provider';
 import AppMessage from '../AppMessage/presenter';
 import DateCol from './DateCol';
 
 const NewReleases = (props) => {
   const {
-    cancel,
     data,
+    error,
     handleCreateOpen,
     handleEditOpen,
     handleDeleteOpen,
+    isLoading,
     refresh,
-    status,
   } = props;
   const { user: { isAuthenticated } } = useAppState();
-  const isLoading = status === STATE_STATUSES.LOADING;
 
   return (
     <Container>
@@ -34,10 +32,11 @@ const NewReleases = (props) => {
           <Col xs='auto'>
             <Button
               variant='outline-dark'
-              onClick={isLoading ? cancel : refresh}
+              disabled={isLoading}
+              onClick={refresh}
               style={{ marginRight: '5px' }}
             >
-              {isLoading ? 'Cancel' : 'Refresh'}
+              Refresh
             </Button>
             <Button
               variant='outline-dark'
@@ -48,18 +47,21 @@ const NewReleases = (props) => {
           </Col>
         )}
       </Row>
-      {status === STATE_STATUSES.FAILURE && <AppMessage />}
-      {data && (
+      {error && <AppMessage />}
+      {data && data.releases && (
         <Row>
-          {Object.keys(data).sort(sortByDate).map(date => (
-            <DateCol
-              key={date}
-              data={data[date]}
-              date={date}
-              handleEditOpen={handleEditOpen}
-              handleDeleteOpen={handleDeleteOpen}
-            />
-          ))}
+          {Object
+            .entries(formatReleases(data.releases))
+            .sort(sortByDate)
+            .map(([date, releases]) => (
+              <DateCol
+                key={date}
+                data={releases}
+                date={date}
+                handleEditOpen={handleEditOpen}
+                handleDeleteOpen={handleDeleteOpen}
+              />
+            ))}
         </Row>
       )}
     </Container>
@@ -67,13 +69,13 @@ const NewReleases = (props) => {
 };
 
 NewReleases.propTypes = {
-  cancel: PropTypes.func.isRequired,
   data: PropTypes.object,
+  error: PropTypes.object,
   handleCreateOpen: PropTypes.func.isRequired,
   handleEditOpen: PropTypes.func.isRequired,
   handleDeleteOpen: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
   refresh: PropTypes.func.isRequired,
-  status: PropTypes.string.isRequired,
 };
 
 export default NewReleases;

@@ -1,10 +1,8 @@
-export const mockTopAlbumsData = {
-  favorites: [
-    { artist: 'Nirvana', title: 'Nevermind', year: '1991' },
-    { artist: 'Pearl Jam', title: 'Ten', year: '1991' },
-    { artist: 'HIM', title: 'Razorblade Romance', year: '1999' },
-  ],
-};
+export const mockTopAlbumsData = [
+  { artist: 'Nirvana', title: 'Nevermind', year: '1991' },
+  { artist: 'Pearl Jam', title: 'Ten', year: '1991' },
+  { artist: 'HIM', title: 'Razorblade Romance', year: '1999' },
+];
 
 export const mockFeaturedSongsData = [
   {
@@ -32,30 +30,26 @@ export const releaseLabels = {
   two: '11 Oct 2019',
 };
 
-export const mockNewReleasesData = {
-  [releaseLabels.one]: [
-    {
-      id: '1',
-      artist: 'City and Colour',
-      title: 'A Pill for Loneliness',
-      date: '2019-10-04T05:00:00.000Z',
-    },
-    {
-      id: '2',
-      artist: 'The Darkness',
-      title: 'Easter Is Cancelled',
-      date: '2019-10-04T05:00:00.000Z',
-    },
-  ],
-  [releaseLabels.two]: [
-    {
-      id: '3',
-      artist: 'Bury Your Dead',
-      title: 'We Are Bury Your Dead',
-      date: '2019-10-11T05:00:00.000Z',
-    },
-  ],
-};
+export const mockNewReleasesData = [
+  {
+    id: '1',
+    artist: 'City and Colour',
+    title: 'A Pill for Loneliness',
+    date: '2019-10-04T05:00:00.000Z',
+  },
+  {
+    id: '2',
+    artist: 'The Darkness',
+    title: 'Easter Is Cancelled',
+    date: '2019-10-04T05:00:00.000Z',
+  },
+  {
+    id: '3',
+    artist: 'Bury Your Dead',
+    title: 'We Are Bury Your Dead',
+    date: '2019-10-11T05:00:00.000Z',
+  },
+];
 
 export const mockAdminData = [
   {

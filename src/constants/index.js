@@ -90,3 +90,8 @@ export const DISPATCH_TYPES = {
   OPEN_MODAL: 'OPEN_MODAL',
   CLOSE_MODAL: 'CLOSE_MODAL',
 };
+
+export const MONTHS = Array.from(
+  { length: 12 },
+  (_, i) => (new Date(0, i).toLocaleDateString('en-US', { month: 'short' })),
+);

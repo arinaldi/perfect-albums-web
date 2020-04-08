@@ -1,12 +1,8 @@
 import React from 'react';
+import { useQuery } from '@apollo/react-hooks';
 
-import useStateMachine from '../../hooks/useStateMachine';
-import {
-  DISPATCH_TYPES,
-  MODAL_TYPES,
-  STATE_EVENTS,
-  STATE_STATUSES,
-} from '../../constants';
+import { DISPATCH_TYPES, MODAL_TYPES } from '../../constants';
+import { GET_RELEASES } from '../../queries';
 import { useAppDispatch } from '../Provider';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
@@ -14,15 +10,17 @@ import NewReleases from './presenter';
 
 const NewReleasesContainer = () => {
   const appDispatch = useAppDispatch();
-  const [state, dispatch] = useStateMachine('/api/releases');
-  const { data, status } = state;
-
-  const cancel = () => {
-    dispatch({ type: STATE_EVENTS.CANCEL });
-  };
+  const {
+    data,
+    error,
+    loading,
+    networkStatus,
+    refetch,
+  } = useQuery(GET_RELEASES, { notifyOnNetworkStatusChange: true });;
+  const isLoading = loading || networkStatus === 4;
 
   const refresh = () => {
-    dispatch({ type: STATE_EVENTS.FETCH });
+    refetch();
   };
 
   const handleCreateOpen = () => {
@@ -67,15 +65,14 @@ const NewReleasesContainer = () => {
 
   return (
     <ErrorBoundary>
-      <ProgressLoader isVisible={status === STATE_STATUSES.LOADING} />
+      <ProgressLoader isVisible={isLoading} />
       <NewReleases
-        cancel={cancel}
         data={data}
         handleCreateOpen={handleCreateOpen}
         handleEditOpen={handleEditOpen}
         handleDeleteOpen={handleDeleteOpen}
+        isLoading={isLoading}
         refresh={refresh}
-        status={status}
       />
     </ErrorBoundary>
   );

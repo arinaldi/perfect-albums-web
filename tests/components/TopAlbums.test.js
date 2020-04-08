@@ -1,17 +1,16 @@
 import React from 'react';
 
 import TopAlbums from '../../src/components/TopAlbums/presenter';
-import { STATE_STATUSES } from '../../src/constants';
 import render from '../utils';
 import { mockTopAlbumsData } from '../mocks';
 
 test('TopAlbums renders with data by year', () => {
   const { getByText, getByTestId } = render(
     <TopAlbums
-      cancel={jest.fn}
-      data={mockTopAlbumsData}
+      data={{ favorites: mockTopAlbumsData }}
+      error={null}
+      isLoading={false}
       refresh={jest.fn}
-      status={STATE_STATUSES.SUCCESS}
     />,
   );
   const titleHeader = getByText('Top Albums');

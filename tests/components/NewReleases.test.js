@@ -1,21 +1,19 @@
 import React from 'react';
 
 import NewReleases from '../../src/components/NewReleases/presenter';
-import { STATE_STATUSES } from '../../src/constants';
 import render from '../utils';
 import { mockNewReleasesData, releaseLabels } from '../mocks';
 
-test('NewReleases renders with data by year', () => {
+test('NewReleases renders with data by date', () => {
   const { getByText, getByTestId } = render(
     <NewReleases
-      cancel={jest.fn}
-      data={mockNewReleasesData}
+      data={{ releases: mockNewReleasesData }}
       error={null}
       handleCreateOpen={jest.fn}
       handleEditOpen={jest.fn}
       handleDeleteOpen={jest.fn}
+      isLoading={false}
       refresh={jest.fn}
-      status={STATE_STATUSES.SUCCESS}
     />,
   );
   const titleHeader = getByText('New Releases');

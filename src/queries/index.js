@@ -10,6 +10,17 @@ export const GET_FAVORITES = gql`
 }
 `;
 
+export const GET_RELEASES = gql`
+{
+  releases {
+    id
+    artist
+    title
+    date
+  }
+}
+`;
+
 export const GET_SONGS = gql`
 {
   songs {
