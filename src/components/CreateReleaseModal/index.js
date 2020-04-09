@@ -1,12 +1,28 @@
 import React, { useState } from 'react';
+import { useMutation } from '@apollo/react-hooks';
 
-import useSubmit from '../../hooks/useSubmit';
+import useGqlSubmit from '../../hooks/useGqlSubmit';
+import { GET_RELEASES } from '../../queries';
+import { CREATE_RELEASE } from '../../mutations';
 import { DISPATCH_TYPES, MESSAGES } from '../../constants';
 import { useApp } from '../Provider';
 import CreateReleaseModal from './presenter';
 
 const CreateReleaseContainer = () => {
   const [state, dispatch] = useApp();
+  const { isOpen } = state.modal;
+  const [createRelease] = useMutation(
+    CREATE_RELEASE,
+    {
+      update (cache, { data: { createRelease } }) {
+        const { releases } = cache.readQuery({ query: GET_RELEASES });
+        cache.writeQuery({
+          query: GET_RELEASES,
+          data: { releases: [...releases, createRelease] },
+        });
+      },
+    },
+  );
   const [release, setRelease] = useState({
     artist: '',
     title: '',
@@ -31,18 +47,22 @@ const CreateReleaseContainer = () => {
     });
   };
 
+  const submitFunc = async () => {
+    await createRelease({
+      variables: release,
+    });
+  };
+
   const options = {
-    body: release,
-    callbacks: [handleClose, state.modal.callback],
-    method: 'POST',
-    path: '/api/releases',
+    callback: handleClose,
+    submitFunc,
     successMessage: `${MESSAGES.RELEASE_PREFIX} created`,
   };
-  const { handleSubmit, isSaving, isValidated } = useSubmit(options);
+  const { handleSubmit, isSaving, isValidated } = useGqlSubmit(options);
 
   return (
     <CreateReleaseModal
-      isOpen={state.modal.isOpen}
+      isOpen={isOpen}
       header='Create'
       release={release}
       isValidated={isValidated}

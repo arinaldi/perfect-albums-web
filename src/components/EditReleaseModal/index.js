@@ -1,14 +1,36 @@
 import React, { useEffect, useState } from 'react';
+import { useMutation } from '@apollo/react-hooks';
 
 import { formatDate } from '../../utils';
-import useSubmit from '../../hooks/useSubmit';
+import useGqlSubmit from '../../hooks/useGqlSubmit';
+import { GET_RELEASES } from '../../queries';
+import { EDIT_RELEASE } from '../../mutations';
 import { DISPATCH_TYPES, MESSAGES } from '../../constants';
 import { useApp } from '../Provider';
 import EditReleaseModal from '../CreateReleaseModal/presenter';
 
 const EditReleaseContainer = () => {
   const [state, dispatch] = useApp();
-  const { isOpen, data, callback } = state.modal;
+  const { data, isOpen } = state.modal;
+  const [editRelease] = useMutation(
+    EDIT_RELEASE,
+    {
+      update (cache, { data: { editRelease } }) {
+        const { releases } = cache.readQuery({ query: GET_RELEASES });
+        const releaseIndex = releases.findIndex(item => item.id === editRelease.id);
+        cache.writeQuery({
+          query: GET_RELEASES,
+          data: {
+            releases: [
+              ...releases.slice(0, releaseIndex),
+              editRelease,
+              ...releases.slice(releaseIndex + 1),
+            ],
+          },
+        });
+      },
+    },
+  );
   const [release, setRelease] = useState({
     artist: '',
     title: '',
@@ -41,14 +63,18 @@ const EditReleaseContainer = () => {
     });
   };
 
+  const submitFunc = async () => {
+    await editRelease({
+      variables: { ...release, id: data.id },
+    });
+  };
+
   const options = {
-    body: release,
-    callbacks: [handleClose, callback],
-    method: 'PUT',
-    path: `/api/releases/${data.id}`,
+    callback: handleClose,
+    submitFunc,
     successMessage: `${MESSAGES.RELEASE_PREFIX} edited`,
   };
-  const { handleSubmit, isSaving, isValidated } = useSubmit(options);
+  const { handleSubmit, isSaving, isValidated } = useGqlSubmit(options);
 
   return (
     <EditReleaseModal

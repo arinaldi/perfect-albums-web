@@ -26,7 +26,6 @@ const NewReleasesContainer = () => {
   const handleCreateOpen = () => {
     appDispatch({
       payload: {
-        callback: refresh,
         type: MODAL_TYPES.NEW_RELEASE_CREATE,
       },
       type: DISPATCH_TYPES.OPEN_MODAL,
@@ -36,11 +35,9 @@ const NewReleasesContainer = () => {
   const handleEditOpen = (data) => {
     appDispatch({
       payload: {
-        callback: refresh,
         data: {
           ...data,
           dataType: 'Release',
-          path: 'releases',
         },
         type: MODAL_TYPES.NEW_RELEASE_EDIT,
       },
@@ -51,13 +48,11 @@ const NewReleasesContainer = () => {
   const handleDeleteOpen = (data) => {
     appDispatch({
       payload: {
-        callback: refresh,
         data: {
           ...data,
           dataType: 'Release',
-          path: 'releases',
         },
-        type: MODAL_TYPES.DATA_DELETE,
+        type: MODAL_TYPES.NEW_RELEASE_DELETE,
       },
       type: DISPATCH_TYPES.OPEN_MODAL,
     });
@@ -68,6 +63,7 @@ const NewReleasesContainer = () => {
       <ProgressLoader isVisible={isLoading} />
       <NewReleases
         data={data}
+        error={error}
         handleCreateOpen={handleCreateOpen}
         handleEditOpen={handleEditOpen}
         handleDeleteOpen={handleDeleteOpen}

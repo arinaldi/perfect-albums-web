@@ -20,11 +20,11 @@ export const TOAST_TYPES = {
 };
 
 export const MODAL_TYPES = {
-  DATA_DELETE: 'Delete data',
   FEATURED_SONGS_CREATE: 'Create Featured Song',
   FEATURED_SONGS_DELETE: 'Delete Featured Song',
   NEW_RELEASE_CREATE: 'Create New Release',
   NEW_RELEASE_EDIT: 'Edit New Release',
+  NEW_RELEASE_DELETE: 'Delete New Release',
 };
 
 export const MESSAGES = {

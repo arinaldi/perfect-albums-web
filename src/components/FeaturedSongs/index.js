@@ -38,7 +38,6 @@ const FeaturedSongsContainer = () => {
         data: {
           ...song,
           dataType: 'Song',
-          path: 'songs',
         },
         type: MODAL_TYPES.FEATURED_SONGS_DELETE,
       },

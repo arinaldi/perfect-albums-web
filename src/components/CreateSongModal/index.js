@@ -48,7 +48,7 @@ const CreateSongContainer = () => {
 
   const submitFunc = async () => {
     await createSong({
-      variables: { ...song },
+      variables: song,
     });
   };
 
