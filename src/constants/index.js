@@ -91,7 +91,17 @@ export const DISPATCH_TYPES = {
   CLOSE_MODAL: 'CLOSE_MODAL',
 };
 
-export const MONTHS = Array.from(
-  { length: 12 },
-  (_, i) => (new Date(0, i).toLocaleDateString('en-US', { month: 'short' })),
-);
+export const MONTHS = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
