@@ -1,3 +1,5 @@
+import { mutate } from 'swr';
+
 import {
   BASE_URL,
   DISPATCH_TYPES,
@@ -5,6 +7,23 @@ import {
   TOAST_TYPES,
 } from '../constants';
 import { getToken } from './storage';
+
+export const fetcher = (url) => {
+  const token = getToken();
+  const headers = { 'Content-Type': 'application/json' };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  return window.fetch(`${BASE_URL}${url}`, { headers }).then(res => res.json());
+};
+
+export const fetchAndCache = (key) => {
+  const request = fetcher(key);
+  mutate(key, request, false);
+  return request;
+};
 
 const logout = (dispatch) => {
   dispatch({

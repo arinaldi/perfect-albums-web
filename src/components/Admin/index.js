@@ -2,11 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { getQuery } from '../../utils';
-import api from '../../utils/api';
+import { fetchAndCache } from '../../utils/api';
 import useDebounce from '../../hooks/useDebounce';
+import useAdminAlbums from '../../hooks/useAdminAlbums';
 import { PER_PAGE, SORT_DIRECTION } from '../../constants';
 
-import { useAppDispatch } from '../Provider';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import AppMessage from '../AppMessage/presenter';
@@ -15,59 +15,24 @@ import Admin from './presenter';
 const AdminContainer = () => {
   const history = useHistory();
   const location = useLocation();
-  const [data, setData] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [searchText, setSearchText] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const initialSearch = location.search ? getQuery(location.search) : '';
+  const [searchText, setSearchText] = useState(initialSearch);
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(PER_PAGE[0]);
   const [sort, setSort] = useState('');
   const [direction, setDirection] = useState('');
   const searchInput = useRef(null);
   const debouncedSearch = useDebounce(searchText, 500);
-  const dispatch = useAppDispatch();
+  const url = `/api/albums?page=${currentPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
+  const preventFetch = !debouncedSearch && searchText;
+  const { albums, total, hasError, isLoading } = useAdminAlbums(url, preventFetch);
 
   useEffect(() => {
-    if (location.search) {
-      const search = getQuery(location.search);
-      setSearchText(search);
+    if (!location.search) {
+      const nextUrl = '/api/albums?page=2&per_page=25&search=&sort=&direction=';
+      fetchAndCache(nextUrl);
     }
   }, [location.search]);
-
-  useEffect(() => {
-    const search = location.search ? getQuery(location.search) : '';
-    const fetchData = async () => {
-      setIsLoading(true);
-
-      try {
-        const url = `/api/albums?page=${currentPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
-        const { data } = await api(url, { dispatch });
-        const { count, data: albums } = data;
-
-        setData(albums);
-        setTotal(count);
-      } catch (err) {
-        setHasError(true);
-      }
-
-      setIsLoading(false);
-    };
-
-    if (!debouncedSearch && search) {
-      // wait for debouncedSearch to fetch data
-    } else {
-      fetchData();
-    }
-  }, [
-    debouncedSearch,
-    currentPage,
-    direction,
-    dispatch,
-    location.search,
-    perPage,
-    sort,
-  ]);
 
   const handleChange = ({ target: { value } }) => {
     handleFirst();
@@ -90,14 +55,21 @@ const AdminContainer = () => {
   };
 
   const handleLast = () => {
-    setCurrentPage(Math.ceil(total / perPage));
+    const page = Math.ceil(total / perPage);
+    const prevUrl = `/api/albums?page=${page - 1}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
+    fetchAndCache(prevUrl);
+    setCurrentPage(page);
   };
 
   const handlePrev = () => {
+    const prevUrl = `/api/albums?page=${currentPage - 2}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
+    fetchAndCache(prevUrl);
     setCurrentPage(currentPage - 1);
   };
 
   const handleNext = () => {
+    const nextUrl = `/api/albums?page=${currentPage + 2}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
+    fetchAndCache(nextUrl);
     setCurrentPage(currentPage + 1);
   };
 
@@ -130,7 +102,7 @@ const AdminContainer = () => {
         isLoading={isLoading}
         searchText={searchText}
         total={total}
-        data={data}
+        data={albums}
         currentPage={currentPage}
         perPage={perPage}
         sort={sort}

@@ -16,7 +16,7 @@ const NewReleasesContainer = () => {
     loading,
     networkStatus,
     refetch,
-  } = useQuery(GET_RELEASES, { notifyOnNetworkStatusChange: true });;
+  } = useQuery(GET_RELEASES, { notifyOnNetworkStatusChange: true });
   const isLoading = loading || networkStatus === 4;
 
   const refresh = () => {
