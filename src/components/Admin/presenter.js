@@ -115,12 +115,15 @@ const Admin = (props) => {
     <Container>
       <Row>
         <Col xs={12}>
-          <Row style={{ marginBottom: '10px' }}>
+          <Row style={{ marginBottom: '15px' }}>
             <Col>
-              <h3>Admin</h3>
+              <h3 style={{ marginBottom: 0 }}>Admin</h3>
+            </Col>
+            <Col style={{ alignSelf: 'center' }}>
+              <code>{process.env.npm_package_version}</code>
             </Col>
             <Col xs='auto'>
-              <h3>
+              <h3 style={{ marginBottom: 0 }}>
                 <Badge variant='light'>{total.toLocaleString()}</Badge>
               </h3>
             </Col>
