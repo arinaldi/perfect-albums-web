@@ -15,16 +15,6 @@ const renderProviders = (toast) => render(
   </StateContext.Provider>,
 );
 
-test('ToastAlert renders as hidden', () => {
-  const toast = {
-    isOpen: false,
-  };
-  const { container } = renderProviders(toast);
-  const div = container.querySelector('.toast-body');
-
-  expect(div.textContent).toBe('');
-});
-
 test('ToastAlert renders as visible', () => {
   const message = `${MESSAGES.ALBUM_PREFIX} edited`;
   const toast = {
