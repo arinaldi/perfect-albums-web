@@ -3,7 +3,11 @@ import useSWR from 'swr';
 import { fetcher } from '../utils/api';
 
 const useAdminAlbums = (url, preventFetch) => {
-  const { data, error } = useSWR(preventFetch ? null : url, fetcher);
+  const { data, error } = useSWR(
+    preventFetch ? null : url,
+    fetcher,
+    { dedupingInterval: 10000 },
+  );
   const obj = {
     albums: [],
     total: 0,

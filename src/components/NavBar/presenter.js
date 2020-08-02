@@ -26,6 +26,7 @@ const NavBar = () => {
           <LinkWrapper to='/featured-songs' label='Featured Songs' />
           <LinkWrapper to='/new-releases' label='New Releases' />
           {isAuthenticated && <LinkWrapper to='/admin' label='Admin' />}
+          {isAuthenticated && <LinkWrapper to='/sandbox' label='Sandbox' />}
         </Nav>
         <Nav className='navbar-nav'>
           {isAuthenticated

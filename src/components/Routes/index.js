@@ -20,6 +20,7 @@ import CreateAlbum from '../CreateAlbum';
 import EditAlbum from '../EditAlbum';
 import DeleteAlbum from '../DeleteAlbum';
 import AuthRoute from '../AuthRoute';
+import Sandbox from '../Sandbox';
 
 const AppRoutes = () => (
   <ErrorBoundary>
@@ -32,6 +33,7 @@ const AppRoutes = () => (
       <AuthRoute path='/admin/edit/:id'><EditAlbum /></AuthRoute>
       <AuthRoute path='/admin/delete/:id'><DeleteAlbum /></AuthRoute>
       <AuthRoute path='/admin'><Admin /></AuthRoute>
+      <AuthRoute path='/sandbox'><Sandbox /></AuthRoute>
       <Route path='/signin'><SignIn /></Route>
       <Route><Redirect to='/top-albums' /></Route>
     </Switch>
