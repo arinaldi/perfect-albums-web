@@ -123,7 +123,7 @@ const Admin = (props) => {
               <code>{process.env.npm_package_version}</code>
             </Col>
             <Col xs='auto'>
-              <h3 style={{ marginBottom: 0 }}>
+              <h3 style={{ marginBottom: 0 }} data-testid='total'>
                 <Badge variant='light'>{total.toLocaleString()}</Badge>
               </h3>
             </Col>

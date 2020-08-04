@@ -5,7 +5,7 @@ import render from '../utils';
 import { mockAdminData } from '../mocks';
 
 test('Admin renders with data', () => {
-  const { getByText } = render(
+  const { getByTestId, getByText } = render(
     <Admin
       searchText=''
       total={mockAdminData.length}
@@ -27,7 +27,7 @@ test('Admin renders with data', () => {
     />,
   );
   const titleHeader = getByText('Admin');
-  const total = getByText(mockAdminData.length.toString());
+  const total = getByTestId('total');
   const clearButton = getByText('Clear');
   const newButton = getByText('New');
 
