@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import { fetcher } from '../../utils/api';
 
 function Page (props) {
-  const { page } = props;
+  const { direction, page, perPage, sort } = props;
   const { data, error } = useSWR(
-    `/api/albums?page=${page}&per_page=10`,
+    `/api/albums?page=${page}&per_page=${perPage}&sort=${sort}&direction=${direction}`,
     fetcher,
     { dedupingInterval: 5000 },
   );
@@ -26,7 +26,15 @@ function Page (props) {
 }
 
 Page.propTypes = {
+  direction: PropTypes.string,
   page: PropTypes.number.isRequired,
+  perPage: PropTypes.number.isRequired,
+  sort: PropTypes.string,
+};
+
+Page.defaultProps = {
+  direction: '',
+  sort: '',
 };
 
 export default Page;
