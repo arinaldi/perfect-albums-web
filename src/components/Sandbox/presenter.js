@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import PropTypes from 'prop-types';
 
 import Page from './Page';
+import LoadMore from './LoadMore';
 
 const Sandbox = (props) => {
   const { handleNext, page } = props;
@@ -26,31 +27,33 @@ const Sandbox = (props) => {
 
   return (
     <Container className='no-loader'>
-      <Row style={{ marginBottom: '10px' }}>
+      <Row>
         <Col>
-          <h3>Sandbox</h3>
-        </Col>
-        <Col xs='auto'>
+          <h3 style={{ marginBottom: '10px' }}>Sandbox</h3>
+          <Page page={page} perPage={10} />
+          <div style={{ display: 'none' }}>
+            <Page page={page + 1} perPage={10} />
+          </div>
           <Button
             variant='outline-dark'
             onClick={handleNext}
           >
             Next
           </Button>
+          <hr />
+          {data}
+          <Button
+            variant='outline-dark'
+            onClick={() => setDataPage(page => page + 1)}
+          >
+            Load More
+          </Button>
+        </Col>
+        <Col>
+          <h3 style={{ marginBottom: '10px' }}>Sandbox 2</h3>
+          <LoadMore />
         </Col>
       </Row>
-      <Page page={page} perPage={10} />
-      <div style={{ display: 'none' }}>
-        <Page page={page + 1} perPage={10} />
-      </div>
-      <hr />
-      {data}
-      <Button
-        variant='outline-dark'
-        onClick={() => setDataPage(page => page + 1)}
-      >
-        Load More
-      </Button>
     </Container>
   );
 };
