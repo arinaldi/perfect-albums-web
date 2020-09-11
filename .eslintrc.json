@@ -39,10 +39,7 @@
     ],
     "jsx-quotes": "error",
     "no-console": "warn",
-    "no-unused-vars": [
-      "error",
-      { "varsIgnorePattern": "should|expect" }
-    ],
+    "no-unused-vars": ["error", { "varsIgnorePattern": "should|expect" }],
     "quotes": ["error", "single"],
     "react/jsx-fragments": "off",
     "react-hooks/rules-of-hooks": "error",
@@ -53,7 +50,7 @@
   },
   "settings": {
     "react": {
-      "version": "16.12"
+      "version": "16.13"
     }
   },
   "globals": {
