@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, wait } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 
 import SignInContainer from '../../src/components/SignIn';
 import mockApi from '../../src/utils/api';
@@ -35,7 +35,7 @@ test('SignInContainer submits credentials', async () => {
     { body: { username, password } },
   );
 
-  await wait(() => {
+  await waitFor(() => {
     const titleHeader = queryByText('Sign In');
     expect(titleHeader).not.toBeInTheDocument();
   });

@@ -5,6 +5,7 @@ node_modules
 
 # development
 .cache
+.parcel-cache
 
 # testing
 coverage

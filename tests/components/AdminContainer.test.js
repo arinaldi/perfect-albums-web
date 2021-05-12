@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, wait } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 
 import AdminContainer from '../../src/components/Admin';
 import render from '../utils';
@@ -40,13 +40,13 @@ describe('Admin container', () => {
 
     fireEvent.change(searchInput, { target: { value } });
 
-    await wait(() => {
+    await waitFor(() => {
       expect(searchInput.value).toEqual(value);
     });
 
     fireEvent.click(clearButton);
 
-    await wait(() => {
+    await waitFor(() => {
       expect(searchInput.value).toEqual('');
     });
   });

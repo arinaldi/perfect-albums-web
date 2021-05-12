@@ -2,8 +2,7 @@ import React from 'react';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import PropTypes from 'prop-types';
 
-const ProgressLoader = (props) => {
-  const { isVisible } = props;
+const ProgressLoader = ({ isVisible }) => {
   const visibility = isVisible ? 'visible' : 'hidden';
 
   return (

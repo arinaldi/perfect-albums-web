@@ -97,12 +97,12 @@ th[data-value] {
 }
 
 .progress {
-  border-radius: 0;
-  height: var(--progress-height);
+  border-radius: 0 !important;
+  height: var(--progress-height) !important;
 }
 
 .progress-bar {
-  background-color: var(--gray);
+  background-color: var(--gray) !important;
 }
 
 .progress-margin {
