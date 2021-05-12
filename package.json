@@ -2,7 +2,6 @@
   "name": "perfect-albums-web",
   "version": "2.0.4",
   "description": "frontend",
-  "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production parcel build src/index.html",
     "deploy": "npm run build && mv dist/index.html dist/200.html && cd dist && surge --domain perfectalbums.surge.sh",
