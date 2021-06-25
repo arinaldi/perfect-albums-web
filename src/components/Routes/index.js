@@ -10,7 +10,6 @@ import ErrorBoundary from '../ErrorBoundary';
 import NavBar from '../NavBar/presenter';
 import ToastAlert from '../ToastAlert/presenter';
 import ModalContainer from '../ModalContainer';
-import PerfectSongs from '../PerfectSongs/presenter';
 import SignIn from '../SignIn';
 import TopAlbums from '../TopAlbums';
 import FeaturedSongs from '../FeaturedSongs';
@@ -26,7 +25,6 @@ const AppRoutes = () => (
   <ErrorBoundary>
     <Switch>
       <Route path='/top-albums'><TopAlbums /></Route>
-      <Route path='/perfect-songs'><PerfectSongs /></Route>
       <Route path='/featured-songs'><FeaturedSongs /></Route>
       <Route path='/new-releases'><NewReleases /></Route>
       <AuthRoute path='/admin/new'><CreateAlbum /></AuthRoute>

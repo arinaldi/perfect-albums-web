@@ -1,6 +1,7 @@
 import React from 'react';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
+import { ChakraProvider } from '@chakra-ui/react';
 
 import '../styles.css';
 import { getToken } from '../utils/storage';
@@ -24,9 +25,11 @@ const client = new ApolloClient({
 const App = () => (
   <ErrorBoundary>
     <ApolloProvider client={client}>
-      <Provider>
-        <Routes />
-      </Provider>
+      <ChakraProvider>
+        <Provider>
+          <Routes />
+        </Provider>
+      </ChakraProvider>
     </ApolloProvider>
   </ErrorBoundary>
 );

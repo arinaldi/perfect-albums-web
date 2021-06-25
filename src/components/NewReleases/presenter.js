@@ -1,8 +1,13 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Heading,
+  Spacer,
+  SimpleGrid,
+} from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
 import { formatReleases, sortByDate } from '../../utils';
@@ -23,33 +28,32 @@ const NewReleases = (props) => {
   const { user: { isAuthenticated } } = useAppState();
 
   return (
-    <Container>
-      <Row style={{ marginBottom: '10px' }}>
-        <Col>
-          <h3>New Releases</h3>
-        </Col>
+    <Container maxW='container.lg'>
+      <Flex mb={3}>
+        <Heading as='h3' size='lg'>New Releases</Heading>
+        <Spacer />
         {isAuthenticated && (
-          <Col xs='auto'>
+          <Box>
             <Button
-              variant='outline-dark'
-              disabled={isLoading}
+              variant='outline'
+              isDisabled={isLoading}
               onClick={refresh}
-              style={{ marginRight: '5px' }}
+              marginRight={1}
             >
               Refresh
             </Button>
             <Button
-              variant='outline-dark'
+              variant='outline'
               onClick={handleCreateOpen}
             >
               New
             </Button>
-          </Col>
+          </Box>
         )}
-      </Row>
+      </Flex>
       {error && <AppMessage />}
       {data && data.releases && (
-        <Row>
+        <SimpleGrid minChildWidth='240px' spacing='24px'>
           {Object
             .entries(formatReleases(data.releases))
             .sort(sortByDate)
@@ -62,7 +66,7 @@ const NewReleases = (props) => {
                 handleDeleteOpen={handleDeleteOpen}
               />
             ))}
-        </Row>
+        </SimpleGrid>
       )}
     </Container>
   );

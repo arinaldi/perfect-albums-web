@@ -22,14 +22,12 @@ test('NavBar renders when not authenticated', () => {
   const { getByText } = renderProviders(user);
   const appHeader = getByText('Perfect Albums');
   const albumsLink = getByText('Top Albums');
-  const songsLink = getByText('Perfect Songs');
   const featuredLink = getByText('Featured Songs');
   const releasesLink = getByText('New Releases');
   const signinLink = getByText('Sign In');
 
   expect(appHeader).toBeInTheDocument();
   expect(albumsLink).toBeInTheDocument();
-  expect(songsLink).toBeInTheDocument();
   expect(featuredLink).toBeInTheDocument();
   expect(releasesLink).toBeInTheDocument();
   expect(signinLink).toBeInTheDocument();
