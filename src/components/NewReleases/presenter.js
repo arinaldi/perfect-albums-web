@@ -29,7 +29,7 @@ const NewReleases = (props) => {
 
   return (
     <Container maxW='container.lg'>
-      <Flex mb={3}>
+      <Flex align='center' mb={3}>
         <Heading as='h3' size='lg'>New Releases</Heading>
         <Spacer />
         {isAuthenticated && (

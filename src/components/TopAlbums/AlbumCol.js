@@ -1,34 +1,47 @@
 import React from 'react';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Badge from 'react-bootstrap/Badge';
+import {
+  Badge,
+  Box,
+  Flex,
+  Heading,
+  ListItem,
+  Spacer,
+  UnorderedList,
+} from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
 const AlbumCol = (props) => {
   const { data, year, total } = props;
 
   return (
-    <Col xs={12} md={6} lg={4}>
-      <Row>
-        <Col>
-          <h4 id={year}>{year}</h4>
-        </Col>
-        <Col xs='auto'>
-          <h4>
-            <Badge variant='light'>
-              {total}
-            </Badge>
-          </h4>
-        </Col>
-      </Row>
-      <ul data-testid={`list-${year}`}>
+    <Box>
+      <Flex mb={2}>
+        <Heading
+          as='h5'
+          id={year}
+          size='md'
+        >
+          {year}
+        </Heading>
+        <Spacer />
+        <Box>
+          <Badge
+            borderRadius='4px'
+            fontSize='1.25em'
+            marginLeft={1}
+          >
+            {total}
+          </Badge>
+        </Box>
+      </Flex>
+      <UnorderedList data-testid={`list-${year}`} pl={3}>
         {data.map((album, index) => (
-          <li key={index}>
+          <ListItem key={index}>
             {album.artist} &ndash; {album.title}
-          </li>
+          </ListItem>
         ))}
-      </ul>
-    </Col>
+      </UnorderedList>
+    </Box>
   );
 };
 
