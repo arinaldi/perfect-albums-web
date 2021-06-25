@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "description": "frontend",
   "scripts": {
-    "build": "NODE_ENV=production parcel build src/index.html",
+    "build": "NODE_ENV=production parcel build src/index.html --no-scope-hoist",
     "deploy": "npm run build && mv dist/index.html dist/200.html && cd dist && surge --domain perfectalbums.surge.sh",
     "lint": "eslint src/**/*.js",
     "start": "parcel serve src/index.html -p 3333 --open",
