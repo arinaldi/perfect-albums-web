@@ -1,6 +1,11 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
+import {
+  Box,
+  Flex,
+  Heading,
+  Link,
+  Text,
+} from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
 import { useAppState } from '../Provider';
@@ -15,37 +20,27 @@ const CardWrapper = (props) => {
   };
 
   return (
-    <Col
-      xs={12}
-      md={6}
-      lg={3}
-      style={{
-        paddingTop: '7.5px',
-        paddingBottom: '7.5px',
-      }}
+    <Box
+      borderWidth='1px'
+      maxW='sm'
+      p={5}
+      rounded='md'
     >
-      <Card>
-        <Card.Body>
-          <Card.Title>{song.title}</Card.Title>
-          <Card.Subtitle className='mb-2 text-muted'>{song.artist}</Card.Subtitle>
-          <Card.Link
-            href={song.link}
-            target='_blank'
-            rel='noopener noreferrer'
+      <Heading size='md'>{song.title}</Heading>
+      <Text my={1}>{song.artist}</Text>
+      <Flex align='center'>
+        <Link color='blue.500' href={song.link} isExternal>Listen</Link>
+        {isAuthenticated && (
+          <Text
+            cursor='pointer'
+            ml={2}
+            onClick={handleClick}
           >
-            Listen
-          </Card.Link>
-          {isAuthenticated && (
-            <Card.Link
-              style={{ color: '#007bff', cursor: 'pointer' }}
-              onClick={handleClick}
-            >
-              {ICONS.X}
-            </Card.Link>
-          )}
-        </Card.Body>
-      </Card>
-    </Col>
+            {ICONS.X}
+          </Text>
+        )}
+      </Flex>
+    </Box>
   );
 };
 

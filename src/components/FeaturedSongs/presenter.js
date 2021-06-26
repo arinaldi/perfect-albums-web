@@ -1,8 +1,12 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
+import {
+  Button,
+  Container,
+  Flex,
+  Heading,
+  SimpleGrid,
+  Spacer,
+} from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
 import { useAppState } from '../Provider';
@@ -21,33 +25,38 @@ const FeaturedSongs = (props) => {
   const { user: { isAuthenticated } } = useAppState();
 
   return (
-    <Container>
-      <Row style={{ marginBottom: '10px' }}>
-        <Col>
-          <h3>Featured Songs</h3>
-        </Col>
+    <Container maxW='container.lg'>
+      <Flex align='center' mb={3}>
+        <Heading as='h3' size='lg'>
+          Featured Songs
+        </Heading>
+        <Spacer />
         {isAuthenticated && (
-          <Col xs='auto'>
+          <>
             <Button
-              variant='outline-dark'
-              disabled={isLoading}
+              variant='outline'
+              isDisabled={isLoading}
               onClick={refresh}
-              style={{ marginRight: '5px' }}
+              marginRight={1}
             >
               Refresh
             </Button>
             <Button
-              variant='outline-dark'
+              variant='outline'
               onClick={handleCreateOpen}
             >
               New
             </Button>
-          </Col>
+          </>
         )}
-      </Row>
+      </Flex>
       {error && <AppMessage />}
       {data && data.songs && (
-        <Row data-testid='card-row'>
+        <SimpleGrid
+          data-testid='card-row'
+          minChildWidth='240px'
+          spacing='24px'
+        >
           {data.songs.map(song => (
             <CardWrapper
               key={song.id}
@@ -55,7 +64,7 @@ const FeaturedSongs = (props) => {
               handleDeleteOpen={handleDeleteOpen}
             />
           ))}
-        </Row>
+        </SimpleGrid>
       )}
     </Container>
   );

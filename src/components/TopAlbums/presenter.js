@@ -35,6 +35,7 @@ const TopAlbums = (props) => {
                 borderRadius='4px'
                 fontSize='0.9em'
                 marginLeft={1}
+                verticalAlign='baseline'
               >
                 {data.favorites.length.toLocaleString()}
               </Badge>

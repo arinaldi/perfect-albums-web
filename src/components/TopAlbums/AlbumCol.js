@@ -15,7 +15,7 @@ const AlbumCol = (props) => {
 
   return (
     <Box>
-      <Flex mb={2}>
+      <Flex align='center' mb={2}>
         <Heading
           as='h5'
           id={year}
