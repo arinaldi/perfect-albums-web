@@ -105,3 +105,11 @@ export const MONTHS = [
   'Nov',
   'Dec',
 ];
+
+export const NAV_LINKS = [
+  { label: 'Top Albums', to: '/top-albums', needsAuth: false },
+  { label: 'Featured Songs', to: '/featured-songs', needsAuth: false },
+  { label: 'New Releases', to: '/new-releases', needsAuth: false },
+  { label: 'Admin', to: '/admin', needsAuth: true },
+  { label: 'Sandbox', to: '/sandbox', needsAuth: true },
+];

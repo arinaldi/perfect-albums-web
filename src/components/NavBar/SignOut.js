@@ -1,5 +1,5 @@
 import React from 'react';
-import Nav from 'react-bootstrap/Nav';
+import { Box, Link } from '@chakra-ui/react';
 
 import { DISPATCH_TYPES } from '../../constants';
 import { useAppDispatch } from '../Provider';
@@ -14,14 +14,11 @@ const SignOut = () => {
   };
 
   return (
-    <Nav.Link
-      className='sign-out'
-      eventKey='signout'
-      active={false}
-      as='div'
-    >
-      <span onClick={signOut}>Sign Out</span>
-    </Nav.Link>
+    <Box>
+      <Link>
+        <span onClick={signOut}>Sign Out</span>
+      </Link>
+    </Box>
   );
 };
 

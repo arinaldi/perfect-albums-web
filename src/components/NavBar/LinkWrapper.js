@@ -1,31 +1,29 @@
 import React from 'react';
-import Nav from 'react-bootstrap/Nav';
+import { Box, Link } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const activeStyle = {
-  color: 'rgba(255,255,255,.75)',
+  fontWeight: 600,
 };
 
-const LinkWrapper = (props) => {
-  const { to, label } = props;
-
-  return (
-    <Nav.Link eventKey={to} active={false} as='span'>
-      <NavLink
-        className='link'
-        activeStyle={activeStyle}
-        to={to}
-      >
-        {label}
-      </NavLink>
-    </Nav.Link>
-  );
-};
+const LinkWrapper = ({ label, to }) => (
+  <Box>
+    <Link
+      activeStyle={activeStyle}
+      as={NavLink}
+      p={2}
+      to={to}
+      _hover={{ color: 'white' }}
+    >
+      {label}
+    </Link>
+  </Box>
+);
 
 LinkWrapper.propTypes = {
-  to: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
 };
 
 export default LinkWrapper;
