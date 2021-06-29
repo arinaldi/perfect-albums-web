@@ -22,7 +22,11 @@ const SignIn = (props) => {
   } = props;
 
   return (
-    <Container className='no-loader' maxWidth='container.lg'>
+    <Container
+      className='no-loader'
+      maxWidth='container.lg'
+      mb={6}
+    >
       <Flex align='center' mb={3}>
         <Heading as='h3' size='lg'>
           Sign In

@@ -28,7 +28,7 @@ const NewReleases = (props) => {
   const { user: { isAuthenticated } } = useAppState();
 
   return (
-    <Container maxWidth='container.lg'>
+    <Container maxWidth='container.lg' mb={6}>
       <Flex align='center' mb={3}>
         <Heading as='h3' size='lg'>New Releases</Heading>
         <Spacer />

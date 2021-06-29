@@ -1,5 +1,6 @@
 import React from 'react';
 import useSWR from 'swr';
+import { ListItem, Text, UnorderedList } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
 import { fetcher } from '../../utils/api';
@@ -12,16 +13,17 @@ function Page (props) {
     { dedupingInterval: 5000 },
   );
 
-  if (!data) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
+  if (!data) return <Text>Loading...</Text>;
+  if (error) return <Text>Error</Text>;
+
   return (
-    <ul>
+    <UnorderedList>
       {data.data.map(item => (
-        <li key={item.id}>
+        <ListItem key={item.id}>
           {item.artist} – {item.title}
-        </li>
+        </ListItem>
       ))}
-    </ul>
+    </UnorderedList>
   );
 }
 

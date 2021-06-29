@@ -1,27 +1,33 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import {
+  Box,
+  Button,
+  ListItem,
+  Text,
+  UnorderedList,
+} from '@chakra-ui/react';
 
 import useBufferedData from '../../hooks/useBufferedData';
 
 const LoadMore = () => {
   const { data, error, isStale, update } = useBufferedData();
 
-  if (!data) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
+  if (!data) return <Text>Loading...</Text>;
+  if (error) return <Text>Error</Text>;
 
   return (
-    <div>
+    <Box>
       {isStale && (
-        <Button variant='outline-dark' onClick={update}>
+        <Button variant='outline' onClick={update}>
           Load More
         </Button>
       )}
-      <ul>
+      <UnorderedList>
         {data.map((quote, index) => (
-          <li key={index}>{quote}</li>
+          <ListItem key={index}>{quote}</ListItem>
         ))}
-      </ul>
-    </div>
+      </UnorderedList>
+    </Box>
   );
 };
 

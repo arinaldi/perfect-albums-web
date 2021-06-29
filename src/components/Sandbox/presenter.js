@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Flex,
+  Heading,
+} from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
 import Page from './Page';
@@ -26,34 +30,42 @@ const Sandbox = (props) => {
   }
 
   return (
-    <Container className='no-loader'>
-      <Row>
-        <Col>
-          <h3 style={{ marginBottom: '10px' }}>Sandbox</h3>
+    <Container
+      className='no-loader'
+      maxWidth='container.lg'
+      mb={6}
+    >
+      <Flex>
+        <Box flex={1}>
+          <Heading as='h3' mb={3} size='lg'>
+            Sandbox
+          </Heading>
           <Page page={page} perPage={10} />
-          <div style={{ display: 'none' }}>
+          <Box style={{ display: 'none' }}>
             <Page page={page + 1} perPage={10} />
-          </div>
+          </Box>
           <Button
-            variant='outline-dark'
+            variant='outline'
             onClick={handleNext}
           >
             Next
           </Button>
-          <hr />
+          <Divider my={4} />
           {data}
           <Button
-            variant='outline-dark'
+            variant='outline'
             onClick={() => setDataPage(page => page + 1)}
           >
             Load More
           </Button>
-        </Col>
-        <Col>
-          <h3 style={{ marginBottom: '10px' }}>Sandbox 2</h3>
+        </Box>
+        <Box flex={1}>
+          <Heading as='h3' mb={3} size='lg'>
+            Sandbox 2
+          </Heading>
           <LoadMore />
-        </Col>
-      </Row>
+        </Box>
+      </Flex>
     </Container>
   );
 };
