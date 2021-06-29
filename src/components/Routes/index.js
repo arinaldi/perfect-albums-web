@@ -8,7 +8,6 @@ import {
 
 import ErrorBoundary from '../ErrorBoundary';
 import NavBar from '../NavBar/presenter';
-import ToastAlert from '../ToastAlert/presenter';
 import ModalContainer from '../ModalContainer';
 import SignIn from '../SignIn';
 import TopAlbums from '../TopAlbums';
@@ -43,7 +42,6 @@ const Routes = () => {
     <Router>
       <Fragment>
         <NavBar />
-        <ToastAlert />
         <ModalContainer />
         <AppRoutes />
       </Fragment>

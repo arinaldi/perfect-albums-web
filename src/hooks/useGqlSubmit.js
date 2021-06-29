@@ -1,11 +1,7 @@
 import { useState } from 'react';
+import { useToast } from '@chakra-ui/react';
 
-import {
-  DISPATCH_TYPES,
-  MESSAGES,
-  TOAST_TYPES,
-} from '../constants';
-import { useAppDispatch } from '../components/Provider';
+import { MESSAGES } from '../constants';
 
 const useGqlSubmit = (options) => {
   const {
@@ -13,48 +9,40 @@ const useGqlSubmit = (options) => {
     submitFunc,
     successMessage,
   } = options;
-  const dispatch = useAppDispatch();
-  const [isValidated, setIsValidated] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const toast = useToast();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const form = event.currentTarget;
+    setIsSaving(true);
 
-    if (form.checkValidity()) {
-      setIsSaving(true);
+    try {
+      await submitFunc();
+      setIsSaving(false);
 
-      try {
-        submitFunc();
-        setIsSaving(false);
-
-        callback();
-        dispatch({
-          payload: {
-            message: successMessage,
-            type: TOAST_TYPES.SUCCESS,
-          },
-          type: DISPATCH_TYPES.OPEN_TOAST,
-        });
-      } catch (err) {
-        setIsSaving(false);
-        dispatch({
-          payload: {
-            message: err.message || MESSAGES.ERROR,
-            type: TOAST_TYPES.ERROR,
-          },
-          type: DISPATCH_TYPES.OPEN_TOAST,
-        });
-      }
-    } else {
-      setIsValidated(true);
+      callback();
+      toast({
+        description: successMessage,
+        duration: 4000,
+        isClosable: true,
+        status: 'success',
+        title: 'Success',
+      });
+    } catch (err) {
+      setIsSaving(false);
+      toast({
+        description: err.message || MESSAGES.ERROR,
+        duration: 4000,
+        isClosable: true,
+        status: 'error',
+        title: 'Error',
+      });
     }
   };
 
   return {
     handleSubmit,
     isSaving,
-    isValidated,
   };
 };
 

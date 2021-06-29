@@ -57,13 +57,12 @@ const CreateSongContainer = () => {
     submitFunc,
     successMessage: `${MESSAGES.SONG_PREFIX} created`,
   };
-  const { handleSubmit, isSaving, isValidated } = useGqlSubmit(options);
+  const { handleSubmit, isSaving } = useGqlSubmit(options);
 
   return (
     <CreateSongModal
       isOpen={state.modal.isOpen}
       song={song}
-      isValidated={isValidated}
       isSaving={isSaving}
       onChange={handleChange}
       onClose={handleClose}

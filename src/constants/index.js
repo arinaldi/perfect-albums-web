@@ -1,6 +1,5 @@
 export const BASE_URL = process.env.API_URL;
 
-export const TOAST_TIMEOUT = 2500;
 export const PER_PAGE = [25, 50, 100];
 
 export const SORT_DIRECTION = {
@@ -12,11 +11,6 @@ export const ALERT_TYPES = {
   SUCCESS: 'success',
   ERROR: 'danger',
   INFO: 'dark',
-};
-
-export const TOAST_TYPES = {
-  SUCCESS: 'success',
-  ERROR: 'error',
 };
 
 export const MODAL_TYPES = {
@@ -85,8 +79,6 @@ export const STATE_STATUSES = {
 export const DISPATCH_TYPES = {
   SIGN_IN_USER: 'SIGN_IN_USER',
   SIGN_OUT_USER: 'SIGN_OUT_USER',
-  OPEN_TOAST: 'OPEN_TOAST',
-  CLOSE_TOAST: 'CLOSE_TOAST',
   OPEN_MODAL: 'OPEN_MODAL',
   CLOSE_MODAL: 'CLOSE_MODAL',
 };

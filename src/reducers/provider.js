@@ -8,11 +8,6 @@ export const providerInitialState = {
     isOpen: false,
     type: '',
   },
-  toast: {
-    isOpen: false,
-    message: '',
-    type: '',
-  },
   user: {
     isAuthenticated: Boolean(getToken()),
   },
@@ -31,23 +26,6 @@ export const providerReducer = (state, action) => {
     return {
       ...state,
       user: { isAuthenticated: false },
-    };
-  case DISPATCH_TYPES.OPEN_TOAST:
-    return {
-      ...state,
-      toast: {
-        isOpen: true,
-        message: action.payload.message,
-        type: action.payload.type,
-      },
-    };
-  case DISPATCH_TYPES.CLOSE_TOAST:
-    return {
-      ...state,
-      toast: {
-        ...state.toast,
-        isOpen: false,
-      },
     };
   case DISPATCH_TYPES.OPEN_MODAL:
     return {

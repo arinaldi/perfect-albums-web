@@ -92,7 +92,6 @@ CreateReleaseModal.propTypes = {
     title: PropTypes.string.isRequired,
     date: PropTypes.string,
   }),
-  isValidated: PropTypes.bool,
   isSaving: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,

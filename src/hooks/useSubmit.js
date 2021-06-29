@@ -1,11 +1,8 @@
 import { useState } from 'react';
+import { useToast } from '@chakra-ui/react';
 
 import api from '../utils/api';
-import {
-  DISPATCH_TYPES,
-  MESSAGES,
-  TOAST_TYPES,
-} from '../constants';
+import { MESSAGES } from '../constants';
 import { useAppDispatch } from '../components/Provider';
 
 const useSubmit = (options) => {
@@ -19,6 +16,7 @@ const useSubmit = (options) => {
   const dispatch = useAppDispatch();
   const [isValidated, setIsValidated] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const toast = useToast();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -28,29 +26,30 @@ const useSubmit = (options) => {
       setIsSaving(true);
 
       try {
-        await api(path, { body, dispatch, method });
+        await api(path, { body, dispatch, method, toast });
         setIsSaving(false);
 
         callbacks.forEach(cb => {
           cb();
         });
 
-        dispatch({
-          payload: {
-            message: successMessage,
-            type: TOAST_TYPES.SUCCESS,
-          },
-          type: DISPATCH_TYPES.OPEN_TOAST,
+        toast({
+          description: successMessage,
+          duration: 4000,
+          isClosable: true,
+          status: 'success',
+          title: 'Success',
         });
       } catch (err) {
         if (err.message !== MESSAGES.UNAUTHORIZED) {
           setIsSaving(false);
-          dispatch({
-            payload: {
-              message: err.message || MESSAGES.ERROR,
-              type: TOAST_TYPES.ERROR,
-            },
-            type: DISPATCH_TYPES.OPEN_TOAST,
+
+          toast({
+            description: err.message || MESSAGES.ERROR,
+            duration: 4000,
+            isClosable: true,
+            status: 'error',
+            title: 'Error',
           });
         }
       }

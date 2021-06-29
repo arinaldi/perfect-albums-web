@@ -1,4 +1,5 @@
 import { useEffect, useReducer } from 'react';
+import { useToast } from '@chakra-ui/react';
 
 import { useAppDispatch } from '../components/Provider';
 import api from '../utils/api';
@@ -10,20 +11,22 @@ import {
 
 const useStateMachine = (path) => {
   const appDispatch = useAppDispatch();
+  const toast = useToast();
   const [state, dispatch] = useReducer(dataReducer, dataInitialState);
   const { status } = state;
-  const controller = new AbortController();
 
   useEffect(() => {
     dispatch({ type: STATE_EVENTS.FETCH });
   }, []);
 
   useEffect(() => {
+    const controller = new AbortController();
     const fetchData = async () => {
       try {
         const { data } = await api(path, {
           dispatch: appDispatch,
           options: { signal: controller.signal },
+          toast,
         });
 
         dispatch({ type: STATE_EVENTS.RESOLVE, data });
@@ -40,7 +43,7 @@ const useStateMachine = (path) => {
         controller.abort();
       };
     }
-  }, [appDispatch, controller, path, status]);
+  }, [appDispatch, path, status, toast]);
 
   return [state, dispatch];
 };

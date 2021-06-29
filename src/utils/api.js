@@ -4,11 +4,10 @@ import {
   BASE_URL,
   DISPATCH_TYPES,
   MESSAGES,
-  TOAST_TYPES,
 } from '../constants';
 import { getToken } from './storage';
 
-export const fetcher = (url) => {
+export const fetcher = async (url) => {
   const token = getToken();
   const headers = { 'Content-Type': 'application/json' };
 
@@ -25,27 +24,27 @@ export const fetchAndCache = (key) => {
   return request;
 };
 
-const logout = (dispatch) => {
+const logout = (dispatch, toast) => {
   dispatch({
     type: DISPATCH_TYPES.SIGN_OUT_USER,
   });
-  dispatch({
-    payload: {
-      message: MESSAGES.UNAUTHORIZED,
-      type: TOAST_TYPES.ERROR,
-    },
-    type: DISPATCH_TYPES.OPEN_TOAST,
+  toast({
+    description: MESSAGES.UNAUTHORIZED,
+    duration: 4000,
+    isClosable: true,
+    status: 'error',
+    title: 'Error',
   });
 };
 
-const handleResponse = async (response, dispatch) => {
+const handleResponse = async (response, dispatch, toast) => {
   const { status, url } = response;
 
   if (status === 401) {
     if (url.includes('signin')) {
       return Promise.reject(new Error(MESSAGES.SIGNIN));
     } else {
-      logout(dispatch);
+      logout(dispatch, toast);
       return Promise.reject(new Error(MESSAGES.UNAUTHORIZED));
     }
   }
@@ -60,7 +59,7 @@ const handleResponse = async (response, dispatch) => {
 };
 
 const api = async (endpoint, options = {}) => {
-  const { body, dispatch, ...customConfig } = options;
+  const { body, dispatch, toast, ...customConfig } = options;
   const token = getToken();
   const headers = { 'Content-Type': 'application/json' };
 
@@ -82,7 +81,7 @@ const api = async (endpoint, options = {}) => {
   }
 
   const response = await window.fetch(`${BASE_URL}${endpoint}`, config);
-  return handleResponse(response, dispatch);
+  return handleResponse(response, dispatch, toast);
 };
 
 export default api;

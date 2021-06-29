@@ -20,6 +20,5 @@ test('useGqlSubmit handles successful data posting', async () => {
   expect(state).toEqual({
     handleSubmit: state.handleSubmit,
     isSaving: false,
-    isValidated: false,
   });
 });

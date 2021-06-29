@@ -86,7 +86,6 @@ const CreateSongModal = (props) => {
 CreateSongModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   isSaving: PropTypes.bool,
-  isValidated: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,

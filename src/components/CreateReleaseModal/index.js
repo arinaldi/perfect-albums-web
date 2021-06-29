@@ -58,14 +58,13 @@ const CreateReleaseContainer = () => {
     submitFunc,
     successMessage: `${MESSAGES.RELEASE_PREFIX} created`,
   };
-  const { handleSubmit, isSaving, isValidated } = useGqlSubmit(options);
+  const { handleSubmit, isSaving } = useGqlSubmit(options);
 
   return (
     <CreateReleaseModal
       isOpen={isOpen}
       header='Create'
       release={release}
-      isValidated={isValidated}
       isSaving={isSaving}
       onChange={handleChange}
       onClose={handleClose}
