@@ -67,9 +67,9 @@ const CreateReleaseContainer = () => {
       release={release}
       isValidated={isValidated}
       isSaving={isSaving}
-      handleChange={handleChange}
-      handleClose={handleClose}
-      handleSubmit={handleSubmit}
+      onChange={handleChange}
+      onClose={handleClose}
+      onSubmit={handleSubmit}
     />
   );
 };

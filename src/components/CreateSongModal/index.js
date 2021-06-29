@@ -65,9 +65,9 @@ const CreateSongContainer = () => {
       song={song}
       isValidated={isValidated}
       isSaving={isSaving}
-      handleChange={handleChange}
-      handleClose={handleClose}
-      handleSubmit={handleSubmit}
+      onChange={handleChange}
+      onClose={handleClose}
+      onSubmit={handleSubmit}
     />
   );
 };

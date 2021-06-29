@@ -34,7 +34,7 @@ const SignIn = (props) => {
       </Flex>
       <Box maxWidth={{ base: '100%', md: '400px' }} margin='0 auto'>
         <form onSubmit={handleSubmit}>
-          <FormControl id='username'>
+          <FormControl id='username' isRequired>
             <FormLabel>Username</FormLabel>
             <Input
               autoCapitalize='off'
@@ -45,7 +45,7 @@ const SignIn = (props) => {
               value={username}
             />
           </FormControl>
-          <FormControl id='password' my={4}>
+          <FormControl id='password' isRequired my={4}>
             <FormLabel>Password</FormLabel>
             <Input
               autoComplete='current-password'

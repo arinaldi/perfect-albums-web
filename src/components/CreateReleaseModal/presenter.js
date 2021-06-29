@@ -1,10 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+} from '@chakra-ui/react';
 
-import InputFeedback from '../InputFeedback/presenter';
 import SubmitButton from '../SubmitButton/presenter';
 
 const CreateReleaseModal = (props) => {
@@ -12,63 +21,65 @@ const CreateReleaseModal = (props) => {
     isOpen,
     header,
     release,
-    isValidated,
     isSaving,
-    handleChange,
-    handleClose,
-    handleSubmit,
+    onChange,
+    onClose,
+    onSubmit,
   } = props;
 
   return (
-    <Modal show={isOpen} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>{header} Release</Modal.Title>
-      </Modal.Header>
-      <Form
-        noValidate
-        validated={isValidated}
-        onSubmit={handleSubmit}
-      >
-        <Modal.Body>
-          <InputFeedback
-            controlId='formArtist'
-            label='Artist'
-            name='artist'
-            value={release.artist}
-            onChange={handleChange}
-          />
-          <InputFeedback
-            controlId='formTitle'
-            label='Title'
-            name='title'
-            value={release.title}
-            onChange={handleChange}
-          />
-          <InputFeedback
-            controlId='formDate'
-            label='Date'
-            name='date'
-            value={release.date}
-            onChange={handleChange}
-            type='date'
-            isRequired={false}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant='outline-dark'
-            onClick={handleClose}
-          >
-            Close
-          </Button>
-          <SubmitButton
-            isDisabled={isSaving}
-            isLoading={isSaving}
-            text='Save'
-            loadingText='Saving...'
-          />
-        </Modal.Footer>
-      </Form>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>{header} Release</ModalHeader>
+        <ModalCloseButton />
+        <form onSubmit={onSubmit}>
+          <ModalBody>
+            <FormControl id='artist' isRequired>
+              <FormLabel>Artist</FormLabel>
+              <Input
+                name='artist'
+                onChange={onChange}
+                type='text'
+                value={release.artist}
+              />
+            </FormControl>
+            <FormControl id='title' isRequired my={4}>
+              <FormLabel>Title</FormLabel>
+              <Input
+                name='title'
+                onChange={onChange}
+                type='text'
+                value={release.title}
+              />
+            </FormControl>
+            <FormControl id='date'>
+              <FormLabel>Date</FormLabel>
+              <Input
+                name='date'
+                onChange={onChange}
+                type='date'
+                value={release.date}
+              />
+            </FormControl>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              variant='outline'
+              mr={2}
+              onClick={onClose}
+            >
+              Close
+            </Button>
+            <SubmitButton
+              isDisabled={isSaving}
+              isLoading={isSaving}
+              text='Save'
+              loadingText='Saving'
+            />
+          </ModalFooter>
+        </form>
+      </ModalContent>
     </Modal>
   );
 };
@@ -83,9 +94,9 @@ CreateReleaseModal.propTypes = {
   }),
   isValidated: PropTypes.bool,
   isSaving: PropTypes.bool,
-  handleChange: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default CreateReleaseModal;

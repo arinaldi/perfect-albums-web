@@ -1,82 +1,95 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+} from '@chakra-ui/react';
 
-import InputFeedback from '../InputFeedback/presenter';
 import SubmitButton from '../SubmitButton/presenter';
 
 const CreateSongModal = (props) => {
   const {
-    handleChange,
-    handleClose,
-    handleSubmit,
     isOpen,
     isSaving,
-    isValidated,
+    onChange,
+    onClose,
+    onSubmit,
     song,
   } = props;
 
   return (
-    <Modal show={isOpen} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Create Song</Modal.Title>
-      </Modal.Header>
-      <Form
-        noValidate
-        validated={isValidated}
-        onSubmit={handleSubmit}
-      >
-        <Modal.Body>
-          <InputFeedback
-            controlId='formArtist'
-            label='Artist'
-            name='artist'
-            value={song.artist}
-            onChange={handleChange}
-          />
-          <InputFeedback
-            controlId='formTitle'
-            label='Title'
-            name='title'
-            value={song.title}
-            onChange={handleChange}
-          />
-          <InputFeedback
-            controlId='formLink'
-            label='Link'
-            name='link'
-            value={song.link}
-            onChange={handleChange}
-          />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant='outline-dark'
-            onClick={handleClose}
-          >
-            Close
-          </Button>
-          <SubmitButton
-            isDisabled={isSaving}
-            isLoading={isSaving}
-            text='Save'
-            loadingText='Saving...'
-          />
-        </Modal.Footer>
-      </Form>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Create Song</ModalHeader>
+        <ModalCloseButton />
+        <form onSubmit={onSubmit}>
+          <ModalBody>
+            <FormControl id='artist' isRequired>
+              <FormLabel>Artist</FormLabel>
+              <Input
+                name='artist'
+                onChange={onChange}
+                type='text'
+                value={song.artist}
+              />
+            </FormControl>
+            <FormControl id='title' isRequired my={4}>
+              <FormLabel>Title</FormLabel>
+              <Input
+                name='title'
+                onChange={onChange}
+                type='text'
+                value={song.title}
+              />
+            </FormControl>
+            <FormControl id='link' isRequired>
+              <FormLabel>Link</FormLabel>
+              <Input
+                name='link'
+                onChange={onChange}
+                type='text'
+                value={song.link}
+              />
+            </FormControl>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              variant='outline'
+              mr={2}
+              onClick={onClose}
+            >
+              Close
+            </Button>
+            <SubmitButton
+              isDisabled={isSaving}
+              isLoading={isSaving}
+              text='Save'
+              loadingText='Saving'
+            />
+          </ModalFooter>
+        </form>
+      </ModalContent>
     </Modal>
   );
 };
 
 CreateSongModal.propTypes = {
-  handleChange: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   isSaving: PropTypes.bool,
   isValidated: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   song: PropTypes.shape({
     artist: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,

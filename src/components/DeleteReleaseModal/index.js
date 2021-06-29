@@ -50,8 +50,8 @@ const DeleteReleaseContainer = () => {
       artist={data.artist}
       title={data.title}
       isDeleting={isSaving}
-      handleClose={handleClose}
-      handleDelete={handleSubmit}
+      onClose={handleClose}
+      onDelete={handleSubmit}
     />
   );
 };
