@@ -22,7 +22,7 @@ const CardWrapper = (props) => {
   return (
     <Box
       borderWidth='1px'
-      maxW='sm'
+      maxWidth='sm'
       p={5}
       rounded='md'
     >

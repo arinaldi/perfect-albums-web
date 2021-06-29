@@ -1,8 +1,13 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
+import {
+  Box,
+  Container,
+  Flex,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+} from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
 import SubmitButton from '../SubmitButton/presenter';
@@ -17,49 +22,43 @@ const SignIn = (props) => {
   } = props;
 
   return (
-    <Container className='no-loader'>
-      <h3>Sign In</h3>
-      <Row>
-        <Col md={{ span: 6, offset: 3 }}>
-          <Form onSubmit={handleSubmit}>
-            <Form.Row>
-              <Form.Group as={Col} controlId='formUsername'>
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  type='text'
-                  name='username'
-                  autoComplete='username'
-                  autoCapitalize='off'
-                  value={username}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            </Form.Row>
-            <Form.Row>
-              <Form.Group as={Col} controlId='formPassword'>
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type='password'
-                  name='password'
-                  autoComplete='current-password'
-                  value={password}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            </Form.Row>
-            <Form.Row>
-              <Form.Group as={Col}>
-                <SubmitButton
-                  isDisabled={!(username && password) || isSubmitting}
-                  isLoading={isSubmitting}
-                  text='Submit'
-                  loadingText='Submitting...'
-                />
-              </Form.Group>
-            </Form.Row>
-          </Form>
-        </Col>
-      </Row>
+    <Container className='no-loader' maxWidth='container.lg'>
+      <Flex align='center' mb={3}>
+        <Heading as='h3' size='lg'>
+          Sign In
+        </Heading>
+      </Flex>
+      <Box maxWidth={{ base: '100%', md: '400px' }} margin='0 auto'>
+        <form onSubmit={handleSubmit}>
+          <FormControl id='username'>
+            <FormLabel>Username</FormLabel>
+            <Input
+              autoCapitalize='off'
+              autoComplete='username'
+              name='username'
+              onChange={handleChange}
+              type='text'
+              value={username}
+            />
+          </FormControl>
+          <FormControl id='password' my={4}>
+            <FormLabel>Password</FormLabel>
+            <Input
+              autoComplete='current-password'
+              name='password'
+              onChange={handleChange}
+              type='password'
+              value={password}
+            />
+          </FormControl>
+          <SubmitButton
+            isDisabled={!(username && password) || isSubmitting}
+            isLoading={isSubmitting}
+            text='Submit'
+            loadingText='Submitting'
+          />
+        </form>
+      </Box>
     </Container>
   );
 };

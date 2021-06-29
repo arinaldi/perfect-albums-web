@@ -27,7 +27,7 @@ const TopAlbums = (props) => {
 
   return (
     <>
-      <Container maxW='container.lg'>
+      <Container maxWidth='container.lg'>
         <Flex align='center' mb={3}>
           <Heading as='h3' size='lg'>Top Albums
             {data && data.favorites && (

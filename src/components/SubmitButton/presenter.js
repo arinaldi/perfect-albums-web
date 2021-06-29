@@ -1,6 +1,5 @@
-import React, { Fragment } from 'react';
-import Button from 'react-bootstrap/Button';
-import Spinner from 'react-bootstrap/Spinner';
+import React from 'react';
+import { Button } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
 const SubmitButton = (props) => {
@@ -13,25 +12,13 @@ const SubmitButton = (props) => {
 
   return (
     <Button
+      isDisabled={isDisabled}
+      isLoading={isLoading}
+      loadingText={loadingText}
       type='submit'
-      variant='outline-dark'
-      disabled={isDisabled}
+      variant='outline'
     >
-      {isLoading
-        ? (
-          <Fragment>
-            <Spinner
-              as='span'
-              animation='border'
-              size='sm'
-              role='status'
-              aria-hidden='true'
-            />
-            <span className='sr-only'>{loadingText}</span>
-          </Fragment>
-        )
-        : `${text}`
-      }
+      {text}
     </Button>
   );
 };
@@ -44,7 +31,7 @@ SubmitButton.propTypes = {
 };
 
 SubmitButton.defaultProps = {
-  loadingText: 'Loading...',
+  loadingText: 'Loading',
 };
 
 export default SubmitButton;
