@@ -16,14 +16,12 @@ const MobileNavItem = ({ label, onClose, to }) => (
       align='center'
       justify='space-between'
       py={2}
-      _hover={{
-        textDecoration: 'none',
-      }}
     >
       <Link
         activeStyle={{ fontWeight: 600 }}
         as={NavLink}
         to={to}
+        _hover={{ color: 'white' }}
       >
         <span onClick={onClose}>{label}</span>
       </Link>

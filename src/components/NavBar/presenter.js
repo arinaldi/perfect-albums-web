@@ -42,6 +42,7 @@ const NavBar = () => {
             onClick={onToggle}
             variant='ghost'
             _active={{ background: 'gray.700' }}
+            _hover={{ background: 'gray.700' }}
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
