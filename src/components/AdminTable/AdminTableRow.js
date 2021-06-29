@@ -1,11 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+import { CheckIcon } from '@chakra-ui/icons';
 import PropTypes from 'prop-types';
 
-import { ICONS } from '../../constants';
-
-const { CHECK } = ICONS;
 const margin = 2;
 
 const AdminTableRow = (props) => {
@@ -22,9 +20,9 @@ const AdminTableRow = (props) => {
       <td>{artist}</td>
       <td>{title}</td>
       <td>{year}</td>
-      <td>{cd && CHECK}</td>
-      <td>{aotd && CHECK}</td>
-      <td>{favorite && CHECK}</td>
+      <td>{cd ? <CheckIcon /> : null}</td>
+      <td>{aotd ? <CheckIcon /> : null}</td>
+      <td>{favorite ? <CheckIcon /> : null}</td>
       <td>
         <Button
           variant='outline-dark'

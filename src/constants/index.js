@@ -31,14 +31,6 @@ export const MESSAGES = {
   NO_DATA: 'No Data',
 };
 
-export const ICONS = {
-  CHECK: '✔',
-  DOWN: '↓',
-  UP: '↑',
-  X: '✖',
-  PENCIL: '✎',
-};
-
 export const DECADES = [
   {
     label: '10s',

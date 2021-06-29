@@ -1,15 +1,16 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
+import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
 import PropTypes from 'prop-types';
 
-import { ICONS, SORT_DIRECTION } from '../../constants';
+import { SORT_DIRECTION } from '../../constants';
 import AdminTableRow from './AdminTableRow';
 
 const getSortIcon = (direction) => {
   const { ASC, DESC } = SORT_DIRECTION;
   if (!direction) return '';
-  if (direction === ASC) return `${ICONS.UP} `;
-  if (direction === DESC) return `${ICONS.DOWN} `;
+  if (direction === ASC) return <ArrowUpIcon mr={1} verticalAlign='text-bottom' />;
+  if (direction === DESC) return <ArrowDownIcon mr={1} verticalAlign='text-bottom' />;
 };
 
 const AdminTable = (props) => {

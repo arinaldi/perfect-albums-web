@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Link } from '@chakra-ui/react';
-
-import { ICONS } from '../../constants';
+import { ArrowUpIcon } from '@chakra-ui/icons';
 
 const TopLink = () => (
   <Box
@@ -12,7 +11,8 @@ const TopLink = () => (
     zIndex={1030}
   >
     <Link href='#top'>
-      {`${ICONS.UP} Top`}
+      <ArrowUpIcon mr={1} verticalAlign='text-top' />
+      Top
     </Link>
   </Box>
 );

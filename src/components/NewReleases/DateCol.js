@@ -2,18 +2,14 @@ import React from 'react';
 import {
   Box,
   Heading,
+  IconButton,
   ListItem,
   UnorderedList,
 } from '@chakra-ui/react';
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import PropTypes from 'prop-types';
 
-import { ICONS } from '../../constants';
 import { useAppState } from '../Provider';
-
-const style = {
-  cursor: 'pointer',
-  verticalAlign: 'middle',
-};
 
 const DateCol = (props) => {
   const {
@@ -40,14 +36,22 @@ const DateCol = (props) => {
               {release.artist} &ndash; {release.title}
             </span>
             {isAuthenticated && (
-              <>
-                <span style={style} onClick={() => handleEditOpen(release)}>
-                  &nbsp;&nbsp;{ICONS.PENCIL}
-                </span>
-                <span style={style} onClick={() => handleDeleteOpen(release)}>
-                  {ICONS.X}
-                </span>
-              </>
+              <Box as='span' ml={1}>
+                <IconButton
+                  aria-label='Edit Release'
+                  icon={<EditIcon />}
+                  onClick={() => handleEditOpen(release)}
+                  size='xs'
+                  variant='ghost'
+                />
+                <IconButton
+                  aria-label='Delete Release'
+                  icon={<DeleteIcon />}
+                  onClick={() => handleDeleteOpen(release)}
+                  size='xs'
+                  variant='ghost'
+                />
+              </Box>
             )}
           </ListItem>
         ))}

@@ -3,13 +3,14 @@ import {
   Box,
   Flex,
   Heading,
+  IconButton,
   Link,
   Text,
 } from '@chakra-ui/react';
+import { DeleteIcon } from '@chakra-ui/icons';
 import PropTypes from 'prop-types';
 
 import { useAppState } from '../Provider';
-import { ICONS } from '../../constants';
 
 const CardWrapper = (props) => {
   const { song, handleDeleteOpen } = props;
@@ -31,13 +32,14 @@ const CardWrapper = (props) => {
       <Flex align='center'>
         <Link color='blue.500' href={song.link} isExternal>Listen</Link>
         {isAuthenticated && (
-          <Text
-            cursor='pointer'
-            ml={2}
+          <IconButton
+            aria-label='Delete Song'
+            icon={<DeleteIcon />}
+            ml={1}
             onClick={handleClick}
-          >
-            {ICONS.X}
-          </Text>
+            size='xs'
+            variant='ghost'
+          />
         )}
       </Flex>
     </Box>

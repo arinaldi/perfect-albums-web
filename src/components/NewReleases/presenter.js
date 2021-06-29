@@ -53,7 +53,7 @@ const NewReleases = (props) => {
       </Flex>
       {error && <AppMessage />}
       {data && data.releases && (
-        <SimpleGrid minChildWidth='240px' spacing='24px'>
+        <SimpleGrid minChildWidth='248px' spacing='24px'>
           {Object
             .entries(formatReleases(data.releases))
             .sort(sortByDate)
