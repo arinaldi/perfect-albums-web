@@ -79,14 +79,20 @@ const MobileNav = ({ onClose }) => {
       display={{ md: 'none' }}
       p={4}
     >
-      {NAV_LINKS.map(({ label, to }) => (
-        <MobileNavItem
-          key={to}
-          label={label}
-          onClose={onClose}
-          to={to}
-        />
-      ))}
+      {NAV_LINKS.map(({ label, needsAuth, to }) => {
+        if (needsAuth && !isAuthenticated) {
+          return null;
+        }
+
+        return (
+          <MobileNavItem
+            key={to}
+            label={label}
+            onClose={onClose}
+            to={to}
+          />
+        );
+      })}
       {isAuthenticated
         ? <MobileSignOut onClose={onClose} />
         : (

@@ -47,7 +47,7 @@ const NavBar = () => {
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           <Heading
             color='white'
-            minWidth='fit-content'
+            minWidth='max-content'
             size='md'
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
           >
