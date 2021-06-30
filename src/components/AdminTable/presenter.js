@@ -36,6 +36,7 @@ const AdminTable = (props) => {
           <Tr>
             <Th
               data-value='artist'
+              cursor='pointer'
               onClick={onSort}
             >
               {sort === 'artist' && getSortIcon(direction)}
@@ -43,6 +44,7 @@ const AdminTable = (props) => {
             </Th>
             <Th
               data-value='title'
+              cursor='pointer'
               onClick={onSort}
             >
               {sort === 'title' && getSortIcon(direction)}
@@ -50,6 +52,7 @@ const AdminTable = (props) => {
             </Th>
             <Th
               data-value='year'
+              cursor='pointer'
               onClick={onSort}
             >
               {sort === 'year' && getSortIcon(direction)}
