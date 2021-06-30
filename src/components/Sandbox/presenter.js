@@ -30,11 +30,7 @@ const Sandbox = (props) => {
   }
 
   return (
-    <Container
-      className='no-loader'
-      maxWidth='container.lg'
-      mb={6}
-    >
+    <Container maxWidth='container.lg' marginBottom={6}>
       <Flex>
         <Box flex={1}>
           <Heading as='h3' mb={3} size='lg'>

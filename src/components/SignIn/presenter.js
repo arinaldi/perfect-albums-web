@@ -11,9 +11,11 @@ import {
 import PropTypes from 'prop-types';
 
 import SubmitButton from '../SubmitButton/presenter';
+import AppMessage from '../AppMessage/presenter';
 
 const SignIn = (props) => {
   const {
+    error,
     isSubmitting,
     onChange,
     onSubmit,
@@ -22,11 +24,7 @@ const SignIn = (props) => {
   } = props;
 
   return (
-    <Container
-      className='no-loader'
-      maxWidth='container.lg'
-      mb={6}
-    >
+    <Container maxWidth='container.lg' marginBottom={6}>
       <Flex align='center' mb={3}>
         <Heading as='h3' size='lg'>
           Sign In
@@ -64,12 +62,16 @@ const SignIn = (props) => {
             text='Submit'
           />
         </form>
+        <Box mt={4}>
+          {error ? <AppMessage message={error} /> : null}
+        </Box>
       </Box>
     </Container>
   );
 };
 
 SignIn.propTypes = {
+  error: PropTypes.string,
   isSubmitting: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,

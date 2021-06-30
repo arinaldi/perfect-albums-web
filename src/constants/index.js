@@ -8,9 +8,9 @@ export const SORT_DIRECTION = {
 };
 
 export const ALERT_TYPES = {
+  ERROR: 'error',
+  INFO: 'info',
   SUCCESS: 'success',
-  ERROR: 'danger',
-  INFO: 'dark',
 };
 
 export const MODAL_TYPES = {

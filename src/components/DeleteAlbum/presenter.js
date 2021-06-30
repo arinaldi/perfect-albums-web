@@ -30,13 +30,12 @@ const DeleteAlbum = (props) => {
   return (
     <Container maxWidth='container.lg' mb={3}>
       <Heading as='h3' size='lg'>Delete Album</Heading>
-      {status === STATE_STATUSES.FAILURE && <AppMessage />}
       {data && (
         <form onSubmit={onSubmit}>
           <Text marginY={4}>
             {`Are you sure you want to delete ${data.artist} – ${data.title}?`}
           </Text>
-          <Box>
+          <Box marginBottom={6}>
             <Button
               onClick={handleCancel}
               marginRight={2}
@@ -53,6 +52,7 @@ const DeleteAlbum = (props) => {
           </Box>
         </form>
       )}
+      {status === STATE_STATUSES.FAILURE ? <AppMessage /> : null}
     </Container>
   );
 };

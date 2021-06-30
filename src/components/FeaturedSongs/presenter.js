@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Box,
   Button,
   Container,
   Flex,
@@ -31,41 +32,45 @@ const FeaturedSongs = (props) => {
           Featured Songs
         </Heading>
         <Spacer />
-        {isAuthenticated && (
-          <>
-            <Button
-              variant='outline'
-              isDisabled={isLoading}
-              onClick={refresh}
-              marginRight={1}
-            >
-              Refresh
-            </Button>
-            <Button
-              variant='outline'
-              onClick={onCreateOpen}
-            >
-              New
-            </Button>
-          </>
-        )}
+        {isAuthenticated
+          ? (
+            <Box>
+              <Button
+                variant='outline'
+                isDisabled={isLoading}
+                onClick={refresh}
+                marginRight={1}
+              >
+                Refresh
+              </Button>
+              <Button
+                variant='outline'
+                onClick={onCreateOpen}
+              >
+                New
+              </Button>
+            </Box>
+          )
+          : null}
       </Flex>
-      {error && <AppMessage />}
-      {data && data.songs && (
-        <SimpleGrid
-          data-testid='card-row'
-          minChildWidth='240px'
-          spacing='24px'
-        >
-          {data.songs.map(song => (
-            <CardWrapper
-              key={song.id}
-              song={song}
-              handleDeleteOpen={onDeleteOpen}
-            />
-          ))}
-        </SimpleGrid>
-      )}
+      {error ? <AppMessage /> : null}
+      {data && data.songs
+        ? (
+          <SimpleGrid
+            data-testid='card-row'
+            minChildWidth='240px'
+            spacing='24px'
+          >
+            {data.songs.map(song => (
+              <CardWrapper
+                key={song.id}
+                song={song}
+                handleDeleteOpen={onDeleteOpen}
+              />
+            ))}
+          </SimpleGrid>
+        )
+        : null}
     </Container>
   );
 };

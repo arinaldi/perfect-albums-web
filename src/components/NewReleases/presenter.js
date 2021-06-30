@@ -32,42 +32,46 @@ const NewReleases = (props) => {
       <Flex align='center' mb={3}>
         <Heading as='h3' size='lg'>New Releases</Heading>
         <Spacer />
-        {isAuthenticated && (
-          <Box>
-            <Button
-              variant='outline'
-              isDisabled={isLoading}
-              onClick={refresh}
-              marginRight={1}
-            >
-              Refresh
-            </Button>
-            <Button
-              variant='outline'
-              onClick={onCreateOpen}
-            >
-              New
-            </Button>
-          </Box>
-        )}
+        {isAuthenticated
+          ? (
+            <Box>
+              <Button
+                variant='outline'
+                isDisabled={isLoading}
+                onClick={refresh}
+                marginRight={1}
+              >
+                Refresh
+              </Button>
+              <Button
+                variant='outline'
+                onClick={onCreateOpen}
+              >
+                New
+              </Button>
+            </Box>
+          )
+          : null}
       </Flex>
-      {error && <AppMessage />}
-      {data && data.releases && (
-        <SimpleGrid minChildWidth='248px' spacing='24px'>
-          {Object
-            .entries(formatReleases(data.releases))
-            .sort(sortByDate)
-            .map(([date, releases]) => (
-              <DateCol
-                key={date}
-                data={releases}
-                date={date}
-                onEditOpen={onEditOpen}
-                onDeleteOpen={onDeleteOpen}
-              />
-            ))}
-        </SimpleGrid>
-      )}
+      {error ? <AppMessage /> : null}
+      {data && data.releases
+        ? (
+          <SimpleGrid minChildWidth='248px' spacing='24px'>
+            {Object
+              .entries(formatReleases(data.releases))
+              .sort(sortByDate)
+              .map(([date, releases]) => (
+                <DateCol
+                  key={date}
+                  data={releases}
+                  date={date}
+                  onEditOpen={onEditOpen}
+                  onDeleteOpen={onDeleteOpen}
+                />
+              ))}
+          </SimpleGrid>
+        )
+        : null}
     </Container>
   );
 };

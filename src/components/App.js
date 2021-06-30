@@ -3,7 +3,6 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ChakraProvider } from '@chakra-ui/react';
 
-import '../styles.css';
 import { getToken } from '../utils/storage';
 import { BASE_URL } from '../constants';
 import ErrorBoundary from './ErrorBoundary';

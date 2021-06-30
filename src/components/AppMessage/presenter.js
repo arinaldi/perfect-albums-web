@@ -1,18 +1,15 @@
 import React from 'react';
-import Alert from 'react-bootstrap/Alert';
+import { Alert, AlertIcon } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
 import { ALERT_TYPES, MESSAGES } from '../../constants';
 
-const AppMessage = (props) => {
-  const { type, message } = props;
-
-  return (
-    <div className='alert-container'>
-      <Alert variant={type}>{message}</Alert>
-    </div>
-  );
-};
+const AppMessage = ({ type, message }) => (
+  <Alert status={type}>
+    <AlertIcon />
+    {message}
+  </Alert>
+);
 
 AppMessage.propTypes = {
   type: PropTypes.string,

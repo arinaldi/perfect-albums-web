@@ -131,7 +131,7 @@ const CreateEditAlbum = (props) => {
               </RadioGroup>
             </Box>
           </Flex>
-          <Box marginTop={{ base: 8, md: 4 }}>
+          <Box marginTop={{ base: 8, md: 4 }} marginBottom={6}>
             <Button
               onClick={() => history.push(`/admin?${query}`)}
               marginRight={1}
@@ -148,7 +148,7 @@ const CreateEditAlbum = (props) => {
           </Box>
         </form>
       )}
-      {status === STATE_STATUSES.FAILURE && <AppMessage />}
+      {status === STATE_STATUSES.FAILURE ? <AppMessage /> : null}
     </Container>
   );
 };

@@ -5,7 +5,7 @@ import { DISPATCH_TYPES } from '../../constants';
 import api from '../../utils/api';
 import { useApp } from '../Provider';
 import ErrorBoundary from '../ErrorBoundary';
-import AppMessage from '../AppMessage/presenter';
+import ProgressLoader from '../ProgressLoader/presenter';
 import SignIn from './presenter';
 
 const SignInContainer = () => {
@@ -50,14 +50,15 @@ const SignInContainer = () => {
 
   return (
     <ErrorBoundary>
+      <ProgressLoader />
       <SignIn
+        error={error}
         isSubmitting={isSubmitting}
         onChange={handleChange}
         onSubmit={handleSubmit}
         password={credentials.password}
         username={credentials.username}
       />
-      {error && <AppMessage message={error} />}
     </ErrorBoundary>
   );
 };

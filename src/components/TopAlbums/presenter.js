@@ -30,16 +30,18 @@ const TopAlbums = (props) => {
       <Container maxWidth='container.lg' mb={6}>
         <Flex align='center' mb={3}>
           <Heading as='h3' size='lg'>Top Albums
-            {data && data.favorites && (
-              <Badge
-                borderRadius='4px'
-                fontSize='0.9em'
-                marginLeft={1}
-                verticalAlign='baseline'
-              >
-                {data.favorites.length.toLocaleString()}
-              </Badge>
-            )}
+            {data && data.favorites
+              ? (
+                <Badge
+                  borderRadius='4px'
+                  fontSize='0.9em'
+                  marginLeft={1}
+                  verticalAlign='baseline'
+                >
+                  {data.favorites.length.toLocaleString()}
+                </Badge>
+              )
+              : null}
           </Heading>
           <Spacer />
           {isAuthenticated && (
@@ -53,22 +55,24 @@ const TopAlbums = (props) => {
             </Button>
           )}
         </Flex>
-        {error && <AppMessage />}
-        {data && data.favorites && (
-          <SimpleGrid minChildWidth='240px' spacing='24px'>
-            {Object
-              .entries(formatFavorites(data.favorites))
-              .sort(sortDesc)
-              .map(([year, favorites]) => (
-                <AlbumCol
-                  key={year}
-                  data={favorites}
-                  year={year}
-                  total={favorites.length}
-                />
-              ))}
-          </SimpleGrid>
-        )}
+        {error ? <AppMessage /> : null}
+        {data && data.favorites
+          ? (
+            <SimpleGrid minChildWidth='240px' spacing='24px'>
+              {Object
+                .entries(formatFavorites(data.favorites))
+                .sort(sortDesc)
+                .map(([year, favorites]) => (
+                  <AlbumCol
+                    key={year}
+                    data={favorites}
+                    year={year}
+                    total={favorites.length}
+                  />
+                ))}
+            </SimpleGrid>
+          )
+          : null}
       </Container>
       <TopLink />
     </>

@@ -11,7 +11,7 @@ test('AppMessage renders error message', () => {
   const div = getByText(MESSAGES.ERROR);
 
   expect(div).toBeInTheDocument();
-  expect(div).toHaveClass('alert-danger');
+  expect(div).toHaveClass('chakra-alert');
   expect(div).toHaveAttribute('role', 'alert');
 });
 
@@ -23,6 +23,6 @@ test('AppMessage renders success message', () => {
   const div = getByText(message);
 
   expect(div).toBeInTheDocument();
-  expect(div).toHaveClass('alert-success');
+  expect(div).toHaveClass('chakra-alert');
   expect(div).toHaveAttribute('role', 'alert');
 });

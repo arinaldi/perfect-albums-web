@@ -1,22 +1,28 @@
 import React from 'react';
-import ProgressBar from 'react-bootstrap/ProgressBar';
+import { Progress } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
 const ProgressLoader = ({ isVisible }) => {
   const visibility = isVisible ? 'visible' : 'hidden';
 
   return (
-    <ProgressBar
-      animated
-      className='progress-margin'
-      now={100}
+    <Progress
+      colorScheme='gray'
+      hasStripe
+      isAnimated
+      marginBottom={2}
       style={{ visibility }}
+      value={100}
     />
   );
 };
 
 ProgressLoader.propTypes = {
-  isVisible: PropTypes.bool.isRequired,
+  isVisible: PropTypes.bool,
+};
+
+ProgressLoader.defaultProps = {
+  isVisible: false,
 };
 
 export default ProgressLoader;
