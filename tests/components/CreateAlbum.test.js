@@ -6,22 +6,25 @@ import render from '../utils';
 import { mockAdminData } from '../mocks';
 
 const { artist, title, year, cd, aotd, favorite } = mockAdminData[0];
+const handleChange = () => jest.fn;
+const handleRadioChange = () => jest.fn;
+const handleSubmit = () => jest.fn;
 
 test('CreateEditAlbum renders with data', () => {
-  const { getByText, getByLabelText, container } = render(
+  const { container, getByText } = render(
     <CreateAlbum
       data={mockAdminData[0]}
       header='Create'
-      handleChange={jest.fn}
-      handleRadioChange={jest.fn}
-      handleSubmit={jest.fn}
+      onChange={handleChange}
+      onRadioChange={handleRadioChange}
+      onSubmit={handleSubmit}
       status={STATE_STATUSES.SUCCESS}
     />,
   );
   const titleHeader = getByText('Create Album');
-  const artistInput = getByLabelText('Artist');
-  const titleInput = getByLabelText('Title');
-  const yearInput = getByLabelText('Year');
+  const artistInput = container.querySelector('input[name=artist]');
+  const titleInput = container.querySelector('input[name=title]');
+  const yearInput = container.querySelector('input[name=year]');
   const cdInput = container.querySelector('input[name=cd][value=true]');
   const aotdInput = container.querySelector('input[name=aotd][value=true]');
   const favoriteInput = container.querySelector('input[name=favorite][value=true]');

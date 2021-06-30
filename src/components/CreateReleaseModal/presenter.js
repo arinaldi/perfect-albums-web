@@ -44,7 +44,7 @@ const CreateReleaseModal = (props) => {
                 value={release.artist}
               />
             </FormControl>
-            <FormControl id='title' isRequired my={4}>
+            <FormControl id='title' isRequired marginY={4}>
               <FormLabel>Title</FormLabel>
               <Input
                 name='title'

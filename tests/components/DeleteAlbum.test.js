@@ -6,12 +6,13 @@ import render from '../utils';
 import { mockAdminData } from '../mocks';
 
 const { artist, title } = mockAdminData[0];
+const handleSubmit = () => jest.fn;
 
 test('DeleteAlbum renders with data', () => {
   const { getByText } = render(
     <DeleteAlbum
       data={mockAdminData[0]}
-      handleSubmit={jest.fn}
+      onSubmit={handleSubmit}
       status={STATE_STATUSES.SUCCESS}
     />,
   );

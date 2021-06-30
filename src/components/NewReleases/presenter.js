@@ -19,10 +19,10 @@ const NewReleases = (props) => {
   const {
     data,
     error,
-    handleCreateOpen,
-    handleEditOpen,
-    handleDeleteOpen,
     isLoading,
+    onCreateOpen,
+    onEditOpen,
+    onDeleteOpen,
     refresh,
   } = props;
   const { user: { isAuthenticated } } = useAppState();
@@ -44,7 +44,7 @@ const NewReleases = (props) => {
             </Button>
             <Button
               variant='outline'
-              onClick={handleCreateOpen}
+              onClick={onCreateOpen}
             >
               New
             </Button>
@@ -62,8 +62,8 @@ const NewReleases = (props) => {
                 key={date}
                 data={releases}
                 date={date}
-                handleEditOpen={handleEditOpen}
-                handleDeleteOpen={handleDeleteOpen}
+                onEditOpen={onEditOpen}
+                onDeleteOpen={onDeleteOpen}
               />
             ))}
         </SimpleGrid>
@@ -75,10 +75,10 @@ const NewReleases = (props) => {
 NewReleases.propTypes = {
   data: PropTypes.object,
   error: PropTypes.object,
-  handleCreateOpen: PropTypes.func.isRequired,
-  handleEditOpen: PropTypes.func.isRequired,
-  handleDeleteOpen: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
+  onCreateOpen: PropTypes.func.isRequired,
+  onEditOpen: PropTypes.func.isRequired,
+  onDeleteOpen: PropTypes.func.isRequired,
   refresh: PropTypes.func.isRequired,
 };
 

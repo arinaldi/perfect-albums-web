@@ -3,13 +3,16 @@ import { render } from '@testing-library/react';
 
 import SignIn from '../../src/components/SignIn/presenter';
 
+const handleChange = () => jest.fn;
+const handleSubmit = () => jest.fn;
+
 test('SignIn renders with username and password inputs', () => {
   const { getByText, getByLabelText } = render(
     <SignIn
-      username=''
+      onChange={handleChange}
+      onSubmit={handleSubmit}
       password=''
-      handleChange={jest.fn}
-      handleSubmit={jest.fn}
+      username=''
     />,
   );
   const titleHeader = getByText('Sign In');

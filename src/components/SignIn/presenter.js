@@ -14,9 +14,9 @@ import SubmitButton from '../SubmitButton/presenter';
 
 const SignIn = (props) => {
   const {
-    handleChange,
-    handleSubmit,
     isSubmitting,
+    onChange,
+    onSubmit,
     password,
     username,
   } = props;
@@ -33,14 +33,15 @@ const SignIn = (props) => {
         </Heading>
       </Flex>
       <Box maxWidth={{ base: '100%', md: '400px' }} margin='0 auto'>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={onSubmit}>
           <FormControl id='username' isRequired>
             <FormLabel>Username</FormLabel>
             <Input
               autoCapitalize='off'
               autoComplete='username'
+              isRequired
               name='username'
-              onChange={handleChange}
+              onChange={onChange}
               type='text'
               value={username}
             />
@@ -49,17 +50,18 @@ const SignIn = (props) => {
             <FormLabel>Password</FormLabel>
             <Input
               autoComplete='current-password'
+              isRequired
               name='password'
-              onChange={handleChange}
+              onChange={onChange}
               type='password'
               value={password}
             />
           </FormControl>
           <SubmitButton
-            isDisabled={!(username && password) || isSubmitting}
+            isDisabled={isSubmitting}
             isLoading={isSubmitting}
-            text='Submit'
             loadingText='Submitting'
+            text='Submit'
           />
         </form>
       </Box>
@@ -68,9 +70,9 @@ const SignIn = (props) => {
 };
 
 SignIn.propTypes = {
-  handleChange: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   isSubmitting: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   password: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
 };

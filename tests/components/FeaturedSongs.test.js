@@ -5,13 +5,16 @@ import { STATE_STATUSES } from '../../src/constants';
 import render from '../utils';
 import { mockFeaturedSongsData } from '../mocks';
 
+const handleCreateOpen = () => jest.fn;
+const handleDeleteOpen = () => jest.fn;
+
 test('FeaturedSongs renders with data', () => {
   const { getByText, getByTestId } = render(
     <FeaturedSongs
       cancel={jest.fn}
       data={{ songs: mockFeaturedSongsData }}
-      handleCreateOpen={jest.fn}
-      handleDeleteOpen={jest.fn}
+      onCreateOpen={handleCreateOpen}
+      onDeleteOpen={handleDeleteOpen}
       refresh={jest.fn}
       status={STATE_STATUSES.SUCCESS}
     />,

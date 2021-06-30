@@ -4,14 +4,16 @@ import AdminTable from '../../src/components/AdminTable/presenter';
 import render from '../utils';
 import { mockAdminData } from '../mocks';
 
+const handleSort = () => jest.fn;
+
 test('AdminTable renders with data', () => {
   const { container, getByTestId } = render(
     <AdminTable
       data={mockAdminData}
+      direction='asc'
+      onSort={handleSort}
       searchText=''
       sort='artist'
-      direction='asc'
-      onSort={jest.fn}
     />,
   );
   const firstRow = getByTestId('1');

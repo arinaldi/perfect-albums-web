@@ -15,8 +15,8 @@ const DateCol = (props) => {
   const {
     data,
     date,
-    handleEditOpen,
-    handleDeleteOpen,
+    onEditOpen,
+    onDeleteOpen,
   } = props;
   const { user: { isAuthenticated } } = useAppState();
 
@@ -40,14 +40,14 @@ const DateCol = (props) => {
                 <IconButton
                   aria-label='Edit Release'
                   icon={<EditIcon />}
-                  onClick={() => handleEditOpen(release)}
+                  onClick={() => onEditOpen(release)}
                   size='xs'
                   variant='ghost'
                 />
                 <IconButton
                   aria-label='Delete Release'
                   icon={<DeleteIcon />}
-                  onClick={() => handleDeleteOpen(release)}
+                  onClick={() => onDeleteOpen(release)}
                   size='xs'
                   variant='ghost'
                 />
@@ -63,8 +63,8 @@ const DateCol = (props) => {
 DateCol.propTypes = {
   data: PropTypes.array.isRequired,
   date: PropTypes.string.isRequired,
-  handleEditOpen: PropTypes.func.isRequired,
-  handleDeleteOpen: PropTypes.func.isRequired,
+  onEditOpen: PropTypes.func.isRequired,
+  onDeleteOpen: PropTypes.func.isRequired,
 };
 
 export default DateCol;

@@ -4,15 +4,19 @@ import NewReleases from '../../src/components/NewReleases/presenter';
 import render from '../utils';
 import { mockNewReleasesData, releaseLabels } from '../mocks';
 
+const handleCreateOpen = () => jest.fn;
+const handleEditOpen = () => jest.fn;
+const handleDeleteOpen = () => jest.fn;
+
 test('NewReleases renders with data by date', () => {
   const { getByText, getByTestId } = render(
     <NewReleases
       data={{ releases: mockNewReleasesData }}
       error={null}
-      handleCreateOpen={jest.fn}
-      handleEditOpen={jest.fn}
-      handleDeleteOpen={jest.fn}
       isLoading={false}
+      onCreateOpen={handleCreateOpen}
+      onEditOpen={handleEditOpen}
+      onDeleteOpen={handleDeleteOpen}
       refresh={jest.fn}
     />,
   );

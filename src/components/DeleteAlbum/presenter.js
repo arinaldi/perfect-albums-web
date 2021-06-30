@@ -1,9 +1,12 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  Text,
+} from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
 import { STATE_STATUSES } from '../../constants';
@@ -13,40 +16,42 @@ import SubmitButton from '../SubmitButton/presenter';
 const DeleteAlbum = (props) => {
   const {
     data,
-    handleSubmit,
     isDeleting,
+    onSubmit,
     query,
     status,
   } = props;
   const history = useHistory();
 
+  const handleCancel = () => {
+    history.push(`/admin?${query}`);
+  };
+
   return (
-    <Container>
-      <h3>Delete Album</h3>
+    <Container maxWidth='container.lg' mb={3}>
+      <Heading as='h3' size='lg'>Delete Album</Heading>
       {status === STATE_STATUSES.FAILURE && <AppMessage />}
       {data && (
-        <Form onSubmit={handleSubmit}>
-          <Form.Row>
-            <Form.Group as={Col} controlId='formConfirm'>
-              {`Are you sure you want to delete ${data.artist} – ${data.title}?`}
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
+        <form onSubmit={onSubmit}>
+          <Text marginY={4}>
+            {`Are you sure you want to delete ${data.artist} – ${data.title}?`}
+          </Text>
+          <Box>
             <Button
-              onClick={() => history.push(`/admin?${query}`)}
-              variant='outline-dark'
-              style={{ marginRight: 5 }}
+              onClick={handleCancel}
+              marginRight={2}
+              variant='outline'
             >
               Cancel
             </Button>
             <SubmitButton
               isDisabled={isDeleting}
               isLoading={isDeleting}
+              loadingText='Deleting'
               text='Delete'
-              loadingText='Deleting...'
             />
-          </Form.Row>
-        </Form>
+          </Box>
+        </form>
       )}
     </Container>
   );
@@ -57,8 +62,8 @@ DeleteAlbum.propTypes = {
     artist: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
   }),
-  handleSubmit: PropTypes.func.isRequired,
   isDeleting: PropTypes.bool,
+  onSubmit: PropTypes.func.isRequired,
   query: PropTypes.string,
   status: PropTypes.string.isRequired,
 };

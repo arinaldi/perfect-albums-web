@@ -40,8 +40,8 @@ const DeleteAlbumContainer = () => {
       <ProgressLoader isVisible={status === STATE_STATUSES.LOADING} />
       <DeleteAlbum
         data={data}
-        handleSubmit={handleSubmit}
         isDeleting={isSaving}
+        onSubmit={handleSubmit}
         query={query}
         status={status}
       />

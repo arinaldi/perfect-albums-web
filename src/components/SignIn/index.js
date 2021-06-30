@@ -51,11 +51,11 @@ const SignInContainer = () => {
   return (
     <ErrorBoundary>
       <SignIn
-        username={credentials.username}
-        password={credentials.password}
         isSubmitting={isSubmitting}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
+        onChange={handleChange}
+        onSubmit={handleSubmit}
+        password={credentials.password}
+        username={credentials.username}
       />
       {error && <AppMessage message={error} />}
     </ErrorBoundary>

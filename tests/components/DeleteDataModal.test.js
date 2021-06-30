@@ -5,20 +5,20 @@ import DeleteDataModal from '../../src/components/DeleteDataModal/presenter';
 import { mockFeaturedSongsData } from '../mocks';
 
 const { artist, title } = mockFeaturedSongsData[0];
+const handleClose = () => jest.fn;
+const handleDelete = () => jest.fn;
 
 test('DeleteDataModal renders with data', () => {
-  const handleClose = () => jest.fn;
-  const handleDelete = () => jest.fn;
   const { getByText } = render(
     <DeleteDataModal
-      isOpen
-      dataType='Song'
       artist={artist}
-      title={title}
+      dataType='Song'
+      error=''
       isDeleting={false}
+      isOpen
       onClose={handleClose}
       onDelete={handleDelete}
-      error=''
+      title={title}
     />,
   );
   const titleHeader = getByText('Delete Song');

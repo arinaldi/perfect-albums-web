@@ -1,108 +1,152 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  Radio,
+  RadioGroup,
+  Stack,
+  Text,
+} from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
 import { STATE_STATUSES } from '../../constants';
 import AppMessage from '../AppMessage/presenter';
-import InputFeedback from '../InputFeedback/presenter';
-import RadioGroup from '../RadioGroup/presenter';
 import SubmitButton from '../SubmitButton/presenter';
 
 const CreateEditAlbum = (props) => {
   const {
     data,
-    isValidated,
     isLoading,
     isSaving,
     query,
     header,
-    handleChange,
-    handleRadioChange,
-    handleSubmit,
+    onChange,
+    onRadioChange,
+    onSubmit,
     status,
   } = props;
   const history = useHistory();
 
   return (
-    <Container>
-      <h3>{header} Album</h3>
+    <Container maxWidth='container.lg' mb={6}>
+      <Heading as='h3' size='lg' mb={3}>
+        {header} Album
+      </Heading>
       {!isLoading && (
-        <Form
-          noValidate
-          validated={isValidated}
-          onSubmit={handleSubmit}
-        >
-          <Row>
-            <Col>
-              <InputFeedback
-                controlId='formArtist'
-                label='Artist'
-                name='artist'
-                value={data.artist}
-                onChange={handleChange}
-              />
-              <InputFeedback
-                controlId='formTitle'
-                label='Title'
-                name='title'
-                value={data.title}
-                onChange={handleChange}
-              />
-              <InputFeedback
-                controlId='formYear'
-                label='Year'
-                name='year'
-                value={data.year}
-                onChange={handleChange}
-              />
-            </Col>
-            <Col sm={12} md='auto'>
-              <RadioGroup
-                controlId='formCd'
-                label='CD'
-                name='cd'
-                value={data.cd}
-                onChange={handleRadioChange}
-              />
-              <RadioGroup
-                controlId='formAotd'
-                label='AotD'
-                name='aotd'
-                value={data.aotd}
-                onChange={handleRadioChange}
-              />
-              <RadioGroup
-                controlId='formFavorite'
-                label='Favorite'
-                name='favorite'
-                value={data.favorite}
-                onChange={handleRadioChange}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col style={{ paddingBottom: 15 }}>
-              <Button
-                onClick={() => history.push(`/admin?${query}`)}
-                variant='outline-dark'
-                style={{ marginRight: 5 }}
-              >
-                Cancel
-              </Button>
-              <SubmitButton
-                isDisabled={isSaving}
-                isLoading={isSaving}
-                text='Save'
-                loadingText='Saving...'
-              />
-            </Col>
-          </Row>
-        </Form>
+        <form onSubmit={onSubmit}>
+          <Flex flexDirection={{ base: 'column', md: 'row' }} justify='space-between'>
+            <Box flex={1} marginRight={6}>
+              <FormControl id='artist' isRequired>
+                <FormLabel>Artist</FormLabel>
+                <Input
+                  isRequired
+                  name='artist'
+                  onChange={onChange}
+                  type='text'
+                  value={data.artist}
+                />
+              </FormControl>
+              <FormControl id='title' isRequired marginY={4}>
+                <FormLabel>Title</FormLabel>
+                <Input
+                  isRequired
+                  name='title'
+                  onChange={onChange}
+                  type='text'
+                  value={data.title}
+                />
+              </FormControl>
+              <FormControl id='year' isRequired>
+                <FormLabel>Year</FormLabel>
+                <Input
+                  isRequired
+                  name='year'
+                  onChange={onChange}
+                  type='text'
+                  value={data.year}
+                />
+              </FormControl>
+            </Box>
+            <Box marginTop={{ base: 6, md: 0 }}>
+              <RadioGroup name='cd' value={data.cd}>
+                <Text>CD</Text>
+                <Stack direction='row' spacing={4}>
+                  <Radio
+                    marginBottom={0}
+                    onChange={onRadioChange}
+                    value={false}
+                  >
+                    false
+                  </Radio>
+                  <Radio
+                    onChange={onRadioChange}
+                    value
+                  >
+                    true
+                  </Radio>
+                </Stack>
+              </RadioGroup>
+              <RadioGroup marginY={{ base: 7, md: 14 }} name='aotd' value={data.aotd}>
+                <Text>AotD</Text>
+                <Stack direction='row' spacing={4}>
+                  <Radio
+                    marginBottom={0}
+                    onChange={onRadioChange}
+                    value={false}
+                  >
+                    false
+                  </Radio>
+                  <Radio
+                    onChange={onRadioChange}
+                    value
+                  >
+                    true
+                  </Radio>
+                </Stack>
+              </RadioGroup>
+              <RadioGroup name='favorite' value={data.favorite}>
+                <Text>Favorite</Text>
+                <Stack direction='row' spacing={4}>
+                  <Radio
+                    marginBottom={0}
+                    onChange={onRadioChange}
+                    value={false}
+                  >
+                    false
+                  </Radio>
+                  <Radio
+                    onChange={onRadioChange}
+                    value
+                  >
+                    true
+                  </Radio>
+                </Stack>
+              </RadioGroup>
+            </Box>
+          </Flex>
+          <Box marginTop={{ base: 8, md: 4 }}>
+            <Button
+              onClick={() => history.push(`/admin?${query}`)}
+              marginRight={1}
+              variant='outline'
+            >
+              Cancel
+            </Button>
+            <SubmitButton
+              isDisabled={isSaving}
+              isLoading={isSaving}
+              loadingText='Saving'
+              text='Save'
+            />
+          </Box>
+        </form>
       )}
       {status === STATE_STATUSES.FAILURE && <AppMessage />}
     </Container>
@@ -118,14 +162,13 @@ CreateEditAlbum.propTypes = {
     aotd: PropTypes.bool.isRequired,
     favorite: PropTypes.bool.isRequired,
   }).isRequired,
-  isValidated: PropTypes.bool,
   isLoading: PropTypes.bool,
   isSaving: PropTypes.bool,
   query: PropTypes.string,
   header: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  handleRadioChange: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onRadioChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   status: PropTypes.string.isRequired,
 };
 

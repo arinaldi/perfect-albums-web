@@ -30,7 +30,7 @@ const CreateAlbumContainer = () => {
     path: '/api/albums',
     successMessage: `${MESSAGES.ALBUM_PREFIX} created`,
   };
-  const { handleSubmit, isSaving, isValidated } = useSubmit(options);
+  const { handleSubmit, isSaving } = useSubmit(options);
 
   useEffect(() => {
     const query = location.search ? getQuery(location.search) : '';
@@ -51,10 +51,10 @@ const CreateAlbumContainer = () => {
     });
   };
 
-  const handleRadioChange = (value, e) => {
+  const handleRadioChange = ({ target: { name, value } }) => {
     setAlbum({
       ...album,
-      [e.target.name]: value,
+      [name]: value === 'true',
     });
   };
 
@@ -63,13 +63,12 @@ const CreateAlbumContainer = () => {
       <ProgressLoader isVisible={false} />
       <CreateEditAlbum
         data={album}
-        isValidated={isValidated}
         isSaving={isSaving}
         query={query}
         header='Create'
-        handleChange={handleChange}
-        handleRadioChange={handleRadioChange}
-        handleSubmit={handleSubmit}
+        onChange={handleChange}
+        onRadioChange={handleRadioChange}
+        onSubmit={handleSubmit}
         status={status}
       />
     </ErrorBoundary>

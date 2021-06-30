@@ -17,9 +17,9 @@ const FeaturedSongs = (props) => {
   const {
     data,
     error,
-    handleCreateOpen,
-    handleDeleteOpen,
     isLoading,
+    onCreateOpen,
+    onDeleteOpen,
     refresh,
   } = props;
   const { user: { isAuthenticated } } = useAppState();
@@ -43,7 +43,7 @@ const FeaturedSongs = (props) => {
             </Button>
             <Button
               variant='outline'
-              onClick={handleCreateOpen}
+              onClick={onCreateOpen}
             >
               New
             </Button>
@@ -61,7 +61,7 @@ const FeaturedSongs = (props) => {
             <CardWrapper
               key={song.id}
               song={song}
-              handleDeleteOpen={handleDeleteOpen}
+              handleDeleteOpen={onDeleteOpen}
             />
           ))}
         </SimpleGrid>
@@ -73,9 +73,9 @@ const FeaturedSongs = (props) => {
 FeaturedSongs.propTypes = {
   data: PropTypes.object,
   error: PropTypes.object,
-  handleCreateOpen: PropTypes.func.isRequired,
-  handleDeleteOpen: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
+  onCreateOpen: PropTypes.func.isRequired,
+  onDeleteOpen: PropTypes.func.isRequired,
   refresh: PropTypes.func.isRequired,
 };
 

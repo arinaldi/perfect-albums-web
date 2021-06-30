@@ -51,9 +51,9 @@ const FeaturedSongsContainer = () => {
       <FeaturedSongs
         data={data}
         error={error}
-        handleCreateOpen={handleCreateOpen}
-        handleDeleteOpen={handleDeleteOpen}
         isLoading={isLoading}
+        onCreateOpen={handleCreateOpen}
+        onDeleteOpen={handleDeleteOpen}
         refresh={refresh}
       />
     </ErrorBoundary>

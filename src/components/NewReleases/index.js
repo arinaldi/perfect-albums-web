@@ -64,10 +64,10 @@ const NewReleasesContainer = () => {
       <NewReleases
         data={data}
         error={error}
-        handleCreateOpen={handleCreateOpen}
-        handleEditOpen={handleEditOpen}
-        handleDeleteOpen={handleDeleteOpen}
         isLoading={isLoading}
+        onCreateOpen={handleCreateOpen}
+        onEditOpen={handleEditOpen}
+        onDeleteOpen={handleDeleteOpen}
         refresh={refresh}
       />
     </ErrorBoundary>

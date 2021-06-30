@@ -37,17 +37,17 @@ const DeleteDataModal = (props) => {
           </ModalBody>
           <ModalFooter>
             <Button
-              variant='outline'
-              mr={2}
+              marginRight={2}
               onClick={onClose}
+              variant='outline'
             >
               Close
             </Button>
             <SubmitButton
               isDisabled={isDeleting}
               isLoading={isDeleting}
-              text='Delete'
               loadingText='Deleting'
+              text='Delete'
             />
           </ModalFooter>
         </form>

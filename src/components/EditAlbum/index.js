@@ -62,10 +62,10 @@ const EditAlbumContainer = () => {
     });
   };
 
-  const handleRadioChange = (value, e) => {
+  const handleRadioChange = ({ target: { name, value } }) => {
     setAlbum({
       ...album,
-      [e.target.name]: value,
+      [name]: value === 'true',
     });
   };
 
@@ -79,9 +79,9 @@ const EditAlbumContainer = () => {
         isSaving={isSaving}
         query={query}
         header='Edit'
-        handleChange={handleChange}
-        handleRadioChange={handleRadioChange}
-        handleSubmit={handleSubmit}
+        onChange={handleChange}
+        onRadioChange={handleRadioChange}
+        onSubmit={handleSubmit}
         status={status}
       />
     </ErrorBoundary>
