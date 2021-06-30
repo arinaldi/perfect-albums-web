@@ -99,23 +99,23 @@ const AdminContainer = () => {
     <ErrorBoundary>
       <ProgressLoader isVisible={isLoading} />
       <Admin
-        isLoading={isLoading}
-        searchText={searchText}
-        total={total}
-        data={albums}
-        currentPage={currentPage}
-        perPage={perPage}
-        sort={sort}
-        direction={direction}
-        searchInput={searchInput}
-        handleChange={handleChange}
         clearInput={clearInput}
-        handleFirst={handleFirst}
-        handleLast={handleLast}
-        handlePrev={handlePrev}
-        handleNext={handleNext}
-        handlePageChange={handlePageChange}
-        handleSort={handleSort}
+        currentPage={currentPage}
+        isLoading={isLoading}
+        data={albums}
+        direction={direction}
+        onChange={handleChange}
+        onFirst={handleFirst}
+        onLast={handleLast}
+        onNext={handleNext}
+        onPageChange={handlePageChange}
+        onPrev={handlePrev}
+        onSort={handleSort}
+        perPage={perPage}
+        searchInput={searchInput}
+        searchText={searchText}
+        sort={sort}
+        total={total}
       />
     </ErrorBoundary>
   );

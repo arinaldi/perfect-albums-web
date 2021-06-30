@@ -1,10 +1,12 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
+import {
+  Button,
+  Td,
+  Tr,
+} from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 import PropTypes from 'prop-types';
-
-const margin = 2;
 
 const AdminTableRow = (props) => {
   const { item, searchText } = props;
@@ -16,32 +18,32 @@ const AdminTableRow = (props) => {
   };
 
   return (
-    <tr data-testid={id}>
-      <td>{artist}</td>
-      <td>{title}</td>
-      <td>{year}</td>
-      <td>{cd ? <CheckIcon /> : null}</td>
-      <td>{aotd ? <CheckIcon /> : null}</td>
-      <td>{favorite ? <CheckIcon /> : null}</td>
-      <td>
+    <Tr data-testid={id}>
+      <Td>{artist}</Td>
+      <Td>{title}</Td>
+      <Td>{year}</Td>
+      <Td>{cd ? <CheckIcon /> : null}</Td>
+      <Td>{aotd ? <CheckIcon /> : null}</Td>
+      <Td>{favorite ? <CheckIcon /> : null}</Td>
+      <Td>
         <Button
-          variant='outline-dark'
-          size='sm'
+          marginRight={1}
           onClick={() => navigate('edit')}
-          style={{ margin }}
+          size='sm'
+          variant='outline'
         >
           Edit
         </Button>
         <Button
-          variant='outline-dark'
-          size='sm'
+          marginRight={1}
           onClick={() => navigate('delete')}
-          style={{ margin }}
+          size='sm'
+          variant='outline'
         >
           Delete
         </Button>
-      </td>
-    </tr>
+      </Td>
+    </Tr>
   );
 };
 

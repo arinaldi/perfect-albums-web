@@ -15,14 +15,14 @@ test('Admin renders with data', () => {
       sort='artist'
       direction='asc'
       searchInput={{ current: null }}
-      handleChange={jest.fn}
+      onChange={jest.fn}
       clearInput={jest.fn}
-      handleFirst={jest.fn}
-      handleLast={jest.fn}
-      handlePrev={jest.fn}
-      handleNext={jest.fn}
-      handlePageChange={jest.fn}
-      handleSort={jest.fn}
+      onFirst={jest.fn}
+      onLast={jest.fn}
+      onPrev={jest.fn}
+      onNext={jest.fn}
+      onPageChange={jest.fn}
+      onSort={jest.fn}
       isLoading={false}
     />,
   );

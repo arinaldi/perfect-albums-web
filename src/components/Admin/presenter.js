@@ -1,14 +1,23 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import {
+  Badge,
+  Box,
+  Button,
+  ButtonGroup,
+  Code,
+  Container,
+  Flex,
+  Heading,
+  Input,
+} from '@chakra-ui/react';
+import {
+  ArrowBackIcon,
+  ArrowForwardIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from '@chakra-ui/icons';
 import PropTypes from 'prop-types';
-import Badge from 'react-bootstrap/Badge';
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Pagination from 'react-bootstrap/Pagination';
-import Row from 'react-bootstrap/Row';
 
 import { ALERT_TYPES, MESSAGES, PER_PAGE } from '../../constants';
 
@@ -17,23 +26,23 @@ import AppMessage from '../AppMessage/presenter';
 
 const Admin = (props) => {
   const {
-    isLoading,
-    searchText,
-    total,
-    data,
-    currentPage,
-    perPage,
-    sort,
-    direction,
-    searchInput,
-    handleChange,
     clearInput,
-    handleFirst,
-    handleLast,
-    handlePrev,
-    handleNext,
-    handlePageChange,
-    handleSort,
+    currentPage,
+    data,
+    direction,
+    isLoading,
+    onChange,
+    onFirst,
+    onLast,
+    onNext,
+    onPrev,
+    onPageChange,
+    onSort,
+    perPage,
+    searchInput,
+    searchText,
+    sort,
+    total,
   } = props;
   const history = useHistory();
   const isFirstPage = currentPage === 1;
@@ -43,21 +52,23 @@ const Admin = (props) => {
     searchInput.current.focus();
   }, [searchInput]);
 
+  const handleNavigate = () => {
+    history.push(`/admin/new?${searchText}`);
+  };
+
   const PerPageSelector = (
     <ButtonGroup
       aria-label='Change per page'
-      style={{
-        alignSelf: 'flex-start',
-        marginLeft: '10px',
-        marginRight: '10px',
-      }}
+      isAttached
+      size='sm'
+      variant='outline'
     >
       {PER_PAGE.map((page, index) => (
         <Button
           key={index}
-          onClick={() => handlePageChange(page)}
-          variant={page === perPage ? 'dark' : 'outline-dark'}
-          disabled={page === perPage}
+          isDisabled={page === perPage}
+          onClick={() => onPageChange(page)}
+          variant='outline'
         >
           {page}
         </Button>
@@ -65,29 +76,41 @@ const Admin = (props) => {
     </ButtonGroup>
   );
 
-  const PaginationBar = () => (
-    <Row className='justify-content-center'>
-      <Pagination style={{ marginLeft: '10px', marginRight: '10px' }}>
-        <Pagination.First
-          onClick={handleFirst}
-          disabled={isFirstPage}
-        />
-        <Pagination.Prev
-          onClick={handlePrev}
-          disabled={isFirstPage}
-        />
-        <Pagination.Item disabled>{currentPage}</Pagination.Item>
-        <Pagination.Next
-          onClick={handleNext}
-          disabled={isLastPage}
-        />
-        <Pagination.Last
-          onClick={handleLast}
-          disabled={isLastPage}
-        />
-      </Pagination>
-      {PerPageSelector}
-    </Row>
+  const Pagination = (
+    <ButtonGroup
+      aria-label='Change page'
+      isAttached
+      size='sm'
+      variant='outline'
+    >
+      <Button
+        isDisabled={isFirstPage}
+        onClick={onFirst}
+      >
+        <ArrowBackIcon />
+      </Button>
+      <Button
+        isDisabled={isFirstPage}
+        onClick={onPrev}
+      >
+        <ChevronLeftIcon />
+      </Button>
+      <Button isDisabled>
+        {currentPage}
+      </Button>
+      <Button
+        isDisabled={isLastPage}
+        onClick={onNext}
+      >
+        <ChevronRightIcon />
+      </Button>
+      <Button
+        isDisabled={isLastPage}
+        onClick={onLast}
+      >
+        <ArrowForwardIcon />
+      </Button>
+    </ButtonGroup>
   );
 
   const Content = () => {
@@ -97,10 +120,10 @@ const Admin = (props) => {
       ? (
         <AdminTable
           data={data}
+          direction={direction}
+          onSort={onSort}
           searchText={searchText}
           sort={sort}
-          direction={direction}
-          handleSort={handleSort}
         />
       )
       : (
@@ -112,81 +135,75 @@ const Admin = (props) => {
   };
 
   return (
-    <Container>
-      <Row>
-        <Col xs={12}>
-          <Row style={{ marginBottom: '15px' }}>
-            <Col>
-              <h3 style={{ marginBottom: 0 }}>Admin</h3>
-            </Col>
-            <Col style={{ alignSelf: 'center' }}>
-              <code>{process.env.npm_package_version}</code>
-            </Col>
-            <Col xs='auto'>
-              <h3 style={{ marginBottom: 0 }} data-testid='total'>
-                <Badge variant='light'>{total.toLocaleString()}</Badge>
-              </h3>
-            </Col>
-          </Row>
-          <Form onSubmit={e => e.preventDefault()}>
-            <Form.Group as={Row} controlId='formSearch'>
-              <Col>
-                <Row>
-                  <Col>
-                    <Form.Control
-                      ref={searchInput}
-                      type='text'
-                      value={searchText}
-                      placeholder='Search'
-                      onChange={handleChange}
-                      style={{ marginBottom: 5 }}
-                    />
-                  </Col>
-                </Row>
-              </Col>
-              <Col sm={12} md='auto'>
-                <Button
-                  variant='outline-dark'
-                  onClick={clearInput}
-                  style={{ marginRight: 5 }}
-                >
-                  Clear
-                </Button>
-                <Button
-                  variant='outline-dark'
-                  onClick={() => history.push(`/admin/new?${searchText}`)}
-                >
-                  New
-                </Button>
-              </Col>
-            </Form.Group>
-          </Form>
-          <PaginationBar />
-          <Content />
-        </Col>
-      </Row>
+    <Container maxWidth='container.lg' mb={6}>
+      <Flex align='center' justify='space-between' mb={3}>
+        <Heading as='h3' size='lg'>Admin</Heading>
+        <Code>{process.env.npm_package_version}</Code>
+        <Heading as='h3' size='lg'>
+          <Badge
+            borderRadius='4px'
+            data-testid='total'
+            fontSize='0.9em'
+            verticalAlign='baseline'
+          >
+            {total.toLocaleString()}
+          </Badge>
+        </Heading>
+      </Flex>
+      <Flex align='center' justify='space-between' mb={3}>
+        <Input
+          marginRight={3}
+          name='username'
+          onChange={onChange}
+          placeholder='Search'
+          ref={searchInput}
+          type='text'
+          value={searchText}
+        />
+        <Flex>
+          <Button
+            marginRight={1}
+            onClick={clearInput}
+            variant='outline'
+          >
+            Clear
+          </Button>
+          <Button
+            onClick={handleNavigate}
+            variant='outline'
+          >
+            New
+          </Button>
+        </Flex>
+      </Flex>
+      <Flex align='center' justify='center' mb={3}>
+        {Pagination}
+        <Box mx={2} />
+        {PerPageSelector}
+      </Flex>
+      <Content />
     </Container>
   );
 };
 
 Admin.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  searchText: PropTypes.string.isRequired,
-  total: PropTypes.number.isRequired,
   data: PropTypes.array.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  perPage: PropTypes.number.isRequired,
-  sort: PropTypes.string.isRequired,
-  direction: PropTypes.string.isRequired,
-  searchInput: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
   clearInput: PropTypes.func.isRequired,
-  handleFirst: PropTypes.func.isRequired,
-  handleLast: PropTypes.func.isRequired,
-  handlePrev: PropTypes.func.isRequired,
-  handleNext: PropTypes.func.isRequired,
-  handlePageChange: PropTypes.func.isRequired,
-  handleSort: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  direction: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onFirst: PropTypes.func.isRequired,
+  onLast: PropTypes.func.isRequired,
+  onNext: PropTypes.func.isRequired,
+  onPrev: PropTypes.func.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  onSort: PropTypes.func.isRequired,
+  perPage: PropTypes.number.isRequired,
+  searchInput: PropTypes.object.isRequired,
+  searchText: PropTypes.string.isRequired,
+  sort: PropTypes.string.isRequired,
+  total: PropTypes.number.isRequired,
 };
 
 export default Admin;

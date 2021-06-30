@@ -44,10 +44,10 @@ const TopAlbums = (props) => {
           <Spacer />
           {isAuthenticated && (
             <Button
-              variant='outline'
               isDisabled={isLoading}
-              onClick={refresh}
               marginRight={1}
+              onClick={refresh}
+              variant='outline'
             >
               Refresh
             </Button>

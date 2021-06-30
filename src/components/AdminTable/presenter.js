@@ -1,5 +1,12 @@
 import React from 'react';
-import Table from 'react-bootstrap/Table';
+import {
+  Box,
+  Table,
+  Thead,
+  Tbody,
+  Th,
+  Tr,
+} from '@chakra-ui/react';
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
 import PropTypes from 'prop-types';
 
@@ -16,62 +23,64 @@ const getSortIcon = (direction) => {
 const AdminTable = (props) => {
   const {
     data,
+    direction,
+    onSort,
     searchText,
     sort,
-    direction,
-    handleSort,
   } = props;
 
   return (
-    <Table responsive striped hover size='sm'>
-      <thead>
-        <tr>
-          <th
-            data-value='artist'
-            onClick={handleSort}
-          >
-            {sort === 'artist' && getSortIcon(direction)}
-            Artist
-          </th>
-          <th
-            data-value='title'
-            onClick={handleSort}
-          >
-            {sort === 'title' && getSortIcon(direction)}
-            Title
-          </th>
-          <th
-            data-value='year'
-            onClick={handleSort}
-          >
-            {sort === 'year' && getSortIcon(direction)}
-            Year
-          </th>
-          <th>CD</th>
-          <th>AotD</th>
-          <th>Favorite</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map(item => (
-          <AdminTableRow
-            key={item.id}
-            item={item}
-            searchText={searchText}
-          />
-        ))}
-      </tbody>
-    </Table>
+    <Box overflowX='auto'>
+      <Table size='sm' variant='striped'>
+        <Thead>
+          <Tr>
+            <Th
+              data-value='artist'
+              onClick={onSort}
+            >
+              {sort === 'artist' && getSortIcon(direction)}
+              Artist
+            </Th>
+            <Th
+              data-value='title'
+              onClick={onSort}
+            >
+              {sort === 'title' && getSortIcon(direction)}
+              Title
+            </Th>
+            <Th
+              data-value='year'
+              onClick={onSort}
+            >
+              {sort === 'year' && getSortIcon(direction)}
+              Year
+            </Th>
+            <Th>CD</Th>
+            <Th>AotD</Th>
+            <Th>Favorite</Th>
+            <Th>Actions</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {data.map(item => (
+            <AdminTableRow
+              key={item.id}
+              item={item}
+              searchText={searchText}
+            />
+          ))}
+        </Tbody>
+      </Table>
+    </Box>
   );
 };
 
 AdminTable.propTypes = {
   data: PropTypes.array.isRequired,
+  direction: PropTypes.string.isRequired,
+  onSort: PropTypes.func.isRequired,
   searchText: PropTypes.string,
   sort: PropTypes.string.isRequired,
-  direction: PropTypes.string.isRequired,
-  handleSort: PropTypes.func.isRequired,
 };
 
 AdminTable.defaultProps = {

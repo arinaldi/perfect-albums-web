@@ -11,7 +11,7 @@ test('AdminTable renders with data', () => {
       searchText=''
       sort='artist'
       direction='asc'
-      handleSort={jest.fn}
+      onSort={jest.fn}
     />,
   );
   const firstRow = getByTestId('1');
