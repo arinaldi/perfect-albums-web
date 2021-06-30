@@ -28,7 +28,7 @@ const DeleteAlbum = (props) => {
   };
 
   return (
-    <Container maxWidth='container.lg' mb={3}>
+    <Container maxWidth='container.lg' marginBottom={3}>
       <Heading as='h3' size='lg'>Delete Album</Heading>
       {data && (
         <form onSubmit={onSubmit}>

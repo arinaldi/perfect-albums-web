@@ -33,7 +33,7 @@ const Sandbox = (props) => {
     <Container maxWidth='container.lg' marginBottom={6}>
       <Flex>
         <Box flex={1}>
-          <Heading as='h3' mb={3} size='lg'>
+          <Heading as='h3' marginBottom={3} size='lg'>
             Sandbox
           </Heading>
           <Page page={page} perPage={10} />
@@ -56,7 +56,7 @@ const Sandbox = (props) => {
           </Button>
         </Box>
         <Box flex={1}>
-          <Heading as='h3' mb={3} size='lg'>
+          <Heading as='h3' marginBottom={3} size='lg'>
             Sandbox 2
           </Heading>
           <LoadMore />

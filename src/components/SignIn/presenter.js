@@ -25,7 +25,7 @@ const SignIn = (props) => {
 
   return (
     <Container maxWidth='container.lg' marginBottom={6}>
-      <Flex align='center' mb={3}>
+      <Flex align='center' marginBottom={3}>
         <Heading as='h3' size='lg'>
           Sign In
         </Heading>

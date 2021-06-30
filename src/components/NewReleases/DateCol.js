@@ -24,7 +24,7 @@ const DateCol = (props) => {
     <Box>
       <Heading
         as='h5'
-        mb={2}
+        marginBottom={2}
         size='md'
       >
         {date}

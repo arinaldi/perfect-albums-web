@@ -35,8 +35,8 @@ const CreateEditAlbum = (props) => {
   const history = useHistory();
 
   return (
-    <Container maxWidth='container.lg' mb={6}>
-      <Heading as='h3' size='lg' mb={3}>
+    <Container maxWidth='container.lg' marginBottom={6}>
+      <Heading as='h3' size='lg' marginBottom={3}>
         {header} Album
       </Heading>
       {!isLoading && (

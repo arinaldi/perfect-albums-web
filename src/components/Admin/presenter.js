@@ -135,8 +135,8 @@ const Admin = (props) => {
   };
 
   return (
-    <Container maxWidth='container.lg' mb={6}>
-      <Flex align='center' justify='space-between' mb={3}>
+    <Container maxWidth='container.lg' marginBottom={6}>
+      <Flex align='center' justify='space-between' marginBottom={3}>
         <Heading as='h3' size='lg'>Admin</Heading>
         <Code>{process.env.npm_package_version}</Code>
         <Heading as='h3' size='lg'>
@@ -150,7 +150,7 @@ const Admin = (props) => {
           </Badge>
         </Heading>
       </Flex>
-      <Flex align='center' justify='space-between' mb={3}>
+      <Flex align='center' justify='space-between' marginBottom={3}>
         <Input
           marginRight={3}
           name='username'
@@ -176,7 +176,7 @@ const Admin = (props) => {
           </Button>
         </Flex>
       </Flex>
-      <Flex align='center' justify='center' mb={3}>
+      <Flex align='center' justify='center' marginBottom={3}>
         {Pagination}
         <Box mx={2} />
         {PerPageSelector}
