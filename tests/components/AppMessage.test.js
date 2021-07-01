@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 
 import AppMessage from '../../src/components/AppMessage/presenter';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import AdminTable from '../../src/components/AdminTable/presenter';
 import render from '../utils';
 import { mockAdminData } from '../mocks';

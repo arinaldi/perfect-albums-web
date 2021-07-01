@@ -1,5 +1,3 @@
-import React from 'react';
-
 import NewReleases from '../../src/components/NewReleases/presenter';
 import render from '../utils';
 import { mockNewReleasesData, releaseLabels } from '../mocks';

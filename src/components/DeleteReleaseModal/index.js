@@ -1,4 +1,3 @@
-import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
 
 import useGqlSubmit from '../../hooks/useGqlSubmit';

@@ -1,4 +1,3 @@
-import React, { Fragment } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -40,11 +39,11 @@ const AppRoutes = () => (
 const Routes = () => {
   return (
     <Router>
-      <Fragment>
+      <>
         <NavBar />
         <ModalContainer />
         <AppRoutes />
-      </Fragment>
+      </>
     </Router>
   );
 };

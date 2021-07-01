@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Link } from '@chakra-ui/react';
 
 import { DISPATCH_TYPES } from '../../constants';

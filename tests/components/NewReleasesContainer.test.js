@@ -1,4 +1,3 @@
-import React from 'react';
 import { MockedProvider } from '@apollo/react-testing';
 
 import NewReleasesContainer from '../../src/components/NewReleases';

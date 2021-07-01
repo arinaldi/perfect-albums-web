@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Admin from '../../src/components/Admin/presenter';
 import render from '../utils';
 import { mockAdminData } from '../mocks';

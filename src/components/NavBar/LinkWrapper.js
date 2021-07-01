@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Link } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';

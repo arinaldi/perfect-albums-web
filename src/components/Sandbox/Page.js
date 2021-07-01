@@ -1,4 +1,3 @@
-import React from 'react';
 import useSWR from 'swr';
 import { ListItem, Text, UnorderedList } from '@chakra-ui/react';
 import PropTypes from 'prop-types';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Alert, AlertIcon } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 

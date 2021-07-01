@@ -1,5 +1,3 @@
-import React from 'react';
-
 import CreateAlbum from '../../src/components/CreateAlbum/presenter';
 import { STATE_STATUSES } from '../../src/constants';
 import render from '../utils';

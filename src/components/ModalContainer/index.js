@@ -1,5 +1,3 @@
-import React, { Fragment } from 'react';
-
 import { MODAL_TYPES } from '../../constants';
 import { useAppState } from '../Provider';
 import CreateReleaseModal from '../CreateReleaseModal';
@@ -23,7 +21,7 @@ const ModalContainer = () => {
   case MODAL_TYPES.FEATURED_SONGS_DELETE:
     return <DeleteSongModal />;
   default:
-    return <Fragment />;
+    return null;
   }
 };
 

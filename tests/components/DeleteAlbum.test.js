@@ -1,5 +1,3 @@
-import React from 'react';
-
 import DeleteAlbum from '../../src/components/DeleteAlbum/presenter';
 import { STATE_STATUSES } from '../../src/constants';
 import render from '../utils';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
 import { DISPATCH_TYPES, MODAL_TYPES } from '../../constants';

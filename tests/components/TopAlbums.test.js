@@ -1,5 +1,3 @@
-import React from 'react';
-
 import TopAlbums from '../../src/components/TopAlbums/presenter';
 import render from '../utils';
 import { mockTopAlbumsData } from '../mocks';

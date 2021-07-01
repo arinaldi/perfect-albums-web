@@ -1,5 +1,3 @@
-import React from 'react';
-
 import FeaturedSongs from '../../src/components/FeaturedSongs/presenter';
 import { STATE_STATUSES } from '../../src/constants';
 import render from '../utils';
