@@ -27,8 +27,8 @@ const DeleteAlbum = (props) => {
   };
 
   return (
-    <Container maxWidth='container.lg' marginBottom={3}>
-      <Heading as='h3' size='lg'>Delete Album</Heading>
+    <Container maxWidth="container.lg" marginBottom={3}>
+      <Heading as="h3" size="lg">Delete Album</Heading>
       {data && (
         <form onSubmit={onSubmit}>
           <Text marginY={4}>
@@ -38,15 +38,15 @@ const DeleteAlbum = (props) => {
             <Button
               onClick={handleCancel}
               marginRight={2}
-              variant='outline'
+              variant="outline"
             >
               Cancel
             </Button>
             <SubmitButton
               isDisabled={isDeleting}
               isLoading={isDeleting}
-              loadingText='Deleting'
-              text='Delete'
+              loadingText="Deleting"
+              text="Delete"
             />
           </Box>
         </form>

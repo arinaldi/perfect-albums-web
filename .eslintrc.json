@@ -37,7 +37,7 @@
       "error",
       { "groups": ["builtin", "external", "parent", "sibling", "index"] }
     ],
-    "jsx-quotes": "error",
+    "jsx-quotes": ["error", "prefer-double"],
     "no-console": "warn",
     "no-unused-vars": ["error", { "varsIgnorePattern": "should|expect" }],
     "quotes": ["error", "single"],

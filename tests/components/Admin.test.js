@@ -16,7 +16,7 @@ test('Admin renders with data', () => {
       clearInput={jest.fn}
       currentPage={1}
       data={mockAdminData}
-      direction='asc'
+      direction="asc"
       isLoading={false}
       onChange={handleChange}
       onFirst={handleFirst}
@@ -27,8 +27,8 @@ test('Admin renders with data', () => {
       onSort={handleSort}
       perPage={25}
       searchInput={{ current: null }}
-      searchText=''
-      sort='artist'
+      searchText=""
+      sort="artist"
       total={mockAdminData.length}
     />,
   );

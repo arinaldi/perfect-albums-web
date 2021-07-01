@@ -62,7 +62,7 @@ const CreateAlbumContainer = () => {
         data={album}
         isSaving={isSaving}
         query={query}
-        header='Create'
+        header="Create"
         onChange={handleChange}
         onRadioChange={handleRadioChange}
         onSubmit={handleSubmit}

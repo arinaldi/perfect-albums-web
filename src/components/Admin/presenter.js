@@ -58,17 +58,17 @@ const Admin = (props) => {
 
   const PerPageSelector = (
     <ButtonGroup
-      aria-label='Change per page'
+      aria-label="Change per page"
       isAttached
-      size='sm'
-      variant='outline'
+      size="sm"
+      variant="outline"
     >
       {PER_PAGE.map((page, index) => (
         <Button
           key={index}
           isDisabled={page === perPage}
           onClick={() => onPageChange(page)}
-          variant='outline'
+          variant="outline"
         >
           {page}
         </Button>
@@ -78,10 +78,10 @@ const Admin = (props) => {
 
   const Pagination = (
     <ButtonGroup
-      aria-label='Change page'
+      aria-label="Change page"
       isAttached
-      size='sm'
-      variant='outline'
+      size="sm"
+      variant="outline"
     >
       <Button
         isDisabled={isFirstPage}
@@ -135,48 +135,48 @@ const Admin = (props) => {
   };
 
   return (
-    <Container maxWidth='container.lg' marginBottom={6}>
-      <Flex align='center' justify='space-between' marginBottom={3}>
-        <Heading as='h3' size='lg'>Admin</Heading>
+    <Container maxWidth="container.lg" marginBottom={6}>
+      <Flex align="center" justify="space-between" marginBottom={3}>
+        <Heading as="h3" size="lg">Admin</Heading>
         <Code>{process.env.npm_package_version}</Code>
-        <Heading as='h3' size='lg'>
+        <Heading as="h3" size="lg">
           <Badge
-            borderRadius='4px'
-            data-testid='total'
-            fontSize='0.9em'
-            verticalAlign='baseline'
+            borderRadius="4px"
+            data-testid="total"
+            fontSize="0.9em"
+            verticalAlign="baseline"
           >
             {total.toLocaleString()}
           </Badge>
         </Heading>
       </Flex>
-      <Flex align='center' justify='space-between' marginBottom={3}>
+      <Flex align="center" justify="space-between" marginBottom={3}>
         <Input
           marginRight={3}
-          name='username'
+          name="username"
           onChange={onChange}
-          placeholder='Search'
+          placeholder="Search"
           ref={searchInput}
-          type='text'
+          type="text"
           value={searchText}
         />
         <Flex>
           <Button
             marginRight={1}
             onClick={clearInput}
-            variant='outline'
+            variant="outline"
           >
             Clear
           </Button>
           <Button
             onClick={handleNavigate}
-            variant='outline'
+            variant="outline"
           >
             New
           </Button>
         </Flex>
       </Flex>
-      <Flex align='center' justify='center' marginBottom={3}>
+      <Flex align="center" justify="center" marginBottom={3}>
         {Pagination}
         <Box mx={2} />
         {PerPageSelector}

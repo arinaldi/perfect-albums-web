@@ -21,19 +21,19 @@ const Sandbox = (props) => {
     data.push(
       <Page
         key={i}
-        direction='desc'
+        direction="desc"
         page={i + 1}
         perPage={10}
-        sort='year'
+        sort="year"
       />,
     );
   }
 
   return (
-    <Container maxWidth='container.lg' marginBottom={6}>
+    <Container maxWidth="container.lg" marginBottom={6}>
       <Flex>
         <Box flex={1}>
-          <Heading as='h3' marginBottom={3} size='lg'>
+          <Heading as="h3" marginBottom={3} size="lg">
             Sandbox
           </Heading>
           <Page page={page} perPage={10} />
@@ -41,7 +41,7 @@ const Sandbox = (props) => {
             <Page page={page + 1} perPage={10} />
           </Box>
           <Button
-            variant='outline'
+            variant="outline"
             onClick={handleNext}
           >
             Next
@@ -49,14 +49,14 @@ const Sandbox = (props) => {
           <Divider my={4} />
           {data}
           <Button
-            variant='outline'
+            variant="outline"
             onClick={() => setDataPage(page => page + 1)}
           >
             Load More
           </Button>
         </Box>
         <Box flex={1}>
-          <Heading as='h3' marginBottom={3} size='lg'>
+          <Heading as="h3" marginBottom={3} size="lg">
             Sandbox 2
           </Heading>
           <LoadMore />

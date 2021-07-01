@@ -14,19 +14,19 @@ const AlbumCol = (props) => {
 
   return (
     <Box>
-      <Flex align='center' marginBottom={2}>
+      <Flex align="center" marginBottom={2}>
         <Heading
-          as='h5'
+          as="h5"
           id={year}
-          size='md'
+          size="md"
         >
           {year}
         </Heading>
         <Spacer />
         <Box>
           <Badge
-            borderRadius='4px'
-            fontSize='1.25em'
+            borderRadius="4px"
+            fontSize="1.25em"
             marginLeft={1}
           >
             {total}

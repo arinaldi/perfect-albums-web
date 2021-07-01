@@ -22,9 +22,9 @@ const DateCol = (props) => {
   return (
     <Box>
       <Heading
-        as='h5'
+        as="h5"
         marginBottom={2}
-        size='md'
+        size="md"
       >
         {date}
       </Heading>
@@ -35,20 +35,20 @@ const DateCol = (props) => {
               {release.artist} &ndash; {release.title}
             </span>
             {isAuthenticated && (
-              <Box as='span' ml={1}>
+              <Box as="span" ml={1}>
                 <IconButton
-                  aria-label='Edit Release'
+                  aria-label="Edit Release"
                   icon={<EditIcon />}
                   onClick={() => onEditOpen(release)}
-                  size='xs'
-                  variant='ghost'
+                  size="xs"
+                  variant="ghost"
                 />
                 <IconButton
-                  aria-label='Delete Release'
+                  aria-label="Delete Release"
                   icon={<DeleteIcon />}
                   onClick={() => onDeleteOpen(release)}
-                  size='xs'
-                  variant='ghost'
+                  size="xs"
+                  variant="ghost"
                 />
               </Box>
             )}

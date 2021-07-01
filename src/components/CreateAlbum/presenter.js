@@ -34,49 +34,49 @@ const CreateEditAlbum = (props) => {
   const history = useHistory();
 
   return (
-    <Container maxWidth='container.lg' marginBottom={6}>
-      <Heading as='h3' size='lg' marginBottom={3}>
+    <Container maxWidth="container.lg" marginBottom={6}>
+      <Heading as="h3" size="lg" marginBottom={3}>
         {header} Album
       </Heading>
       {!isLoading && (
         <form onSubmit={onSubmit}>
-          <Flex flexDirection={{ base: 'column', md: 'row' }} justify='space-between'>
+          <Flex flexDirection={{ base: 'column', md: 'row' }} justify="space-between">
             <Box flex={1} marginRight={6}>
-              <FormControl id='artist' isRequired>
+              <FormControl id="artist" isRequired>
                 <FormLabel>Artist</FormLabel>
                 <Input
                   isRequired
-                  name='artist'
+                  name="artist"
                   onChange={onChange}
-                  type='text'
+                  type="text"
                   value={data.artist}
                 />
               </FormControl>
-              <FormControl id='title' isRequired marginY={4}>
+              <FormControl id="title" isRequired marginY={4}>
                 <FormLabel>Title</FormLabel>
                 <Input
                   isRequired
-                  name='title'
+                  name="title"
                   onChange={onChange}
-                  type='text'
+                  type="text"
                   value={data.title}
                 />
               </FormControl>
-              <FormControl id='year' isRequired>
+              <FormControl id="year" isRequired>
                 <FormLabel>Year</FormLabel>
                 <Input
                   isRequired
-                  name='year'
+                  name="year"
                   onChange={onChange}
-                  type='text'
+                  type="text"
                   value={data.year}
                 />
               </FormControl>
             </Box>
             <Box marginTop={{ base: 6, md: 0 }}>
-              <RadioGroup name='cd' value={data.cd}>
+              <RadioGroup name="cd" value={data.cd}>
                 <Text>CD</Text>
-                <Stack direction='row' spacing={4}>
+                <Stack direction="row" spacing={4}>
                   <Radio
                     marginBottom={0}
                     onChange={onRadioChange}
@@ -92,9 +92,9 @@ const CreateEditAlbum = (props) => {
                   </Radio>
                 </Stack>
               </RadioGroup>
-              <RadioGroup marginY={{ base: 7, md: 14 }} name='aotd' value={data.aotd}>
+              <RadioGroup marginY={{ base: 7, md: 14 }} name="aotd" value={data.aotd}>
                 <Text>AotD</Text>
-                <Stack direction='row' spacing={4}>
+                <Stack direction="row" spacing={4}>
                   <Radio
                     marginBottom={0}
                     onChange={onRadioChange}
@@ -110,9 +110,9 @@ const CreateEditAlbum = (props) => {
                   </Radio>
                 </Stack>
               </RadioGroup>
-              <RadioGroup name='favorite' value={data.favorite}>
+              <RadioGroup name="favorite" value={data.favorite}>
                 <Text>Favorite</Text>
-                <Stack direction='row' spacing={4}>
+                <Stack direction="row" spacing={4}>
                   <Radio
                     marginBottom={0}
                     onChange={onRadioChange}
@@ -134,15 +134,15 @@ const CreateEditAlbum = (props) => {
             <Button
               onClick={() => history.push(`/admin?${query}`)}
               marginRight={1}
-              variant='outline'
+              variant="outline"
             >
               Cancel
             </Button>
             <SubmitButton
               isDisabled={isSaving}
               isLoading={isSaving}
-              loadingText='Saving'
-              text='Save'
+              loadingText="Saving"
+              text="Save"
             />
           </Box>
         </form>

@@ -15,8 +15,8 @@ import AdminTableRow from './AdminTableRow';
 const getSortIcon = (direction) => {
   const { ASC, DESC } = SORT_DIRECTION;
   if (!direction) return '';
-  if (direction === ASC) return <ArrowUpIcon mr={1} verticalAlign='text-bottom' />;
-  if (direction === DESC) return <ArrowDownIcon mr={1} verticalAlign='text-bottom' />;
+  if (direction === ASC) return <ArrowUpIcon mr={1} verticalAlign="text-bottom" />;
+  if (direction === DESC) return <ArrowDownIcon mr={1} verticalAlign="text-bottom" />;
 };
 
 const AdminTable = (props) => {
@@ -29,29 +29,29 @@ const AdminTable = (props) => {
   } = props;
 
   return (
-    <Box overflowX='auto'>
-      <Table size='sm' variant='striped'>
+    <Box overflowX="auto">
+      <Table size="sm" variant="striped">
         <Thead>
           <Tr>
             <Th
-              data-value='artist'
-              cursor='pointer'
+              data-value="artist"
+              cursor="pointer"
               onClick={onSort}
             >
               {sort === 'artist' && getSortIcon(direction)}
               Artist
             </Th>
             <Th
-              data-value='title'
-              cursor='pointer'
+              data-value="title"
+              cursor="pointer"
               onClick={onSort}
             >
               {sort === 'title' && getSortIcon(direction)}
               Title
             </Th>
             <Th
-              data-value='year'
-              cursor='pointer'
+              data-value="year"
+              cursor="pointer"
               onClick={onSort}
             >
               {sort === 'year' && getSortIcon(direction)}

@@ -63,7 +63,7 @@ const CreateReleaseContainer = () => {
   return (
     <CreateReleaseModal
       isOpen={isOpen}
-      header='Create'
+      header="Create"
       release={release}
       isSaving={isSaving}
       onChange={handleChange}

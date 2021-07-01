@@ -33,37 +33,37 @@ const CreateSongModal = (props) => {
         <ModalCloseButton />
         <form onSubmit={onSubmit}>
           <ModalBody>
-            <FormControl id='artist' isRequired>
+            <FormControl id="artist" isRequired>
               <FormLabel>Artist</FormLabel>
               <Input
-                name='artist'
+                name="artist"
                 onChange={onChange}
-                type='text'
+                type="text"
                 value={song.artist}
               />
             </FormControl>
-            <FormControl id='title' isRequired my={4}>
+            <FormControl id="title" isRequired my={4}>
               <FormLabel>Title</FormLabel>
               <Input
-                name='title'
+                name="title"
                 onChange={onChange}
-                type='text'
+                type="text"
                 value={song.title}
               />
             </FormControl>
-            <FormControl id='link' isRequired>
+            <FormControl id="link" isRequired>
               <FormLabel>Link</FormLabel>
               <Input
-                name='link'
+                name="link"
                 onChange={onChange}
-                type='text'
+                type="text"
                 value={song.link}
               />
             </FormControl>
           </ModalBody>
           <ModalFooter>
             <Button
-              variant='outline'
+              variant="outline"
               mr={2}
               onClick={onClose}
             >
@@ -72,8 +72,8 @@ const CreateSongModal = (props) => {
             <SubmitButton
               isDisabled={isSaving}
               isLoading={isSaving}
-              text='Save'
-              loadingText='Saving'
+              text="Save"
+              loadingText="Saving"
             />
           </ModalFooter>
         </form>

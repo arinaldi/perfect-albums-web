@@ -23,42 +23,42 @@ const SignIn = (props) => {
   } = props;
 
   return (
-    <Container maxWidth='container.lg' marginBottom={6}>
-      <Flex align='center' marginBottom={3}>
-        <Heading as='h3' size='lg'>
+    <Container maxWidth="container.lg" marginBottom={6}>
+      <Flex align="center" marginBottom={3}>
+        <Heading as="h3" size="lg">
           Sign In
         </Heading>
       </Flex>
-      <Box maxWidth={{ base: '100%', md: '400px' }} margin='0 auto'>
+      <Box maxWidth={{ base: '100%', md: '400px' }} margin="0 auto">
         <form onSubmit={onSubmit}>
-          <FormControl id='username' isRequired>
+          <FormControl id="username" isRequired>
             <FormLabel>Username</FormLabel>
             <Input
-              autoCapitalize='off'
-              autoComplete='username'
+              autoCapitalize="off"
+              autoComplete="username"
               isRequired
-              name='username'
+              name="username"
               onChange={onChange}
-              type='text'
+              type="text"
               value={username}
             />
           </FormControl>
-          <FormControl id='password' isRequired my={4}>
+          <FormControl id="password" isRequired my={4}>
             <FormLabel>Password</FormLabel>
             <Input
-              autoComplete='current-password'
+              autoComplete="current-password"
               isRequired
-              name='password'
+              name="password"
               onChange={onChange}
-              type='password'
+              type="password"
               value={password}
             />
           </FormControl>
           <SubmitButton
             isDisabled={isSubmitting}
             isLoading={isSubmitting}
-            loadingText='Submitting'
-            text='Submit'
+            loadingText="Submitting"
+            text="Submit"
           />
         </form>
         <Box mt={4}>

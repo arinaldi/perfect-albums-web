@@ -6,7 +6,7 @@ const ProgressLoader = ({ isVisible }) => {
 
   return (
     <Progress
-      colorScheme='gray'
+      colorScheme="gray"
       hasStripe
       isAnimated
       marginBottom={2}

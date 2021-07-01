@@ -14,8 +14,8 @@ const SubmitButton = (props) => {
       isDisabled={isDisabled}
       isLoading={isLoading}
       loadingText={loadingText}
-      type='submit'
-      variant='outline'
+      type="submit"
+      variant="outline"
     >
       {text}
     </Button>

@@ -11,8 +11,8 @@ test('DeleteDataModal renders with data', () => {
   const { getByText } = render(
     <DeleteDataModal
       artist={artist}
-      dataType='Song'
-      error=''
+      dataType="Song"
+      error=""
       isDeleting={false}
       isOpen
       onClose={handleClose}

@@ -79,7 +79,7 @@ const EditReleaseContainer = () => {
   return (
     <EditReleaseModal
       isOpen={isOpen}
-      header='Edit'
+      header="Edit"
       release={release}
       isValidated={isValidated}
       isSaving={isSaving}

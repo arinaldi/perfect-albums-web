@@ -25,9 +25,9 @@ const FeaturedSongs = (props) => {
   const { user: { isAuthenticated } } = useAppState();
 
   return (
-    <Container maxWidth='container.lg' marginBottom={6}>
-      <Flex align='center' marginBottom={3}>
-        <Heading as='h3' size='lg'>
+    <Container maxWidth="container.lg" marginBottom={6}>
+      <Flex align="center" marginBottom={3}>
+        <Heading as="h3" size="lg">
           Featured Songs
         </Heading>
         <Spacer />
@@ -35,7 +35,7 @@ const FeaturedSongs = (props) => {
           ? (
             <Box>
               <Button
-                variant='outline'
+                variant="outline"
                 isDisabled={isLoading}
                 onClick={refresh}
                 marginRight={1}
@@ -43,7 +43,7 @@ const FeaturedSongs = (props) => {
                 Refresh
               </Button>
               <Button
-                variant='outline'
+                variant="outline"
                 onClick={onCreateOpen}
               >
                 New
@@ -56,9 +56,9 @@ const FeaturedSongs = (props) => {
       {data && data.songs
         ? (
           <SimpleGrid
-            data-testid='card-row'
-            minChildWidth='240px'
-            spacing='24px'
+            data-testid="card-row"
+            minChildWidth="240px"
+            spacing="24px"
           >
             {data.songs.map(song => (
               <CardWrapper

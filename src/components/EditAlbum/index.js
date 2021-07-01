@@ -75,7 +75,7 @@ const EditAlbumContainer = () => {
         isLoading={isLoading}
         isSaving={isSaving}
         query={query}
-        header='Edit'
+        header="Edit"
         onChange={handleChange}
         onRadioChange={handleRadioChange}
         onSubmit={handleSubmit}

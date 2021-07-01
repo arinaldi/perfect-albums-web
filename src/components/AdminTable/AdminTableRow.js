@@ -28,16 +28,16 @@ const AdminTableRow = (props) => {
         <Button
           marginRight={1}
           onClick={() => navigate('edit')}
-          size='sm'
-          variant='outline'
+          size="sm"
+          variant="outline"
         >
           Edit
         </Button>
         <Button
           marginRight={1}
           onClick={() => navigate('delete')}
-          size='sm'
-          variant='outline'
+          size="sm"
+          variant="outline"
         >
           Delete
         </Button>

@@ -21,23 +21,23 @@ const CardWrapper = (props) => {
 
   return (
     <Box
-      borderWidth='1px'
-      maxWidth='sm'
+      borderWidth="1px"
+      maxWidth="sm"
       p={5}
-      rounded='md'
+      rounded="md"
     >
-      <Heading size='md'>{song.title}</Heading>
+      <Heading size="md">{song.title}</Heading>
       <Text my={1}>{song.artist}</Text>
-      <Flex align='center'>
-        <Link color='blue.500' href={song.link} isExternal>Listen</Link>
+      <Flex align="center">
+        <Link color="blue.500" href={song.link} isExternal>Listen</Link>
         {isAuthenticated && (
           <IconButton
-            aria-label='Delete Song'
+            aria-label="Delete Song"
             icon={<DeleteIcon />}
             ml={1}
             onClick={handleClick}
-            size='xs'
-            variant='ghost'
+            size="xs"
+            variant="ghost"
           />
         )}
       </Flex>

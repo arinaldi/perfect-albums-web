@@ -12,7 +12,7 @@ test('CreateEditAlbum renders with data', () => {
   const { container, getByText } = render(
     <CreateAlbum
       data={mockAdminData[0]}
-      header='Create'
+      header="Create"
       onChange={handleChange}
       onRadioChange={handleRadioChange}
       onSubmit={handleSubmit}

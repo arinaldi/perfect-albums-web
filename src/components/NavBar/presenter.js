@@ -23,10 +23,10 @@ const NavBar = () => {
   return (
     <Box>
       <Flex
-        align='center'
-        bg='gray.700'
-        color='white'
-        minHeight='60px'
+        align="center"
+        bg="gray.700"
+        color="white"
+        minHeight="60px"
         px={{ base: 4 }}
         py={{ base: 2 }}
       >
@@ -36,19 +36,19 @@ const NavBar = () => {
           display={{ base: 'flex', md: 'none' }}
         >
           <IconButton
-            aria-label='Toggle Navigation'
+            aria-label="Toggle Navigation"
             icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
             onClick={onToggle}
-            variant='ghost'
+            variant="ghost"
             _active={{ background: 'gray.700' }}
             _hover={{ background: 'gray.700' }}
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           <Heading
-            color='white'
-            minWidth='max-content'
-            size='md'
+            color="white"
+            minWidth="max-content"
+            size="md"
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
           >
             Perfect Albums
@@ -70,16 +70,16 @@ const NavBar = () => {
           </Flex>
         </Flex>
         <Stack
-          direction='row'
+          direction="row"
           flex={{ base: 1, md: 0 }}
-          justify='flex-end'
-          minWidth='fit-content'
+          justify="flex-end"
+          minWidth="fit-content"
           spacing={6}
         >
           <Box display={{ base: 'none', md: 'inline-flex' }}>
             {isAuthenticated
               ? <SignOut />
-              : <LinkWrapper label='Sign In' to='/signin' />}
+              : <LinkWrapper label="Sign In" to="/signin" />}
           </Box>
         </Stack>
       </Flex>

@@ -27,15 +27,15 @@ const NewReleases = (props) => {
   const { user: { isAuthenticated } } = useAppState();
 
   return (
-    <Container maxWidth='container.lg' marginBottom={6}>
-      <Flex align='center' marginBottom={3}>
-        <Heading as='h3' size='lg'>New Releases</Heading>
+    <Container maxWidth="container.lg" marginBottom={6}>
+      <Flex align="center" marginBottom={3}>
+        <Heading as="h3" size="lg">New Releases</Heading>
         <Spacer />
         {isAuthenticated
           ? (
             <Box>
               <Button
-                variant='outline'
+                variant="outline"
                 isDisabled={isLoading}
                 onClick={refresh}
                 marginRight={1}
@@ -43,7 +43,7 @@ const NewReleases = (props) => {
                 Refresh
               </Button>
               <Button
-                variant='outline'
+                variant="outline"
                 onClick={onCreateOpen}
               >
                 New
@@ -55,7 +55,7 @@ const NewReleases = (props) => {
       {error ? <AppMessage /> : null}
       {data && data.releases
         ? (
-          <SimpleGrid minChildWidth='248px' spacing='24px'>
+          <SimpleGrid minChildWidth="248px" spacing="24px">
             {Object
               .entries(formatReleases(data.releases))
               .sort(sortByDate)

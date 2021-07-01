@@ -8,10 +8,10 @@ test('AdminTable renders with data', () => {
   const { container, getByTestId } = render(
     <AdminTable
       data={mockAdminData}
-      direction='asc'
+      direction="asc"
       onSort={handleSort}
-      searchText=''
-      sort='artist'
+      searchText=""
+      sort="artist"
     />,
   );
   const firstRow = getByTestId('1');

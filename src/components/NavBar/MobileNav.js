@@ -12,8 +12,8 @@ import { useAppState, useAppDispatch } from '../Provider';
 const MobileNavItem = ({ label, onClose, to }) => (
   <Stack spacing={4}>
     <Flex
-      align='center'
-      justify='space-between'
+      align="center"
+      justify="space-between"
       py={2}
     >
       <Link
@@ -47,8 +47,8 @@ const MobileSignOut = ({ onClose }) => {
   return (
     <Stack spacing={4}>
       <Flex
-        align='center'
-        justify='space-between'
+        align="center"
+        justify="space-between"
         py={2}
         _hover={{
           textDecoration: 'none',
@@ -71,8 +71,8 @@ const MobileNav = ({ onClose }) => {
 
   return (
     <Stack
-      bg='gray.700'
-      color='white'
+      bg="gray.700"
+      color="white"
       display={{ md: 'none' }}
       p={4}
     >
@@ -94,9 +94,9 @@ const MobileNav = ({ onClose }) => {
         ? <MobileSignOut onClose={onClose} />
         : (
           <MobileNavItem
-            label='Sign In'
+            label="Sign In"
             onClose={onClose}
-            to='/signin'
+            to="/signin"
           />
         )}
     </Stack>

@@ -17,7 +17,7 @@ const LoadMore = () => {
   return (
     <Box>
       {isStale && (
-        <Button variant='outline' onClick={update}>
+        <Button variant="outline" onClick={update}>
           Load More
         </Button>
       )}

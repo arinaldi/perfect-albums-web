@@ -26,16 +26,16 @@ const TopAlbums = (props) => {
 
   return (
     <>
-      <Container maxWidth='container.lg' marginBottom={6}>
-        <Flex align='center' marginBottom={3}>
-          <Heading as='h3' size='lg'>Top Albums
+      <Container maxWidth="container.lg" marginBottom={6}>
+        <Flex align="center" marginBottom={3}>
+          <Heading as="h3" size="lg">Top Albums
             {data && data.favorites
               ? (
                 <Badge
-                  borderRadius='4px'
-                  fontSize='0.9em'
+                  borderRadius="4px"
+                  fontSize="0.9em"
                   marginLeft={1}
-                  verticalAlign='baseline'
+                  verticalAlign="baseline"
                 >
                   {data.favorites.length.toLocaleString()}
                 </Badge>
@@ -48,7 +48,7 @@ const TopAlbums = (props) => {
               isDisabled={isLoading}
               marginRight={1}
               onClick={refresh}
-              variant='outline'
+              variant="outline"
             >
               Refresh
             </Button>
@@ -57,7 +57,7 @@ const TopAlbums = (props) => {
         {error ? <AppMessage /> : null}
         {data && data.favorites
           ? (
-            <SimpleGrid minChildWidth='240px' spacing='24px'>
+            <SimpleGrid minChildWidth="240px" spacing="24px">
               {Object
                 .entries(formatFavorites(data.favorites))
                 .sort(sortDesc)

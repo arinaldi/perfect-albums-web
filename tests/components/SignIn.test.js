@@ -10,8 +10,8 @@ test('SignIn renders with username and password inputs', () => {
     <SignIn
       onChange={handleChange}
       onSubmit={handleSubmit}
-      password=''
-      username=''
+      password=""
+      username=""
     />,
   );
   const titleHeader = getByText('Sign In');

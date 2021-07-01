@@ -45,7 +45,7 @@ const SignInContainer = () => {
   };
 
   if (state.user.isAuthenticated) {
-    return <Redirect to='/admin' />;
+    return <Redirect to="/admin" />;
   }
 
   return (
