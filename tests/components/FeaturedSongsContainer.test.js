@@ -1,4 +1,4 @@
-import { MockedProvider } from '@apollo/react-testing';
+import { MockedProvider } from '@apollo/client/testing';
 
 import FeaturedSongsContainer from '../../src/components/FeaturedSongs';
 import { GET_SONGS } from '../../src/queries';

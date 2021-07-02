@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { NetworkStatus, useQuery } from '@apollo/client';
 
 import { GET_FAVORITES } from '../../queries';
 import ErrorBoundary from '../ErrorBoundary';
@@ -14,7 +14,7 @@ const TopAlbumsContainer: FC = () => {
     networkStatus,
     refetch,
   } = useQuery(GET_FAVORITES, { notifyOnNetworkStatusChange: true });
-  const isLoading = loading || networkStatus === 4;
+  const isLoading = loading || networkStatus === NetworkStatus.refetch;
 
   const refresh = () => {
     refetch();

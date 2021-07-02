@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { gql, useMutation } from '@apollo/client';
 
 import { Release } from '../../utils/types';
 import useGqlSubmit from '../../hooks/useGqlSubmit';
@@ -9,28 +9,29 @@ import { DISPATCH_TYPES, MESSAGES } from '../../constants';
 import { useApp } from '../Provider';
 import DeleteDataModal from '../DeleteDataModal/presenter';
 
-interface CacheResponse {
-  releases: Release[];
-}
-
 const DeleteReleaseContainer: FC = () => {
   const [state, dispatch] = useApp();
   const { isOpen, data } = state.modal;
-  const [deleteRelease] = useMutation(
-    DELETE_RELEASE,
-    {
-      update (cache, { data: { deleteRelease } }) {
-        const response = cache.readQuery<CacheResponse>({ query: GET_RELEASES });
-
-        if (response?.releases) {
-          cache.writeQuery({
-            query: GET_RELEASES,
-            data: { releases: response.releases.filter((release: Release) => release.id !== deleteRelease.id) },
-          });
-        }
-      },
+  const [deleteRelease] = useMutation(DELETE_RELEASE, {
+    refetchQueries: [{ query: GET_RELEASES }],
+    update (cache, { data: { deleteRelease } }) {
+      cache.modify({
+        fields: {
+          songs (existingReleases = []) {
+            cache.writeFragment({
+              data: deleteRelease,
+              fragment: gql`
+                fragment DeleteRelease on Release {
+                  id
+                }
+              `,
+            });
+            return existingReleases.filter((release: Release) => release.id !== deleteRelease.id);
+          },
+        },
+      });
     },
-  );
+  });
 
   const handleClose = () => {
     dispatch({

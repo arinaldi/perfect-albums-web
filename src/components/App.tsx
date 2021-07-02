@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from '@apollo/react-hooks';
+import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import { ChakraProvider } from '@chakra-ui/react';
 
 import { getToken } from '../utils/storage';
@@ -9,16 +9,24 @@ import ErrorBoundary from './ErrorBoundary';
 import { Provider } from './Provider';
 import Routes from './Routes';
 
-const client = new ApolloClient({
+const httpLink = createHttpLink({
   uri: `${BASE_URL}/graphql`,
-  request: (operation) => {
-    const token = getToken();
-    operation.setContext({
-      headers: {
-        authorization: token ? `Bearer ${token}` : '',
-      },
-    });
-  },
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = getToken();
+
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    }
+  }
+});
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: authLink.concat(httpLink),
 });
 
 const App: FC = () => (

@@ -1,7 +1,6 @@
 import { ChangeEvent, FC, useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { gql, useMutation } from '@apollo/client';
 
-import { Release } from '../../utils/types';
 import useGqlSubmit from '../../hooks/useGqlSubmit';
 import { GET_RELEASES } from '../../queries';
 import { CREATE_RELEASE } from '../../mutations';
@@ -9,28 +8,32 @@ import { DISPATCH_TYPES, MESSAGES } from '../../constants';
 import { useApp } from '../Provider';
 import CreateReleaseModal from './presenter';
 
-interface CacheResponse {
-  releases: Release[];
-}
-
 const CreateReleaseContainer: FC = () => {
   const [state, dispatch] = useApp();
   const { isOpen } = state.modal;
-  const [createRelease] = useMutation(
-    CREATE_RELEASE,
-    {
-      update (cache, { data: { createRelease } }) {
-        const response = cache.readQuery<CacheResponse>({ query: GET_RELEASES });
-
-        if (response?.releases) {
-          cache.writeQuery({
-            query: GET_RELEASES,
-            data: { releases: [...response.releases, createRelease] },
-          });
-        }
-      },
+  const [createRelease] = useMutation(CREATE_RELEASE, {
+    refetchQueries: [{ query: GET_RELEASES }],
+    update (cache, { data: { createRelease } }) {
+      cache.modify({
+        fields: {
+          songs (existingReleases = []) {
+            const newReleaseRef = cache.writeFragment({
+              data: createRelease,
+              fragment: gql`
+                fragment NewRelease on Release {
+                  id
+                  artist
+                  title
+                  date
+                }
+              `,
+            });
+            return [...existingReleases, newReleaseRef];
+          },
+        },
+      });
     },
-  );
+  });
   const [release, setRelease] = useState({
     artist: '',
     title: '',

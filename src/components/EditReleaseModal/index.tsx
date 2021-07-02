@@ -1,46 +1,17 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 
-import { Release } from '../../utils/types';
 import { formatDate } from '../../utils';
 import useGqlSubmit from '../../hooks/useGqlSubmit';
-import { GET_RELEASES } from '../../queries';
 import { EDIT_RELEASE } from '../../mutations';
 import { DISPATCH_TYPES, MESSAGES } from '../../constants';
 import { useApp } from '../Provider';
 import EditReleaseModal from '../CreateReleaseModal/presenter';
 
-interface CacheResponse {
-  releases: Release[];
-}
-
 const EditReleaseContainer: FC = () => {
   const [state, dispatch] = useApp();
   const { data, isOpen } = state.modal;
-  const [editRelease] = useMutation(
-    EDIT_RELEASE,
-    {
-      update (cache, { data: { editRelease } }) {
-        const response = cache.readQuery<CacheResponse>({ query: GET_RELEASES });
-
-        if (response?.releases) {
-          const { releases } = response;
-          const releaseIndex = releases.findIndex((release: Release) => release.id === editRelease.id);
-
-          cache.writeQuery({
-            query: GET_RELEASES,
-            data: {
-              releases: [
-                ...releases.slice(0, releaseIndex),
-                editRelease,
-                ...releases.slice(releaseIndex + 1),
-              ],
-            },
-          });
-        }
-      },
-    },
-  );
+  const [editRelease] = useMutation(EDIT_RELEASE);
   const [release, setRelease] = useState({
     artist: '',
     title: '',

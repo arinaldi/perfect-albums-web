@@ -1,4 +1,4 @@
-import { MockedProvider } from '@apollo/react-testing';
+import { MockedProvider } from '@apollo/client/testing';
 
 import TopAlbumsContainer from '../../src/components/TopAlbums';
 import { GET_FAVORITES } from '../../src/queries';

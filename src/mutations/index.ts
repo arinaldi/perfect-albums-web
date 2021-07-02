@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from '@apollo/client';
 
 export const CREATE_RELEASE = gql`
   mutation CreateRelease($artist: String!, $title: String!, $date: Date) {

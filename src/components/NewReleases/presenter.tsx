@@ -8,7 +8,7 @@ import {
   Spacer,
   SimpleGrid,
 } from '@chakra-ui/react';
-import { ApolloError } from '@apollo/react-hooks';
+import { ApolloError } from '@apollo/client';
 
 import { formatReleases, sortByDate } from '../../utils';
 import { Release } from '../../utils/types';

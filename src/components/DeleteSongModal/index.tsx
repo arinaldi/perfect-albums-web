@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { gql, useMutation } from '@apollo/client';
 
 import { DISPATCH_TYPES, MESSAGES } from '../../constants';
 import { Song } from '../..//utils/types';
@@ -9,28 +9,29 @@ import { DELETE_SONG } from '../../mutations';
 import { useApp } from '../Provider';
 import DeleteDataModal from '../DeleteDataModal/presenter';
 
-interface CacheResponse {
-  songs: Song[];
-}
-
 const DeleteSongContainer: FC = () => {
   const [state, dispatch] = useApp();
   const { isOpen, data } = state.modal;
-  const [deleteSong] = useMutation(
-    DELETE_SONG,
-    {
-      update (cache, { data: { deleteSong } }) {
-        const response = cache.readQuery<CacheResponse>({ query: GET_SONGS });
-
-        if (response?.songs) {
-          cache.writeQuery({
-            query: GET_SONGS,
-            data: { songs: response.songs.filter((song: Song) => song.id !== deleteSong.id) },
-          });
-        }
-      },
+  const [deleteSong] = useMutation(DELETE_SONG, {
+    refetchQueries: [{ query: GET_SONGS }],
+    update (cache, { data: { deleteSong } }) {
+      cache.modify({
+        fields: {
+          songs (existingSongs = []) {
+            cache.writeFragment({
+              data: deleteSong,
+              fragment: gql`
+                fragment DeleteSong on Song {
+                  id
+                }
+              `,
+            });
+            return existingSongs.filter((song: Song) => song.id !== deleteSong.id);
+          },
+        },
+      });
     },
-  );
+  });
 
   const handleClose = () => {
     dispatch({

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { NetworkStatus, useQuery } from '@apollo/client';
 
 import { Song } from '../../utils/types';
 import { DISPATCH_TYPES, MODAL_TYPES } from '../../constants';
@@ -18,7 +18,7 @@ const FeaturedSongsContainer: FC = () => {
     networkStatus,
     refetch,
   } = useQuery(GET_SONGS, { notifyOnNetworkStatusChange: true });
-  const isLoading = loading || networkStatus === 4;
+  const isLoading = loading || networkStatus === NetworkStatus.refetch;
 
   const refresh = () => {
     refetch();

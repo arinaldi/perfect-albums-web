@@ -1,7 +1,6 @@
 import { ChangeEvent, FC, useState } from 'react';
-import { useMutation } from '@apollo/react-hooks';
+import { gql, useMutation } from '@apollo/client';
 
-import { Song } from '../../utils/types';
 import useGqlSubmit from '../../hooks/useGqlSubmit';
 import { GET_SONGS } from '../../queries';
 import { CREATE_SONG } from '../../mutations';
@@ -9,27 +8,31 @@ import { DISPATCH_TYPES, MESSAGES } from '../../constants';
 import { useApp } from '../Provider';
 import CreateSongModal from './presenter';
 
-interface CacheResponse {
-  songs: Song[];
-}
-
 const CreateSongContainer: FC = () => {
   const [state, dispatch] = useApp();
-  const [createSong] = useMutation(
-    CREATE_SONG,
-    {
-      update (cache, { data: { createSong } }) {
-        const response = cache.readQuery<CacheResponse>({ query: GET_SONGS });
-
-        if (response?.songs) {
-          cache.writeQuery({
-            query: GET_SONGS,
-            data: { songs: [createSong].concat(response.songs) },
-          });
-        }
-      },
+  const [createSong] = useMutation(CREATE_SONG, {
+    refetchQueries: [{ query: GET_SONGS }],
+    update (cache, { data: { createSong } }) {
+      cache.modify({
+        fields: {
+          songs (existingSongs = []) {
+            const newSongRef = cache.writeFragment({
+              data: createSong,
+              fragment: gql`
+                fragment NewSong on Song {
+                  id
+                  artist
+                  title
+                  link
+                }
+              `,
+            });
+            return [...existingSongs, newSongRef];
+          },
+        },
+      });
     },
-  );
+  });
   const [song, setSong] = useState({
     artist: '',
     title: '',
