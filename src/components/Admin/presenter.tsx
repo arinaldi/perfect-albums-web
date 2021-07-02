@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, RefObject, useEffect } from 'react';
+import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   Badge,
@@ -18,60 +18,38 @@ import {
   ChevronRightIcon,
 } from '@chakra-ui/icons';
 
-import { Album } from '../../utils/types';
-import { ALERT_TYPES, MESSAGES, PER_PAGE, SORT_DIRECTION } from '../../constants';
+import { ALERT_TYPES, MESSAGES, PER_PAGE } from '../../constants';
+import useAdminState from '../../hooks/useAdminState';
 import AdminTable from '../AdminTable/presenter';
 import AppMessage from '../AppMessage/presenter';
+import ProgressLoader from '../ProgressLoader/presenter';
 
-interface Props {
-  data: Album[];
-  clearInput: () => void;
-  currentPage: number;
-  direction: SORT_DIRECTION;
-  isLoading: boolean;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onFirst: () => void;
-  onLast: () => void;
-  onNext: () => void;
-  onPrev: () => void;
-  onPageChange: (value: number) => void;
-  onSort: (value: string) => void;
-  perPage: number;
-  searchInput: RefObject<HTMLInputElement>;
-  searchText: string;
-  sort: string;
-  total: number;
-}
-
-const Admin: FC<Props> = (props) => {
+const Admin: FC = () => {
   const {
-    clearInput,
+    albums,
     currentPage,
-    data,
     direction,
+    handlers,
+    isFirstPage,
+    isLastPage,
     isLoading,
-    onChange,
-    onFirst,
-    onLast,
-    onNext,
-    onPrev,
-    onPageChange,
-    onSort,
     perPage,
     searchInput,
     searchText,
     sort,
     total,
-  } = props;
+  } = useAdminState();
+  const {
+    onClear,
+    onFirst,
+    onLast,
+    onNext,
+    onPerPageChange,
+    onPrevious,
+    onSearchChange,
+    onSort,
+  } = handlers;
   const history = useHistory();
-  const isFirstPage = currentPage === 1;
-  const isLastPage = currentPage === Math.ceil(total / perPage);
-
-  useEffect(() => {
-    if (searchInput && searchInput.current) {
-      searchInput.current.focus();
-    }
-  }, [searchInput]);
 
   const handleNavigate = () => {
     history.push(`/admin/new?${searchText}`);
@@ -88,7 +66,7 @@ const Admin: FC<Props> = (props) => {
         <Button
           key={index}
           isDisabled={page === perPage}
-          onClick={() => onPageChange(page)}
+          onClick={() => onPerPageChange(page)}
           variant="outline"
         >
           {page}
@@ -112,7 +90,7 @@ const Admin: FC<Props> = (props) => {
       </Button>
       <Button
         isDisabled={isFirstPage}
-        onClick={onPrev}
+        onClick={onPrevious}
       >
         <ChevronLeftIcon />
       </Button>
@@ -137,73 +115,78 @@ const Admin: FC<Props> = (props) => {
   const Content = () => {
     if (isLoading) return null;
 
-    return data.length
+    return albums.length === 0 && !isLoading
       ? (
+        <AppMessage
+          type={ALERT_TYPES.INFO}
+          message={MESSAGES.NO_DATA}
+        />
+      )
+      : (
         <AdminTable
-          data={data}
+          data={albums}
           direction={direction}
           onSort={onSort}
           searchText={searchText}
           sort={sort}
         />
-      )
-      : (
-        <AppMessage
-          type={ALERT_TYPES.INFO}
-          message={MESSAGES.NO_DATA}
-        />
       );
   };
 
   return (
-    <Container maxWidth="container.lg" marginBottom={6}>
-      <Flex align="center" justify="space-between" marginBottom={3}>
-        <Heading as="h3" size="lg">Admin</Heading>
-        <Code>{process.env.npm_package_version}</Code>
-        <Heading as="h3" size="lg">
-          <Badge
-            borderRadius="4px"
-            data-testid="total"
-            fontSize="0.9em"
-            verticalAlign="baseline"
-          >
-            {total.toLocaleString()}
-          </Badge>
-        </Heading>
-      </Flex>
-      <Flex align="center" justify="space-between" marginBottom={3}>
-        <Input
-          marginRight={3}
-          name="username"
-          onChange={onChange}
-          placeholder="Search"
-          ref={searchInput}
-          type="text"
-          value={searchText}
-        />
-        <Flex>
-          <Button
-            marginRight={1}
-            onClick={clearInput}
-            variant="outline"
-          >
-            Clear
-          </Button>
-          <Button
-            onClick={handleNavigate}
-            variant="outline"
-          >
-            New
-          </Button>
+    <>
+      <ProgressLoader isVisible={isLoading} />
+      <Container maxWidth="container.lg" marginBottom={6}>
+        <Flex align="center" justify="space-between" marginBottom={3}>
+          <Flex align="center">
+            <Heading as="h3" size="lg">Admin</Heading>
+            <Code marginLeft={2}>{process.env.npm_package_version}</Code>
+          </Flex>
+          <Heading as="h3" size="lg">
+            <Badge
+              borderRadius="4px"
+              data-testid="total"
+              fontSize="0.9em"
+              verticalAlign="baseline"
+            >
+              {total.toLocaleString()}
+            </Badge>
+          </Heading>
         </Flex>
-      </Flex>
-      <Flex align="center" justify="center" marginBottom={3}>
-        {Pagination}
-        <Box mx={2} />
-        {PerPageSelector}
-      </Flex>
-      <Content />
-    </Container>
+        <Flex align="center" justify="space-between" marginBottom={3}>
+          <Input
+            marginRight={3}
+            name="username"
+            onChange={onSearchChange}
+            placeholder="Search"
+            ref={searchInput}
+            type="text"
+            value={searchText}
+          />
+          <Flex>
+            <Button
+              marginRight={1}
+              onClick={onClear}
+              variant="outline"
+            >
+              Clear
+            </Button>
+            <Button
+              onClick={handleNavigate}
+              variant="outline"
+            >
+              New
+            </Button>
+          </Flex>
+        </Flex>
+        <Flex align="center" justify="center" marginBottom={3}>
+          {Pagination}
+          <Box mx={2} />
+          {PerPageSelector}
+        </Flex>
+        <Content />
+      </Container>
+    </>
   );
 };
 

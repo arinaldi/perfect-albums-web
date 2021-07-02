@@ -12,7 +12,7 @@ export enum ALERT_TYPES {
   ERROR = 'error',
   INFO = 'info',
   SUCCESS = 'success',
-};
+}
 
 export enum MODAL_TYPES {
   FEATURED_SONGS_CREATE = 'Create Featured Song',
@@ -60,21 +60,21 @@ export enum STATE_EVENTS {
   RESOLVE = 'resolve',
   REJECT = 'reject',
   CANCEL = 'cancel',
-};
+}
 
 export enum STATE_STATUSES {
   IDLE = 'idle',
   LOADING = 'loading',
   SUCCESS = 'success',
   FAILURE = 'failure',
-};
+}
 
 export enum DISPATCH_TYPES {
   SIGN_IN_USER = 'SIGN_IN_USER',
   SIGN_OUT_USER = 'SIGN_OUT_USER',
   OPEN_MODAL = 'OPEN_MODAL',
   CLOSE_MODAL = 'CLOSE_MODAL',
-};
+}
 
 export const MONTHS = [
   'Jan',
