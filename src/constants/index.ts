@@ -6,20 +6,12 @@ export enum SORT_DIRECTION {
   ASC = 'asc',
   DESC = 'desc',
   NONE = '',
-};
+}
 
 export enum ALERT_TYPES {
   ERROR = 'error',
   INFO = 'info',
   SUCCESS = 'success',
-}
-
-export enum MODAL_TYPES {
-  FEATURED_SONGS_CREATE = 'Create Featured Song',
-  FEATURED_SONGS_DELETE = 'Delete Featured Song',
-  NEW_RELEASE_CREATE = 'Create New Release',
-  NEW_RELEASE_EDIT = 'Edit New Release',
-  NEW_RELEASE_DELETE = 'Delete New Release',
 }
 
 export const MESSAGES = {
@@ -72,8 +64,6 @@ export enum STATE_STATUSES {
 export enum DISPATCH_TYPES {
   SIGN_IN_USER = 'SIGN_IN_USER',
   SIGN_OUT_USER = 'SIGN_OUT_USER',
-  OPEN_MODAL = 'OPEN_MODAL',
-  CLOSE_MODAL = 'CLOSE_MODAL',
 }
 
 export const MONTHS = [

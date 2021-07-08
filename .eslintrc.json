@@ -46,6 +46,7 @@
     "react/react-in-jsx-scope": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-handler-names": "off",
     "react/prop-types": "off",
     "semi": ["error", "always"],
     "space-before-function-paren": "error",

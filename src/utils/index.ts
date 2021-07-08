@@ -1,10 +1,6 @@
 import { MONTHS } from '../constants';
 import { Favorite, Release } from './types';
 
-interface Results {
-  [key: string]: any;
-}
-
 type Tuple = [any, any];
 
 export function sortByDate (a: Tuple, b: Tuple): number {
@@ -41,18 +37,22 @@ export function formatDate (isoString: string): string {
   const day = date.getUTCDate();
 
   return `${year}-${addZeroPrefix(month)}-${addZeroPrefix(day)}`;
-};
+}
 
-export function formatFavorites (favorites: Favorite[]): Results {
-  const results: Results = {};
+interface FavoriteResults {
+  [key: string]: Favorite[];
+}
 
-  favorites.forEach(({ artist, title, year }) => {
-    const album = { artist, title };
+export function formatFavorites (favorites: Favorite[]): FavoriteResults {
+  const results: FavoriteResults = {};
+
+  favorites.forEach((favorite: Favorite) => {
+    const { year } = favorite;
 
     if (results[year]) {
-      results[year].push(album);
+      results[year].push(favorite);
     } else {
-      results[year] = [album];
+      results[year] = [favorite];
     }
   });
 
@@ -68,10 +68,14 @@ function formatReleaseDate (isoString: string): string {
   return `${date} ${MONTHS[month]} ${year}`;
 }
 
-export function formatReleases (releases: Release[]): Results {
-  const results: Results = {};
+interface ReleaseResults {
+  [key: string]: Release[];
+}
 
-  releases.forEach((release) => {
+export function formatReleases (releases: Release[]): ReleaseResults {
+  const results: ReleaseResults = {};
+
+  releases.forEach((release: Release) => {
     const releaseDate = release.date
       ? formatReleaseDate(release.date)
       : 'TBD';

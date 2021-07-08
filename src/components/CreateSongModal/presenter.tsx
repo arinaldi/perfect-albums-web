@@ -23,7 +23,7 @@ interface Props {
   onClose: () => void;
   onSubmit: (event: FormEvent) => void;
   song: SongBase;
-};
+}
 
 const CreateSongModal: FC<Props> = (props) => {
   const {

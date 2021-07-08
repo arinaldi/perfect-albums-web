@@ -14,7 +14,7 @@ import AppMessage from '../AppMessage/presenter';
 import SubmitButton from '../SubmitButton/presenter';
 
 interface Props {
-  data: Album;
+  data: Album | null;
   isDeleting?: boolean;
   onSubmit: (event: FormEvent) => void;
   query?: string;

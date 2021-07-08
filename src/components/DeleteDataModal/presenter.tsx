@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, FormEvent } from 'react';
 import {
   Button,
   Modal,
@@ -11,27 +11,26 @@ import {
   Text,
 } from '@chakra-ui/react';
 
+import { ModalDataType, Release, Song } from '../../utils/types';
 import SubmitButton from '../SubmitButton/presenter';
 
 interface Props {
-  artist: string;
-  dataType: string;
+  data: Release | Song;
+  dataType: ModalDataType;
   isDeleting: boolean;
   isOpen: boolean;
   onClose: () => void;
-  onDelete: (data: any) => void;
-  title: string;
+  onDelete: (event: FormEvent) => void;
 }
 
 const DeleteDataModal: FC<Props> = (props) => {
   const {
-    artist,
+    data,
     dataType,
     isDeleting,
     isOpen,
     onClose,
     onDelete,
-    title,
   } = props;
 
   return (
@@ -42,7 +41,7 @@ const DeleteDataModal: FC<Props> = (props) => {
         <ModalCloseButton />
         <form onSubmit={onDelete}>
           <ModalBody>
-            <Text>{`Are you sure you want to delete ${artist} – ${title}?`}</Text>
+            <Text>{`Are you sure you want to delete ${data.artist} – ${data.title}?`}</Text>
           </ModalBody>
           <ModalFooter>
             <Button

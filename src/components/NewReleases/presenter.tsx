@@ -16,15 +16,19 @@ import { useAppState } from '../Provider';
 import AppMessage from '../AppMessage/presenter';
 import DateCol from './DateCol';
 
+interface Modal {
+  onCreateOpen: () => void;
+  onDeleteOpen: (release: Release) => void;
+  onEditOpen: (release: Release) => void;
+}
+
 interface Props {
   data: {
     releases: Release[];
   };
   error?: ApolloError;
   isLoading?: boolean;
-  onCreateOpen: () => void;
-  onEditOpen: (release: Release) => void;
-  onDeleteOpen: (release: Release) => void;
+  modal: Modal;
   refresh: () => void;
 }
 
@@ -33,9 +37,7 @@ const NewReleases: FC<Props> = (props) => {
     data,
     error,
     isLoading = false,
-    onCreateOpen,
-    onEditOpen,
-    onDeleteOpen,
+    modal: { onCreateOpen, onDeleteOpen, onEditOpen },
     refresh,
   } = props;
   const { user: { isAuthenticated } } = useAppState();

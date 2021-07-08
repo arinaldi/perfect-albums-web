@@ -9,11 +9,11 @@ import {
 } from '../constants';
 import { Action } from '../reducers/provider';
 import { getToken } from './storage';
+import { Method } from './types';
 
 export async function fetcher (url: string): Promise<any> {
   const token = getToken();
-  // eslint-disable-next-line no-undef
-  const headers: HeadersInit = {
+  const headers: HeadersInit = { // eslint-disable-line no-undef
     'Content-Type': 'application/json',
   };
 
@@ -72,16 +72,15 @@ interface Options {
 }
 
 interface Config {
-  body?: any;
-  headers: any;
-  method: string;
+  body?: string;
+  headers: HeadersInit; // eslint-disable-line no-undef
+  method: Method;
 }
 
 async function api (endpoint: string, options: Options = {}): Promise<any> {
   const { body, dispatch, ...customConfig } = options;
   const token = getToken();
-  // eslint-disable-next-line no-undef
-  const headers: HeadersInit = {
+  const headers: HeadersInit = { // eslint-disable-line no-undef
     'Content-Type': 'application/json',
   };
 
@@ -90,7 +89,7 @@ async function api (endpoint: string, options: Options = {}): Promise<any> {
   }
 
   const config: Config = {
-    method: body ? 'POST' : 'GET',
+    method: body ? Method.post : Method.get,
     ...customConfig,
     headers: {
       ...headers,

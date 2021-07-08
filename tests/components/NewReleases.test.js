@@ -1,22 +1,39 @@
+import { MockedProvider } from '@apollo/client/testing';
+
 import NewReleases from '../../src/components/NewReleases/presenter';
+import { GET_RELEASES } from '../../src/queries';
 import render from '../utils';
 import { mockNewReleasesData, releaseLabels } from '../mocks';
 
-const handleCreateOpen = () => jest.fn;
-const handleEditOpen = () => jest.fn;
-const handleDeleteOpen = () => jest.fn;
+const mocks = [
+  {
+    request: {
+      query: GET_RELEASES,
+    },
+    result: {
+      data: {
+        releases: mockNewReleasesData,
+      },
+    },
+  },
+];
+
+const modal = {
+  onCreateOpen: jest.fn,
+  onDeleteOpen: jest.fn,
+  onEditOpen: jest.fn,
+};
 
 test('NewReleases renders with data by date', () => {
   const { getByText, getByTestId } = render(
-    <NewReleases
-      data={{ releases: mockNewReleasesData }}
-      error={null}
-      isLoading={false}
-      onCreateOpen={handleCreateOpen}
-      onEditOpen={handleEditOpen}
-      onDeleteOpen={handleDeleteOpen}
-      refresh={jest.fn}
-    />,
+    <MockedProvider mocks={mocks} addTypename={false}>
+      <NewReleases
+        data={{ releases: mockNewReleasesData }}
+        isLoading={false}
+        modal={modal}
+        refresh={jest.fn}
+      />
+    </MockedProvider>,
   );
   const titleHeader = getByText('New Releases');
   const year91Header = getByText(releaseLabels.one);

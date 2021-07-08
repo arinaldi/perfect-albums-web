@@ -2,15 +2,19 @@ import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
 import { formatDate } from '../../utils';
+import { Release } from '../../utils/types';
 import useGqlSubmit from '../../hooks/useGqlSubmit';
 import { EDIT_RELEASE } from '../../mutations';
-import { DISPATCH_TYPES, MESSAGES } from '../../constants';
-import { useApp } from '../Provider';
+import { MESSAGES } from '../../constants';
 import EditReleaseModal from '../CreateReleaseModal/presenter';
 
-const EditReleaseContainer: FC = () => {
-  const [state, dispatch] = useApp();
-  const { data, isOpen } = state.modal;
+interface Props {
+  data: Release;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const EditReleaseContainer: FC<Props> = ({ data, isOpen, onClose }) => {
   const [editRelease] = useMutation(EDIT_RELEASE);
   const [release, setRelease] = useState({
     artist: '',
@@ -22,7 +26,7 @@ const EditReleaseContainer: FC = () => {
     setRelease({
       artist: data.artist,
       title: data.title,
-      date: formatDate(data.date),
+      date: formatDate(data.date || ''),
     });
   }, [data]);
 
@@ -36,9 +40,7 @@ const EditReleaseContainer: FC = () => {
   };
 
   const handleClose = () => {
-    dispatch({
-      type: DISPATCH_TYPES.CLOSE_MODAL,
-    });
+    onClose();
     setRelease({
       artist: '',
       title: '',
@@ -48,7 +50,7 @@ const EditReleaseContainer: FC = () => {
 
   const submitFunc = async () => {
     await editRelease({
-      variables: { ...release, id: data.id },
+      variables: { ...release, id: data?.id },
     });
   };
 
@@ -61,13 +63,13 @@ const EditReleaseContainer: FC = () => {
 
   return (
     <EditReleaseModal
-      isOpen={isOpen}
       header="Edit"
-      release={release}
+      isOpen={isOpen}
       isSaving={isSaving}
       onChange={handleChange}
       onClose={handleClose}
       onSubmit={handleSubmit}
+      release={release}
     />
   );
 };

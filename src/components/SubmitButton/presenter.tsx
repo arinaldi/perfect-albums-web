@@ -4,7 +4,7 @@ import { Button } from '@chakra-ui/react';
 interface Props {
   isDisabled: boolean;
   isLoading: boolean;
-  loadingText: string;
+  loadingText?: string;
   text: string;
 }
 

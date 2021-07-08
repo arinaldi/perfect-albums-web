@@ -2,6 +2,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import PropTypes from 'prop-types';
 
 import mockApi from '../../src/utils/api';
+import { Method } from '../../src/utils/types';
 import useSubmit from '../../src/hooks/useSubmit';
 import { Provider } from '../../src/components/Provider';
 import { mockAdminData } from '../mocks';
@@ -22,7 +23,7 @@ test('useSubmit handles successful data posting', async () => {
   const options = {
     body: mockAdminData[0],
     callbacks: [jest.fn],
-    method: 'POST',
+    method: Method.post,
     path: '/api/albums',
     successMessage: 'OK',
   };

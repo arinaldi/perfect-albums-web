@@ -1,16 +1,32 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { NetworkStatus, useQuery } from '@apollo/client';
+import { useDisclosure } from '@chakra-ui/react';
 
 import { Song } from '../../utils/types';
-import { DISPATCH_TYPES, MODAL_TYPES } from '../../constants';
 import { GET_SONGS } from '../../queries';
-import { useAppDispatch } from '../Provider';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
+import CreateSongModal from '../CreateSongModal';
+import DeleteSongModal from '../DeleteSongModal';
 import FeaturedSongs from './presenter';
 
 const FeaturedSongsContainer: FC = () => {
-  const appDispatch = useAppDispatch();
+  const [currentSong, setCurrentSong] = useState<Song>({
+    artist: '',
+    id: '',
+    link: '',
+    title: '',
+  });
+  const {
+    isOpen: isCreateOpen,
+    onClose: onCreateClose,
+    onOpen: onCreateOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isDeleteOpen,
+    onClose: onDeleteClose,
+    onOpen: onDeleteOpen,
+  } = useDisclosure();
   const {
     data,
     error,
@@ -24,26 +40,14 @@ const FeaturedSongsContainer: FC = () => {
     refetch();
   };
 
-  const handleCreateOpen = () => {
-    appDispatch({
-      payload: {
-        type: MODAL_TYPES.FEATURED_SONGS_CREATE,
-      },
-      type: DISPATCH_TYPES.OPEN_MODAL,
-    });
+  const handleDeleteOpen = (song: Song) => {
+    setCurrentSong(song);
+    onDeleteOpen();
   };
 
-  const handleDeleteOpen = (song: Song) => {
-    appDispatch({
-      payload: {
-        data: {
-          ...song,
-          dataType: 'Song',
-        },
-        type: MODAL_TYPES.FEATURED_SONGS_DELETE,
-      },
-      type: DISPATCH_TYPES.OPEN_MODAL,
-    });
+  const modal = {
+    onCreateOpen,
+    onDeleteOpen: handleDeleteOpen,
   };
 
   return (
@@ -53,9 +57,17 @@ const FeaturedSongsContainer: FC = () => {
         data={data}
         error={error}
         isLoading={isLoading}
-        onCreateOpen={handleCreateOpen}
-        onDeleteOpen={handleDeleteOpen}
+        modal={modal}
         refresh={refresh}
+      />
+      <CreateSongModal
+        isOpen={isCreateOpen}
+        onClose={onCreateClose}
+      />
+      <DeleteSongModal
+        data={currentSong}
+        isOpen={isDeleteOpen}
+        onClose={onDeleteClose}
       />
     </ErrorBoundary>
   );

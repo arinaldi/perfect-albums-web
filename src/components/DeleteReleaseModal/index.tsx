@@ -1,17 +1,20 @@
 import { FC } from 'react';
 import { gql, useMutation } from '@apollo/client';
 
-import { Release } from '../../utils/types';
+import { ModalDataType, Release } from '../../utils/types';
 import useGqlSubmit from '../../hooks/useGqlSubmit';
 import { GET_RELEASES } from '../../queries';
 import { DELETE_RELEASE } from '../../mutations';
-import { DISPATCH_TYPES, MESSAGES } from '../../constants';
-import { useApp } from '../Provider';
+import { MESSAGES } from '../../constants';
 import DeleteDataModal from '../DeleteDataModal/presenter';
 
-const DeleteReleaseContainer: FC = () => {
-  const [state, dispatch] = useApp();
-  const { isOpen, data } = state.modal;
+interface Props {
+  data: Release;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const DeleteReleaseContainer: FC<Props> = ({ data, isOpen, onClose }) => {
   const [deleteRelease] = useMutation(DELETE_RELEASE, {
     refetchQueries: [{ query: GET_RELEASES }],
     update (cache, { data: { deleteRelease } }) {
@@ -33,12 +36,6 @@ const DeleteReleaseContainer: FC = () => {
     },
   });
 
-  const handleClose = () => {
-    dispatch({
-      type: DISPATCH_TYPES.CLOSE_MODAL,
-    });
-  };
-
   const submitFunc = async () => {
     await deleteRelease({
       variables: { id: data.id },
@@ -46,7 +43,7 @@ const DeleteReleaseContainer: FC = () => {
   };
 
   const options = {
-    callback: handleClose,
+    callback: onClose,
     submitFunc,
     successMessage: `${MESSAGES.RELEASE_PREFIX} deleted`,
   };
@@ -54,12 +51,11 @@ const DeleteReleaseContainer: FC = () => {
 
   return (
     <DeleteDataModal
-      isOpen={isOpen}
-      dataType={data.dataType}
-      artist={data.artist}
-      title={data.title}
+      data={data}
+      dataType={ModalDataType.release}
       isDeleting={isSaving}
-      onClose={handleClose}
+      isOpen={isOpen}
+      onClose={onClose}
       onDelete={handleSubmit}
     />
   );

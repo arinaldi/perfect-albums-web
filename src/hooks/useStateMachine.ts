@@ -1,5 +1,4 @@
 import { Dispatch, useEffect, useReducer } from 'react';
-import { useToast } from '@chakra-ui/react';
 
 import { useAppDispatch } from '../components/Provider';
 import api from '../utils/api';
@@ -11,7 +10,6 @@ import {
 
 function useStateMachine (path: string): [DataState, Dispatch<DataEvent>] {
   const appDispatch = useAppDispatch();
-  const toast = useToast();
   const [state, dispatch] = useReducer(dataReducer, dataInitialState);
   const { status } = state;
 
@@ -26,7 +24,6 @@ function useStateMachine (path: string): [DataState, Dispatch<DataEvent>] {
         const { data } = await api(path, {
           dispatch: appDispatch,
           options: { signal: controller.signal },
-          toast,
         });
 
         dispatch({ type: STATE_EVENTS.RESOLVE, data });
@@ -43,7 +40,7 @@ function useStateMachine (path: string): [DataState, Dispatch<DataEvent>] {
         controller.abort();
       };
     }
-  }, [appDispatch, path, status, toast]);
+  }, [appDispatch, path, status]);
 
   return [state, dispatch];
 }

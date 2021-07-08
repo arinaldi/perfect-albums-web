@@ -1,17 +1,20 @@
 import { FC } from 'react';
 import { gql, useMutation } from '@apollo/client';
 
-import { DISPATCH_TYPES, MESSAGES } from '../../constants';
-import { Song } from '../..//utils/types';
+import { MESSAGES } from '../../constants';
+import { ModalDataType, Song } from '../..//utils/types';
 import useGqlSubmit from '../../hooks/useGqlSubmit';
 import { GET_SONGS } from '../../queries';
 import { DELETE_SONG } from '../../mutations';
-import { useApp } from '../Provider';
 import DeleteDataModal from '../DeleteDataModal/presenter';
 
-const DeleteSongContainer: FC = () => {
-  const [state, dispatch] = useApp();
-  const { isOpen, data } = state.modal;
+interface Props {
+  data: Song;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const DeleteSongContainer: FC<Props> = ({ data, isOpen, onClose }) => {
   const [deleteSong] = useMutation(DELETE_SONG, {
     refetchQueries: [{ query: GET_SONGS }],
     update (cache, { data: { deleteSong } }) {
@@ -33,12 +36,6 @@ const DeleteSongContainer: FC = () => {
     },
   });
 
-  const handleClose = () => {
-    dispatch({
-      type: DISPATCH_TYPES.CLOSE_MODAL,
-    });
-  };
-
   const submitFunc = async () => {
     await deleteSong({
       variables: { id: data.id },
@@ -46,7 +43,7 @@ const DeleteSongContainer: FC = () => {
   };
 
   const options = {
-    callback: handleClose,
+    callback: onClose,
     submitFunc,
     successMessage: `${MESSAGES.SONG_PREFIX} deleted`,
   };
@@ -54,12 +51,11 @@ const DeleteSongContainer: FC = () => {
 
   return (
     <DeleteDataModal
-      isOpen={isOpen}
-      dataType={data.dataType}
-      artist={data.artist}
-      title={data.title}
+      data={data}
+      dataType={ModalDataType.song}
       isDeleting={isSaving}
-      onClose={handleClose}
+      isOpen={isOpen}
+      onClose={onClose}
       onDelete={handleSubmit}
     />
   );

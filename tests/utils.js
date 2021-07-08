@@ -1,6 +1,5 @@
 import { MemoryRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
-import PropTypes from 'prop-types';
 import { ChakraProvider } from '@chakra-ui/react';
 
 import { Provider } from '../src/components/Provider';
@@ -14,11 +13,6 @@ const Providers = ({ children, route }) => (
     </Provider>
   </ChakraProvider>
 );
-
-Providers.propTypes = {
-  children: PropTypes.node.isRequired,
-  route: PropTypes.string,
-};
 
 Providers.defaultProps = {
   route: '',

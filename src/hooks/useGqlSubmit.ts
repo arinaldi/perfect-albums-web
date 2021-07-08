@@ -5,16 +5,16 @@ import { MESSAGES } from '../constants';
 
 interface Options {
   callback: () => void;
-  submitFunc: () => Promise<any>;
+  submitFunc: () => Promise<void>;
   successMessage: string;
 }
 
-interface Result {
+interface Payload {
   handleSubmit: (event: FormEvent) => void;
   isSaving: boolean;
 }
 
-function useGqlSubmit (options: Options): Result {
+function useGqlSubmit (options: Options): Payload {
   const {
     callback,
     submitFunc,

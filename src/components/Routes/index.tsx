@@ -8,7 +8,6 @@ import {
 
 import ErrorBoundary from '../ErrorBoundary';
 import NavBar from '../NavBar/presenter';
-import ModalContainer from '../ModalContainer';
 import SignIn from '../SignIn';
 import TopAlbums from '../TopAlbums';
 import FeaturedSongs from '../FeaturedSongs';
@@ -42,7 +41,6 @@ const Routes: FC = () => {
     <Router>
       <>
         <NavBar />
-        <ModalContainer />
         <AppRoutes />
       </>
     </Router>

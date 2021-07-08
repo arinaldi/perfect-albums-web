@@ -4,12 +4,15 @@ import { gql, useMutation } from '@apollo/client';
 import useGqlSubmit from '../../hooks/useGqlSubmit';
 import { GET_SONGS } from '../../queries';
 import { CREATE_SONG } from '../../mutations';
-import { DISPATCH_TYPES, MESSAGES } from '../../constants';
-import { useApp } from '../Provider';
+import { MESSAGES } from '../../constants';
 import CreateSongModal from './presenter';
 
-const CreateSongContainer: FC = () => {
-  const [state, dispatch] = useApp();
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const CreateSongContainer: FC<Props> = ({ isOpen, onClose }) => {
   const [createSong] = useMutation(CREATE_SONG, {
     refetchQueries: [{ query: GET_SONGS }],
     update (cache, { data: { createSong } }) {
@@ -49,9 +52,7 @@ const CreateSongContainer: FC = () => {
   };
 
   const handleClose = () => {
-    dispatch({
-      type: DISPATCH_TYPES.CLOSE_MODAL,
-    });
+    onClose();
     setSong({
       artist: '',
       title: '',
@@ -74,12 +75,12 @@ const CreateSongContainer: FC = () => {
 
   return (
     <CreateSongModal
-      isOpen={state.modal.isOpen}
-      song={song}
+      isOpen={isOpen}
       isSaving={isSaving}
       onChange={handleChange}
       onClose={handleClose}
       onSubmit={handleSubmit}
+      song={song}
     />
   );
 };

@@ -4,13 +4,15 @@ import { gql, useMutation } from '@apollo/client';
 import useGqlSubmit from '../../hooks/useGqlSubmit';
 import { GET_RELEASES } from '../../queries';
 import { CREATE_RELEASE } from '../../mutations';
-import { DISPATCH_TYPES, MESSAGES } from '../../constants';
-import { useApp } from '../Provider';
+import { MESSAGES } from '../../constants';
 import CreateReleaseModal from './presenter';
 
-const CreateReleaseContainer: FC = () => {
-  const [state, dispatch] = useApp();
-  const { isOpen } = state.modal;
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const CreateReleaseContainer: FC<Props> = ({ isOpen, onClose }) => {
   const [createRelease] = useMutation(CREATE_RELEASE, {
     refetchQueries: [{ query: GET_RELEASES }],
     update (cache, { data: { createRelease } }) {
@@ -50,9 +52,7 @@ const CreateReleaseContainer: FC = () => {
   };
 
   const handleClose = () => {
-    dispatch({
-      type: DISPATCH_TYPES.CLOSE_MODAL,
-    });
+    onClose();
     setRelease({
       artist: '',
       title: '',
@@ -75,13 +75,13 @@ const CreateReleaseContainer: FC = () => {
 
   return (
     <CreateReleaseModal
-      isOpen={isOpen}
       header="Create"
-      release={release}
+      isOpen={isOpen}
       isSaving={isSaving}
       onChange={handleChange}
       onClose={handleClose}
       onSubmit={handleSubmit}
+      release={release}
     />
   );
 };

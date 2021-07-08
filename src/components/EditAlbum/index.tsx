@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { getQuery } from '../../utils';
-import { AlbumParams } from '../../utils/types';
+import { AlbumParams, Method } from '../../utils/types';
 import useStateMachine from '../../hooks/useStateMachine';
 import useSubmit from '../../hooks/useSubmit';
 import { MESSAGES, STATE_STATUSES } from '../../constants';
@@ -15,12 +15,12 @@ const EditAlbumContainer: FC = () => {
   const location = useLocation();
   const { id } = useParams<AlbumParams>();
   const [album, setAlbum] = useState({
+    aotd: false,
     artist: '',
+    cd: false,
+    favorite: false,
     title: '',
     year: '',
-    cd: false,
-    aotd: false,
-    favorite: false,
   });
   const [query, setQuery] = useState('');
   const [state] = useStateMachine(`/api/albums/${id}`);
@@ -29,7 +29,7 @@ const EditAlbumContainer: FC = () => {
   const options = {
     body: album,
     callbacks: [() => history.push(`/admin?${query}`)],
-    method: 'PUT',
+    method: Method.put,
     path: `/api/albums/${id}`,
     successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,
   };
@@ -42,13 +42,14 @@ const EditAlbumContainer: FC = () => {
   }, [location.search]);
 
   useEffect(() => {
-    if (status === STATE_STATUSES.SUCCESS) {
-      setAlbum(data);
+    if (status === STATE_STATUSES.SUCCESS && data) {
+      const { aotd, artist, cd, favorite, title, year } = data;
+      setAlbum({ aotd, artist, cd, favorite, title, year });
     }
   }, [data, status]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { target: { name, value } } =  event;
+    const { target: { name, value } } = event;
     let newValue = value;
 
     if (name === 'year') {

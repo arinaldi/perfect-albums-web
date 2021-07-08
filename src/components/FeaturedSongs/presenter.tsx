@@ -15,14 +15,18 @@ import { useAppState } from '../Provider';
 import AppMessage from '../AppMessage/presenter';
 import CardWrapper from './CardWrapper';
 
+interface Modal {
+  onCreateOpen: () => void;
+  onDeleteOpen: (song: Song) => void;
+}
+
 interface Props {
   data: {
     songs: Song[];
   };
   error?: ApolloError;
   isLoading?: boolean;
-  onCreateOpen: () => void;
-  onDeleteOpen: (song: Song) => void;
+  modal: Modal;
   refresh: () => void;
 }
 
@@ -31,8 +35,7 @@ const FeaturedSongs: FC<Props> = (props) => {
     data,
     error,
     isLoading = false,
-    onCreateOpen,
-    onDeleteOpen,
+    modal: { onCreateOpen, onDeleteOpen },
     refresh,
   } = props;
   const { user: { isAuthenticated } } = useAppState();

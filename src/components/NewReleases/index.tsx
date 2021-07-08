@@ -1,16 +1,38 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { NetworkStatus, useQuery } from '@apollo/client';
+import { useDisclosure } from '@chakra-ui/react';
 
 import { Release } from '../../utils/types';
-import { DISPATCH_TYPES, MODAL_TYPES } from '../../constants';
 import { GET_RELEASES } from '../../queries';
-import { useAppDispatch } from '../Provider';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
+import CreateReleaseModal from '../CreateReleaseModal';
+import EditReleaseModal from '../EditReleaseModal';
+import DeleteReleaseModal from '../DeleteReleaseModal';
 import NewReleases from './presenter';
 
 const NewReleasesContainer: FC = () => {
-  const appDispatch = useAppDispatch();
+  const [currentRelease, setCurrentRelease] = useState<Release>({
+    artist: '',
+    date: '',
+    id: '',
+    title: '',
+  });
+  const {
+    isOpen: isCreateOpen,
+    onClose: onCreateClose,
+    onOpen: onCreateOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isEditOpen,
+    onClose: onEditClose,
+    onOpen: onEditOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isDeleteOpen,
+    onClose: onDeleteClose,
+    onOpen: onDeleteOpen,
+  } = useDisclosure();
   const {
     data,
     error,
@@ -24,39 +46,20 @@ const NewReleasesContainer: FC = () => {
     refetch();
   };
 
-  const handleCreateOpen = () => {
-    appDispatch({
-      payload: {
-        type: MODAL_TYPES.NEW_RELEASE_CREATE,
-      },
-      type: DISPATCH_TYPES.OPEN_MODAL,
-    });
-  };
-
   const handleEditOpen = (release: Release) => {
-    appDispatch({
-      payload: {
-        data: {
-          ...release,
-          dataType: 'Release',
-        },
-        type: MODAL_TYPES.NEW_RELEASE_EDIT,
-      },
-      type: DISPATCH_TYPES.OPEN_MODAL,
-    });
+    setCurrentRelease(release);
+    onEditOpen();
   };
 
   const handleDeleteOpen = (release: Release) => {
-    appDispatch({
-      payload: {
-        data: {
-          ...release,
-          dataType: 'Release',
-        },
-        type: MODAL_TYPES.NEW_RELEASE_DELETE,
-      },
-      type: DISPATCH_TYPES.OPEN_MODAL,
-    });
+    setCurrentRelease(release);
+    onDeleteOpen();
+  };
+
+  const modal = {
+    onCreateOpen,
+    onDeleteOpen: handleDeleteOpen,
+    onEditOpen: handleEditOpen,
   };
 
   return (
@@ -66,10 +69,22 @@ const NewReleasesContainer: FC = () => {
         data={data}
         error={error}
         isLoading={isLoading}
-        onCreateOpen={handleCreateOpen}
-        onEditOpen={handleEditOpen}
-        onDeleteOpen={handleDeleteOpen}
+        modal={modal}
         refresh={refresh}
+      />
+      <CreateReleaseModal
+        isOpen={isCreateOpen}
+        onClose={onCreateClose}
+      />
+      <EditReleaseModal
+        data={currentRelease}
+        isOpen={isEditOpen}
+        onClose={onEditClose}
+      />
+      <DeleteReleaseModal
+        data={currentRelease}
+        isOpen={isDeleteOpen}
+        onClose={onDeleteClose}
       />
     </ErrorBoundary>
   );

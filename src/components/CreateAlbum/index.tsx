@@ -2,6 +2,7 @@ import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { getQuery } from '../../utils';
+import { Method } from '../../utils/types';
 import useSubmit from '../../hooks/useSubmit';
 import { MESSAGES } from '../../constants';
 import ErrorBoundary from '../ErrorBoundary';
@@ -23,7 +24,7 @@ const CreateAlbumContainer: FC = () => {
   const options = {
     body: album,
     callbacks: [() => history.push(`/admin?${query}`)],
-    method: 'POST',
+    method: Method.post,
     path: '/api/albums',
     successMessage: `${MESSAGES.ALBUM_PREFIX} created`,
   };

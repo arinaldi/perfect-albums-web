@@ -1,7 +1,8 @@
 import { STATE_EVENTS, STATE_STATUSES } from '../constants';
+import { Album } from '../utils/types';
 
 export interface DataState {
-  data: any;
+  data: Album | null;
   error: Error | null;
   status: STATE_STATUSES;
 }

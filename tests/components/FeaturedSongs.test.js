@@ -1,21 +1,38 @@
+import { MockedProvider } from '@apollo/client/testing';
+
 import FeaturedSongs from '../../src/components/FeaturedSongs/presenter';
-import { STATE_STATUSES } from '../../src/constants';
+import { GET_SONGS } from '../../src/queries';
 import render from '../utils';
 import { mockFeaturedSongsData } from '../mocks';
 
-const handleCreateOpen = () => jest.fn;
-const handleDeleteOpen = () => jest.fn;
+const mocks = [
+  {
+    request: {
+      query: GET_SONGS,
+    },
+    result: {
+      data: {
+        songs: mockFeaturedSongsData,
+      },
+    },
+  },
+];
+
+const modal = {
+  onCreateOpen: jest.fn,
+  onDeleteOpen: jest.fn,
+};
 
 test('FeaturedSongs renders with data', () => {
   const { getByText, getByTestId } = render(
-    <FeaturedSongs
-      cancel={jest.fn}
-      data={{ songs: mockFeaturedSongsData }}
-      onCreateOpen={handleCreateOpen}
-      onDeleteOpen={handleDeleteOpen}
-      refresh={jest.fn}
-      status={STATE_STATUSES.SUCCESS}
-    />,
+    <MockedProvider mocks={mocks} addTypename={false}>
+      <FeaturedSongs
+        data={{ songs: mockFeaturedSongsData }}
+        isLoading={false}
+        modal={modal}
+        refresh={jest.fn}
+      />
+    </MockedProvider>,
   );
   const titleHeader = getByText('Featured Songs');
   const nirvanaCard = getByText('Smells Like Teen Spirit');

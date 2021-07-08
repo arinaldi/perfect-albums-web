@@ -9,11 +9,11 @@ interface Data {
 }
 
 let quotesData: string[] = [];
-const url = 'https://ron-swanson-quotes.herokuapp.com/v2/quotes/3';
+const URL = 'https://ron-swanson-quotes.herokuapp.com/v2/quotes/3';
 
 async function fetcher () {
   try {
-    const res = await window.fetch(url);
+    const res = await window.fetch(URL);
     const data = await res.json();
     quotesData = [...data, ...quotesData];
     return quotesData;

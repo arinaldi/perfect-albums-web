@@ -2,25 +2,26 @@ import { FormEvent, useState } from 'react';
 import { useToast } from '@chakra-ui/react';
 
 import api from '../utils/api';
+import { AlbumBase } from '../utils/types';
 import { MESSAGES } from '../constants';
 import { useAppDispatch } from '../components/Provider';
 
 type Callback = () => void;
 
 interface Options {
-  body: any;
+  body?: AlbumBase;
   callbacks: Callback[];
   method: string;
   path: string;
   successMessage: string;
 }
 
-interface Result {
+interface Payload {
   handleSubmit: (event: FormEvent) => void;
   isSaving: boolean;
 }
 
-function useSubmit (options: Options): Result {
+function useSubmit (options: Options): Payload {
   const {
     body,
     callbacks,

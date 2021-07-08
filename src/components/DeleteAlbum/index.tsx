@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { getQuery } from '../../utils';
-import { AlbumParams } from '../../utils/types';
+import { AlbumParams, Method } from '../../utils/types';
 import { MESSAGES, STATE_STATUSES } from '../../constants';
 import useStateMachine from '../../hooks/useStateMachine';
 import useSubmit from '../../hooks/useSubmit';
@@ -18,9 +18,8 @@ const DeleteAlbumContainer: FC = () => {
   const [state] = useStateMachine(`/api/albums/${id}`);
   const { data, status } = state;
   const options = {
-    body: null,
     callbacks: [() => history.push(`/admin?${query}`)],
-    method: 'DELETE',
+    method: Method.delete,
     path: `/api/albums/${id}`,
     successMessage: `${MESSAGES.ALBUM_PREFIX} deleted`,
   };
