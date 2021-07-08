@@ -3,20 +3,21 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { DispatchContext, StateContext } from '../../src/components/Provider';
 import NavBar from '../../src/components/NavBar/presenter';
+import { User } from '../../src/reducers/provider';
 import render from '../utils';
 
 beforeAll(() => {
   window.matchMedia = window.matchMedia || function () {
     return {
       matches: false,
-      addListener: function () {},
-      removeListener: function () {},
+      addListener: jest.fn,
+      removeListener: jest.fn,
     };
   };
 });
 afterEach(cleanup);
 
-const renderProviders = (user) => render(
+const renderProviders = (user: User) => render(
   <StateContext.Provider value={{ user }}>
     <DispatchContext.Provider value={jest.fn()}>
       <MemoryRouter>

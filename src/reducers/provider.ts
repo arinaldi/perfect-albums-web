@@ -1,7 +1,7 @@
 import { getToken, removeToken, setToken } from '../utils/storage';
 import { DISPATCH_TYPES } from '../constants';
 
-interface User {
+export interface User {
   isAuthenticated: boolean;
 }
 
