@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Box, Link } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 interface Props {
   label: string;
@@ -25,10 +24,5 @@ const LinkWrapper: FC<Props> = ({ label, to }) => (
     </Link>
   </Box>
 );
-
-LinkWrapper.propTypes = {
-  label: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
-};
 
 export default LinkWrapper;

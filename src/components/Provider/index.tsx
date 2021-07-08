@@ -7,7 +7,6 @@ import {
   useEffect,
   useReducer,
 } from 'react';
-import PropTypes from 'prop-types';
 
 import api from '../../utils/api';
 import { getToken } from '../../utils/storage';
@@ -63,10 +62,6 @@ const Provider: FC<Props> = ({ children }) => {
       </DispatchContext.Provider>
     </StateContext.Provider>
   );
-};
-
-Provider.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 function useAppState (): State {

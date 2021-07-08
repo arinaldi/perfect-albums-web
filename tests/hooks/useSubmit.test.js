@@ -1,5 +1,4 @@
 import { renderHook } from '@testing-library/react-hooks';
-import PropTypes from 'prop-types';
 
 import mockApi from '../../src/utils/api';
 import { Method } from '../../src/utils/types';
@@ -14,7 +13,6 @@ afterAll(() => {
 });
 
 const wrapper = ({ children }) => <Provider>{children}</Provider>;
-wrapper.propTypes = { children: PropTypes.object };
 
 test('useSubmit handles successful data posting', async () => {
   mockApi.mockImplementation(() => Promise.resolve({

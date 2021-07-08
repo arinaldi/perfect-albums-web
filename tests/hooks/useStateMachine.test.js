@@ -1,5 +1,4 @@
 import { renderHook } from '@testing-library/react-hooks';
-import PropTypes from 'prop-types';
 
 import { mockTopAlbumsData } from '../mocks';
 import mockApi from '../../src/utils/api';
@@ -13,7 +12,6 @@ afterAll(() => {
 });
 
 const wrapper = ({ children }) => <Provider>{children}</Provider>;
-wrapper.propTypes = { children: PropTypes.object };
 
 test('useStateMachine handles successful data fetching', async () => {
   mockApi.mockImplementation(() => Promise.resolve({

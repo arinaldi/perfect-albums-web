@@ -1,11 +1,9 @@
 import { renderHook } from '@testing-library/react-hooks';
-import PropTypes from 'prop-types';
 
 import useGqlSubmit from '../../src/hooks/useGqlSubmit';
 import { Provider } from '../../src/components/Provider';
 
 const wrapper = ({ children }) => <Provider>{children}</Provider>;
-wrapper.propTypes = { children: PropTypes.object };
 
 test('useGqlSubmit handles successful data posting', async () => {
   const options = {

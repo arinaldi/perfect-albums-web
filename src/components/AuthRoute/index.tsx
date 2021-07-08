@@ -1,6 +1,5 @@
 import { FC, ReactNode } from 'react';
 import { Route, Redirect, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { useAppState } from '../Provider';
 
@@ -18,10 +17,6 @@ const AuthRoute: FC<Props> = ({ children, ...props }) => {
       ? <Route {...props}>{children}</Route>
       : <Redirect to={{ pathname: '/top-albums', state: { from: location } }} />
   );
-};
-
-AuthRoute.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default AuthRoute;
