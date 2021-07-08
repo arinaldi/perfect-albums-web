@@ -1,22 +1,6 @@
-import { MockedProvider } from '@apollo/client/testing';
-
 import FeaturedSongs from '../../src/components/FeaturedSongs/presenter';
-import { GET_SONGS } from '../../src/queries';
 import render from '../utils';
 import { mockFeaturedSongsData } from '../mocks';
-
-const mocks = [
-  {
-    request: {
-      query: GET_SONGS,
-    },
-    result: {
-      data: {
-        songs: mockFeaturedSongsData,
-      },
-    },
-  },
-];
 
 const modal = {
   onCreateOpen: jest.fn,
@@ -25,14 +9,12 @@ const modal = {
 
 test('FeaturedSongs renders with data', () => {
   const { getByText, getByTestId } = render(
-    <MockedProvider mocks={mocks} addTypename={false}>
-      <FeaturedSongs
-        data={{ songs: mockFeaturedSongsData }}
-        isLoading={false}
-        modal={modal}
-        refresh={jest.fn}
-      />
-    </MockedProvider>,
+    <FeaturedSongs
+      data={{ songs: mockFeaturedSongsData }}
+      isLoading={false}
+      modal={modal}
+      refresh={jest.fn}
+    />,
   );
   const titleHeader = getByText('Featured Songs');
   const nirvanaCard = getByText('Smells Like Teen Spirit');
