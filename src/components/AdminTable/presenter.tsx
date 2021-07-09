@@ -12,10 +12,12 @@ import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
 import { SORT_DIRECTION } from '../../constants';
 import { Album } from '../../utils/types';
 import AdminTableRow from '../AdminTable/AdminTableRow';
+import AdminTableSkeleton from '../AdminTable/AdminTableSkeleton';
 
 interface Props {
   data: Album[];
   direction: SORT_DIRECTION;
+  isLoading: boolean;
   onSort: (value: string) => void;
   searchText?: string;
   sort: string;
@@ -33,6 +35,7 @@ const AdminTable: FC<Props> = (props) => {
   const {
     data,
     direction,
+    isLoading,
     onSort,
     searchText = '',
     sort,
@@ -70,15 +73,19 @@ const AdminTable: FC<Props> = (props) => {
             <Th>Actions</Th>
           </Tr>
         </Thead>
-        <Tbody>
-          {data.map(item => (
-            <AdminTableRow
-              key={item.id}
-              item={item}
-              searchText={searchText}
-            />
-          ))}
-        </Tbody>
+        {isLoading
+          ? <AdminTableSkeleton />
+          : (
+            <Tbody>
+              {data.map(item => (
+                <AdminTableRow
+                  key={item.id}
+                  item={item}
+                  searchText={searchText}
+                />
+              ))}
+            </Tbody>
+          )}
       </Table>
     </Box>
   );

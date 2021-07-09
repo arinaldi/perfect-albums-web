@@ -112,10 +112,8 @@ const Admin: FC = () => {
     </ButtonGroup>
   );
 
-  const Content = () => {
-    if (isLoading) return null;
-
-    return albums.length === 0 && !isLoading
+  const Content = (
+    albums.length === 0 && !isLoading
       ? (
         <AppMessage
           type={ALERT_TYPES.INFO}
@@ -126,16 +124,17 @@ const Admin: FC = () => {
         <AdminTable
           data={albums}
           direction={direction}
+          isLoading={isLoading}
           onSort={onSort}
           searchText={searchText}
           sort={sort}
         />
-      );
-  };
+      )
+  );
 
   return (
     <>
-      <ProgressLoader isVisible={isLoading} />
+      <ProgressLoader isVisible={false} />
       <Container maxWidth="container.lg" marginBottom={6}>
         <Flex align="center" justify="space-between" marginBottom={3}>
           <Flex align="center">
@@ -149,11 +148,11 @@ const Admin: FC = () => {
               fontSize="0.9em"
               verticalAlign="baseline"
             >
-              {total.toLocaleString()}
+              {isLoading ? '—' : total.toLocaleString()}
             </Badge>
           </Heading>
         </Flex>
-        <Flex align="center" justify="space-between" marginBottom={3}>
+        <Flex align="center" justify="space-between" marginBottom={4}>
           <Input
             marginRight={3}
             name="username"
@@ -179,12 +178,12 @@ const Admin: FC = () => {
             </Button>
           </Flex>
         </Flex>
-        <Flex align="center" justify="center" marginBottom={3}>
+        <Flex align="center" justify="center" marginBottom={4}>
           {Pagination}
-          <Box mx={2} />
+          <Box marginX={2} />
           {PerPageSelector}
         </Flex>
-        <Content />
+        {Content}
       </Container>
     </>
   );
