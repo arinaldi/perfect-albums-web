@@ -1,6 +1,5 @@
-import { render } from '@testing-library/react';
-
 import SignIn from '../../src/components/SignIn/presenter';
+import render from '../utils';
 
 const handleChange = () => jest.fn;
 const handleSubmit = () => jest.fn;

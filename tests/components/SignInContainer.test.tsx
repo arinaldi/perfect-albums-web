@@ -9,9 +9,10 @@ jest.mock('../../src/utils/api', () => (
     data: { token: 'token' },
   }))
 ));
+const mockedApi = (mockApi as jest.Mock);
 
 afterAll(() => {
-  mockApi.mockClear();
+  mockedApi.mockClear();
 });
 
 test('SignInContainer submits credentials', async () => {

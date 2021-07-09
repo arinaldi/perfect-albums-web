@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 
 import mockApi from '../../src/utils/api';
@@ -7,15 +8,16 @@ import { Provider } from '../../src/components/Provider';
 import { mockAdminData } from '../mocks';
 
 jest.mock('../../src/utils/api', () => jest.fn());
+const mockedApi = (mockApi as jest.Mock);
 
 afterAll(() => {
-  mockApi.mockClear();
+  mockedApi.mockClear();
 });
 
-const wrapper = ({ children }) => <Provider>{children}</Provider>;
+const wrapper = ({ children }: { children: ReactNode }) => <Provider>{children}</Provider>;
 
 test('useSubmit handles successful data posting', async () => {
-  mockApi.mockImplementation(() => Promise.resolve({
+  mockedApi.mockImplementation(() => Promise.resolve({
     json: () => Promise.resolve(mockAdminData[0]),
   }));
   const options = {

@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 
 import { mockTopAlbumsData } from '../mocks';
@@ -6,18 +7,19 @@ import useStateMachine from '../../src/hooks/useStateMachine';
 import { Provider } from '../../src/components/Provider';
 
 jest.mock('../../src/utils/api', () => jest.fn());
+const mockedApi = (mockApi as jest.Mock);
 
 afterAll(() => {
-  mockApi.mockClear();
+  mockedApi.mockClear();
 });
 
-const wrapper = ({ children }) => <Provider>{children}</Provider>;
+const wrapper = ({ children }: { children: ReactNode }) => <Provider>{children}</Provider>;
 
 test('useStateMachine handles successful data fetching', async () => {
-  mockApi.mockImplementation(() => Promise.resolve({
+  mockedApi.mockImplementation(() => Promise.resolve({
     data: mockTopAlbumsData,
   }));
-  const { result, waitForNextUpdate } = renderHook(() => useStateMachine('/top-albums', false), { wrapper });
+  const { result, waitForNextUpdate } = renderHook(() => useStateMachine('/top-albums'), { wrapper });
   await waitForNextUpdate();
   const [state] = result.current;
 
@@ -29,8 +31,8 @@ test('useStateMachine handles successful data fetching', async () => {
 });
 
 test('useStateMachine handles error from data fetching', async () => {
-  mockApi.mockImplementation(() => Promise.reject(new Error('error message')));
-  const { result, waitForNextUpdate } = renderHook(() => useStateMachine('/top-albums', false), { wrapper });
+  mockedApi.mockImplementation(() => Promise.reject(new Error('error message')));
+  const { result, waitForNextUpdate } = renderHook(() => useStateMachine('/top-albums'), { wrapper });
   await waitForNextUpdate();
   const [state] = result.current;
 

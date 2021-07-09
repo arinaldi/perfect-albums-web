@@ -20,12 +20,12 @@ test('CreateEditAlbum renders with data', () => {
     />,
   );
   const titleHeader = getByText('Create Album');
-  const artistInput = container.querySelector('input[name=artist]');
-  const titleInput = container.querySelector('input[name=title]');
-  const yearInput = container.querySelector('input[name=year]');
-  const cdInput = container.querySelector('input[name=cd][value=true]');
-  const aotdInput = container.querySelector('input[name=aotd][value=true]');
-  const favoriteInput = container.querySelector('input[name=favorite][value=true]');
+  const artistInput = container.querySelector('input[name=artist]') as HTMLInputElement;
+  const titleInput = container.querySelector('input[name=title]') as HTMLInputElement;
+  const yearInput = container.querySelector('input[name=year]') as HTMLInputElement;
+  const cdInput = container.querySelector('input[name=cd][value=true]') as HTMLInputElement;
+  const aotdInput = container.querySelector('input[name=aotd][value=true]') as HTMLInputElement;
+  const favoriteInput = container.querySelector('input[name=favorite][value=true]') as HTMLInputElement;
   const cancelButton = getByText('Cancel');
   const saveButton = getByText('Save');
 

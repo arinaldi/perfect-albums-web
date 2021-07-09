@@ -1,7 +1,6 @@
-import { render } from '@testing-library/react';
-
 import AppMessage from '../../src/components/AppMessage/presenter';
 import { ALERT_TYPES, MESSAGES } from '../../src/constants';
+import render from '../utils';
 
 test('AppMessage renders error message', () => {
   const { getByText } = render(

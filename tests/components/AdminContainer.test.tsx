@@ -5,12 +5,14 @@ import render from '../utils';
 import { mockAdminData } from '../mocks';
 import useAdminAlbums from '../../src/hooks/useAdminAlbums';
 
+const mockAdminAlbums = (useAdminAlbums as jest.Mock);
+
 global.fetch = jest.fn(() => Promise.resolve({
   json: () => Promise.resolve({
     data: mockAdminData,
     count: mockAdminData.length,
   }),
-}));
+})) as jest.Mock;
 
 jest.mock('../../src/hooks/useAdminAlbums', () => (
   jest.fn().mockImplementation(() => {
@@ -24,14 +26,14 @@ jest.mock('../../src/hooks/useAdminAlbums', () => (
 ));
 
 afterAll(() => {
-  useAdminAlbums.mockClear();
+  mockAdminAlbums.mockClear();
 });
 
 describe('Admin container', () => {
   test('filters data by search', async () => {
     const value = 'nirvana';
     const { getByPlaceholderText, getByTestId, getByText } = render(<AdminContainer />);
-    const searchInput = getByPlaceholderText(/search/i);
+    const searchInput = getByPlaceholderText(/search/i) as HTMLInputElement;
     const total = getByTestId('total');
     const clearButton = getByText('Clear');
 

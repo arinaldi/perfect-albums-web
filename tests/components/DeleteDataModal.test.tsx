@@ -1,8 +1,7 @@
-import { render } from '@testing-library/react';
-
 import DeleteDataModal from '../../src/components/DeleteDataModal/presenter';
 import { ModalDataType } from '../../src/utils/types';
 import { mockFeaturedSongsData } from '../mocks';
+import render from '../utils';
 
 const data = mockFeaturedSongsData[0];
 const handleClose = () => jest.fn;
@@ -13,7 +12,6 @@ test('DeleteDataModal renders with data', () => {
     <DeleteDataModal
       data={data}
       dataType={ModalDataType.song}
-      error=""
       isDeleting={false}
       isOpen
       onClose={handleClose}

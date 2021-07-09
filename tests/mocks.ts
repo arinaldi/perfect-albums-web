@@ -60,6 +60,8 @@ export const mockAdminData = [
     cd: true,
     aotd: true,
     favorite: true,
+    createdAt: '',
+    updatedAt: '',
   },
   {
     id: '2',
@@ -69,6 +71,8 @@ export const mockAdminData = [
     cd: true,
     aotd: true,
     favorite: true,
+    createdAt: '',
+    updatedAt: '',
   },
   {
     id: '3',
@@ -78,5 +82,7 @@ export const mockAdminData = [
     cd: true,
     aotd: true,
     favorite: true,
+    createdAt: '',
+    updatedAt: '',
   },
 ];

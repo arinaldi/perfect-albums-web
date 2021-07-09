@@ -6,7 +6,6 @@ test('TopAlbums renders with data by year', () => {
   const { getByText, getByTestId } = render(
     <TopAlbums
       data={{ favorites: mockTopAlbumsData }}
-      error={null}
       isLoading={false}
       refresh={jest.fn}
     />,
