@@ -38,7 +38,9 @@ const FeaturedSongs: FC<Props> = (props) => {
     modal: { onCreateOpen, onDeleteOpen },
     refresh,
   } = props;
-  const { user: { isAuthenticated } } = useAppState();
+  const {
+    user: { isAuthenticated },
+  } = useAppState();
 
   return (
     <Container maxWidth="container.lg" marginBottom={6}>
@@ -47,45 +49,34 @@ const FeaturedSongs: FC<Props> = (props) => {
           Featured Songs
         </Heading>
         <Spacer />
-        {isAuthenticated
-          ? (
-            <Box>
-              <Button
-                variant="outline"
-                isDisabled={isLoading}
-                onClick={refresh}
-                marginRight={1}
-              >
-                Refresh
-              </Button>
-              <Button
-                variant="outline"
-                onClick={onCreateOpen}
-              >
-                New
-              </Button>
-            </Box>
-          )
-          : null}
+        {isAuthenticated ? (
+          <Box>
+            <Button
+              variant="outline"
+              isDisabled={isLoading}
+              onClick={refresh}
+              marginRight={1}
+            >
+              Refresh
+            </Button>
+            <Button variant="outline" onClick={onCreateOpen}>
+              New
+            </Button>
+          </Box>
+        ) : null}
       </Flex>
       {error ? <AppMessage /> : null}
-      {data && data.songs
-        ? (
-          <SimpleGrid
-            data-testid="card-row"
-            minChildWidth="240px"
-            spacing="24px"
-          >
-            {data.songs.map((song: Song) => (
-              <CardWrapper
-                key={song.id}
-                onDeleteOpen={onDeleteOpen}
-                song={song}
-              />
-            ))}
-          </SimpleGrid>
-        )
-        : null}
+      {data && data.songs ? (
+        <SimpleGrid data-testid="card-row" minChildWidth="240px" spacing="24px">
+          {data.songs.map((song: Song) => (
+            <CardWrapper
+              key={song.id}
+              onDeleteOpen={onDeleteOpen}
+              song={song}
+            />
+          ))}
+        </SimpleGrid>
+      ) : null}
     </Container>
   );
 };

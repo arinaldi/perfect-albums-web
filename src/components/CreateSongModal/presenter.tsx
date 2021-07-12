@@ -26,14 +26,7 @@ interface Props {
 }
 
 const CreateSongModal: FC<Props> = (props) => {
-  const {
-    isOpen,
-    isSaving,
-    onChange,
-    onClose,
-    onSubmit,
-    song,
-  } = props;
+  const { isOpen, isSaving, onChange, onClose, onSubmit, song } = props;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -72,11 +65,7 @@ const CreateSongModal: FC<Props> = (props) => {
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button
-              variant="outline"
-              mr={2}
-              onClick={onClose}
-            >
+            <Button variant="outline" mr={2} onClick={onClose}>
               Close
             </Button>
             <SubmitButton

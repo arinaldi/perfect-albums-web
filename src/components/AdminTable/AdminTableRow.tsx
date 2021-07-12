@@ -1,10 +1,6 @@
 import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
-import {
-  Button,
-  Td,
-  Tr,
-} from '@chakra-ui/react';
+import { Button, Td, Tr } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 
 import { Album } from '../../utils/types';

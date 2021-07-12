@@ -9,13 +9,15 @@ interface Props {
 }
 
 const AuthRoute: FC<Props> = ({ children, ...props }) => {
-  const { user: { isAuthenticated } } = useAppState();
+  const {
+    user: { isAuthenticated },
+  } = useAppState();
   const location = useLocation();
 
-  return (
-    isAuthenticated
-      ? <Route {...props}>{children}</Route>
-      : <Redirect to={{ pathname: '/top-albums', state: { from: location } }} />
+  return isAuthenticated ? (
+    <Route {...props}>{children}</Route>
+  ) : (
+    <Redirect to={{ pathname: '/top-albums', state: { from: location } }} />
   );
 };
 

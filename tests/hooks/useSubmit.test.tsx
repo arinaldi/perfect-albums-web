@@ -8,18 +8,22 @@ import { Provider } from '../../src/components/Provider';
 import { mockAdminData } from '../mocks';
 
 jest.mock('../../src/utils/api', () => jest.fn());
-const mockedApi = (mockApi as jest.Mock);
+const mockedApi = mockApi as jest.Mock;
 
 afterAll(() => {
   mockedApi.mockClear();
 });
 
-const wrapper = ({ children }: { children: ReactNode }) => <Provider>{children}</Provider>;
+const wrapper = ({ children }: { children: ReactNode }) => (
+  <Provider>{children}</Provider>
+);
 
 test('useSubmit handles successful data posting', async () => {
-  mockedApi.mockImplementation(() => Promise.resolve({
-    json: () => Promise.resolve(mockAdminData[0]),
-  }));
+  mockedApi.mockImplementation(() =>
+    Promise.resolve({
+      json: () => Promise.resolve(mockAdminData[0]),
+    }),
+  );
   const options = {
     body: mockAdminData[0],
     callbacks: [jest.fn],

@@ -18,7 +18,9 @@ const SignInContainer: FC = () => {
   const [error, setError] = useState('');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { target: { name, value } } = event;
+    const {
+      target: { name, value },
+    } = event;
 
     if (error) setError('');
 

@@ -11,7 +11,7 @@ interface Data {
 let quotesData: string[] = [];
 const URL = 'https://ron-swanson-quotes.herokuapp.com/v2/quotes/3';
 
-async function fetcher () {
+async function fetcher() {
   try {
     const res = await window.fetch(URL);
     const data = await res.json();
@@ -22,7 +22,7 @@ async function fetcher () {
   }
 }
 
-function useBufferedData (): Data {
+function useBufferedData(): Data {
   const { data, error } = useSWR('quotes', fetcher);
   const [buffer, setBuffer] = useState(data);
 

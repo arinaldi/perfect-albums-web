@@ -2,18 +2,15 @@ import { Dispatch } from 'react';
 import { mutate } from 'swr';
 import { createStandaloneToast } from '@chakra-ui/react';
 
-import {
-  BASE_URL,
-  DISPATCH_TYPES,
-  MESSAGES,
-} from '../constants';
+import { BASE_URL, DISPATCH_TYPES, MESSAGES } from '../constants';
 import { Action } from '../reducers/provider';
 import { getToken } from './storage';
 import { Method } from './types';
 
-export async function fetcher (url: string): Promise<any> {
+export async function fetcher(url: string): Promise<any> {
   const token = getToken();
-  const headers: HeadersInit = { // eslint-disable-line no-undef
+  // eslint-disable-next-line no-undef
+  const headers: HeadersInit = {
     'Content-Type': 'application/json',
   };
 
@@ -21,10 +18,12 @@ export async function fetcher (url: string): Promise<any> {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  return window.fetch(`${BASE_URL}${url}`, { headers }).then(res => res.json());
+  return window
+    .fetch(`${BASE_URL}${url}`, { headers })
+    .then((res) => res.json());
 }
 
-export function fetchAndCache (key: string): Promise<any> {
+export function fetchAndCache(key: string): Promise<any> {
   const request = fetcher(key);
   mutate(key, request, false);
   return request;
@@ -45,7 +44,10 @@ const logout = (dispatch: Dispatch<Action>) => {
   });
 };
 
-const handleResponse = async (response: Response, dispatch: Dispatch<Action>) => {
+const handleResponse = async (
+  response: Response,
+  dispatch: Dispatch<Action>,
+) => {
   const { status, url } = response;
 
   if (status === 401) {
@@ -77,10 +79,11 @@ interface Config {
   method: Method;
 }
 
-async function api (endpoint: string, options: Options = {}): Promise<any> {
+async function api(endpoint: string, options: Options = {}): Promise<any> {
   const { body, dispatch, ...customConfig } = options;
   const token = getToken();
-  const headers: HeadersInit = { // eslint-disable-line no-undef
+  // eslint-disable-next-line no-undef
+  const headers: HeadersInit = {
     'Content-Type': 'application/json',
   };
 

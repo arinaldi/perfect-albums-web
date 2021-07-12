@@ -70,9 +70,7 @@ const SignIn: FC<Props> = (props) => {
             text="Submit"
           />
         </form>
-        <Box mt={4}>
-          {error ? <AppMessage message={error} /> : null}
-        </Box>
+        <Box mt={4}>{error ? <AppMessage message={error} /> : null}</Box>
       </Box>
     </Container>
   );

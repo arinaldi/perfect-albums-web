@@ -10,6 +10,7 @@ test('AdminTable renders with data', () => {
     <AdminTable
       data={mockAdminData}
       direction={SORT_DIRECTION.ASC}
+      isLoading={false}
       onSort={handleSort}
       searchText=""
       sort="artist"

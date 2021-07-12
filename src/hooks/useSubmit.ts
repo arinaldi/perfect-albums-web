@@ -21,14 +21,8 @@ interface Payload {
   isSaving: boolean;
 }
 
-function useSubmit (options: Options): Payload {
-  const {
-    body,
-    callbacks,
-    method,
-    path,
-    successMessage,
-  } = options;
+function useSubmit(options: Options): Payload {
+  const { body, callbacks, method, path, successMessage } = options;
   const dispatch = useAppDispatch();
   const [isSaving, setIsSaving] = useState(false);
   const toast = useToast();

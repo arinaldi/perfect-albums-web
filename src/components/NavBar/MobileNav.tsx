@@ -1,9 +1,5 @@
 import { FC } from 'react';
-import {
-  Flex,
-  Link,
-  Stack,
-} from '@chakra-ui/react';
+import { Flex, Link, Stack } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 
 import { DISPATCH_TYPES, NAV_LINKS } from '../../constants';
@@ -21,11 +17,7 @@ interface Props {
 
 const MobileNavItem: FC<ItemProps> = ({ label, onClose, to }) => (
   <Stack spacing={4}>
-    <Flex
-      align="center"
-      justify="space-between"
-      py={2}
-    >
+    <Flex align="center" justify="space-between" py={2}>
       <Link
         activeStyle={{ fontWeight: 600 }}
         as={NavLink}
@@ -67,38 +59,26 @@ const MobileSignOut: FC<Props> = ({ onClose }) => {
 };
 
 const MobileNav: FC<Props> = ({ onClose }) => {
-  const { user: { isAuthenticated } } = useAppState();
+  const {
+    user: { isAuthenticated },
+  } = useAppState();
 
   return (
-    <Stack
-      bg="gray.700"
-      color="white"
-      display={{ md: 'none' }}
-      p={4}
-    >
+    <Stack bg="gray.700" color="white" display={{ md: 'none' }} p={4}>
       {NAV_LINKS.map(({ label, needsAuth, to }) => {
         if (needsAuth && !isAuthenticated) {
           return null;
         }
 
         return (
-          <MobileNavItem
-            key={to}
-            label={label}
-            onClose={onClose}
-            to={to}
-          />
+          <MobileNavItem key={to} label={label} onClose={onClose} to={to} />
         );
       })}
-      {isAuthenticated
-        ? <MobileSignOut onClose={onClose} />
-        : (
-          <MobileNavItem
-            label="Sign In"
-            onClose={onClose}
-            to="/signin"
-          />
-        )}
+      {isAuthenticated ? (
+        <MobileSignOut onClose={onClose} />
+      ) : (
+        <MobileNavItem label="Sign In" onClose={onClose} to="/signin" />
+      )}
     </Stack>
   );
 };

@@ -15,10 +15,10 @@ interface Props {
 const CreateSongContainer: FC<Props> = ({ isOpen, onClose }) => {
   const [createSong] = useMutation(CREATE_SONG, {
     refetchQueries: [{ query: GET_SONGS }],
-    update (cache, { data: { createSong } }) {
+    update(cache, { data: { createSong } }) {
       cache.modify({
         fields: {
-          songs (existingSongs = []) {
+          songs(existingSongs = []) {
             const newSongRef = cache.writeFragment({
               data: createSong,
               fragment: gql`
@@ -43,7 +43,9 @@ const CreateSongContainer: FC<Props> = ({ isOpen, onClose }) => {
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { target: { name, value } } = event;
+    const {
+      target: { name, value },
+    } = event;
 
     setSong({
       ...song,

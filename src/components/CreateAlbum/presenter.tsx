@@ -53,7 +53,10 @@ const CreateEditAlbum: FC<Props> = (props) => {
       </Heading>
       {!isLoading && (
         <form onSubmit={onSubmit}>
-          <Flex flexDirection={{ base: 'column', md: 'row' }} justify="space-between">
+          <Flex
+            flexDirection={{ base: 'column', md: 'row' }}
+            justify="space-between"
+          >
             <Box flex={1} marginRight={6}>
               <FormControl id="artist" isRequired>
                 <FormLabel>Artist</FormLabel>
@@ -97,15 +100,16 @@ const CreateEditAlbum: FC<Props> = (props) => {
                   >
                     false
                   </Radio>
-                  <Radio
-                    onChange={onRadioChange}
-                    value="true"
-                  >
+                  <Radio onChange={onRadioChange} value="true">
                     true
                   </Radio>
                 </Stack>
               </RadioGroup>
-              <RadioGroup marginY={{ base: 7, md: 14 }} name="aotd" value={data.aotd.toString()}>
+              <RadioGroup
+                marginY={{ base: 7, md: 14 }}
+                name="aotd"
+                value={data.aotd.toString()}
+              >
                 <Text>AotD</Text>
                 <Stack direction="row" spacing={4}>
                   <Radio
@@ -115,10 +119,7 @@ const CreateEditAlbum: FC<Props> = (props) => {
                   >
                     false
                   </Radio>
-                  <Radio
-                    onChange={onRadioChange}
-                    value="true"
-                  >
+                  <Radio onChange={onRadioChange} value="true">
                     true
                   </Radio>
                 </Stack>
@@ -133,10 +134,7 @@ const CreateEditAlbum: FC<Props> = (props) => {
                   >
                     false
                   </Radio>
-                  <Radio
-                    onChange={onRadioChange}
-                    value="true"
-                  >
+                  <Radio onChange={onRadioChange} value="true">
                     true
                   </Radio>
                 </Stack>

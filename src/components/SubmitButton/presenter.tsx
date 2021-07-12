@@ -9,12 +9,7 @@ interface Props {
 }
 
 const SubmitButton: FC<Props> = (props) => {
-  const {
-    isDisabled,
-    isLoading,
-    loadingText = 'Loading',
-    text,
-  } = props;
+  const { isDisabled, isLoading, loadingText = 'Loading', text } = props;
 
   return (
     <Button

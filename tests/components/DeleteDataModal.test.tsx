@@ -19,7 +19,9 @@ test('DeleteDataModal renders with data', () => {
     />,
   );
   const titleHeader = getByText('Delete Song');
-  const confirmText = getByText(`Are you sure you want to delete ${data.artist} – ${data.title}?`);
+  const confirmText = getByText(
+    `Are you sure you want to delete ${data.artist} – ${data.title}?`,
+  );
   const closeButton = getByText('Close');
   const deleteButton = getByText('Delete');
 

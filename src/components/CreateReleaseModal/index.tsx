@@ -15,10 +15,10 @@ interface Props {
 const CreateReleaseContainer: FC<Props> = ({ isOpen, onClose }) => {
   const [createRelease] = useMutation(CREATE_RELEASE, {
     refetchQueries: [{ query: GET_RELEASES }],
-    update (cache, { data: { createRelease } }) {
+    update(cache, { data: { createRelease } }) {
       cache.modify({
         fields: {
-          songs (existingReleases = []) {
+          songs(existingReleases = []) {
             const newReleaseRef = cache.writeFragment({
               data: createRelease,
               fragment: gql`
@@ -43,7 +43,9 @@ const CreateReleaseContainer: FC<Props> = ({ isOpen, onClose }) => {
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { target: { name, value } } = event;
+    const {
+      target: { name, value },
+    } = event;
 
     setRelease({
       ...release,

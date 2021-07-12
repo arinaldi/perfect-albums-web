@@ -8,7 +8,10 @@ interface Props {
   type?: ALERT_TYPES;
 }
 
-const AppMessage: FC<Props> = ({ message = MESSAGES.ERROR, type = ALERT_TYPES.ERROR }) => (
+const AppMessage: FC<Props> = ({
+  message = MESSAGES.ERROR,
+  type = ALERT_TYPES.ERROR,
+}) => (
   <Alert status={type}>
     <AlertIcon />
     {message}

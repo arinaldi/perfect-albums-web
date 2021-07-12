@@ -22,13 +22,7 @@ const Sandbox: FC<Props> = ({ handleNext, page }) => {
 
   for (let i = 0; i < dataPage; i++) {
     data.push(
-      <Page
-        key={i}
-        direction="desc"
-        page={i + 1}
-        perPage={10}
-        sort="year"
-      />,
+      <Page key={i} direction="desc" page={i + 1} perPage={10} sort="year" />,
     );
   }
 
@@ -43,17 +37,14 @@ const Sandbox: FC<Props> = ({ handleNext, page }) => {
           <Box style={{ display: 'none' }}>
             <Page page={page + 1} perPage={10} />
           </Box>
-          <Button
-            variant="outline"
-            onClick={handleNext}
-          >
+          <Button variant="outline" onClick={handleNext}>
             Next
           </Button>
           <Divider my={4} />
           {data}
           <Button
             variant="outline"
-            onClick={() => setDataPage(page => page + 1)}
+            onClick={() => setDataPage((page) => page + 1)}
           >
             Load More
           </Button>

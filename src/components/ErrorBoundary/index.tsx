@@ -17,14 +17,14 @@ class ErrorBoundary extends Component<Props, State> {
     error: '',
   };
 
-  static getDerivedStateFromError (error: Error): State {
+  static getDerivedStateFromError(error: Error): State {
     return {
       hasError: true,
       error: error.message,
     };
   }
 
-  render (): ReactNode {
+  render(): ReactNode {
     const { hasError, error } = this.state;
 
     if (hasError) {

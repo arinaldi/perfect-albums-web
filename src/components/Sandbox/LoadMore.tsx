@@ -1,11 +1,5 @@
 import { FC } from 'react';
-import {
-  Box,
-  Button,
-  ListItem,
-  Text,
-  UnorderedList,
-} from '@chakra-ui/react';
+import { Box, Button, ListItem, Text, UnorderedList } from '@chakra-ui/react';
 
 import useBufferedData from '../../hooks/useBufferedData';
 

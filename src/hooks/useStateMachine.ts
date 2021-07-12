@@ -2,13 +2,15 @@ import { Dispatch, useEffect, useReducer } from 'react';
 
 import { useAppDispatch } from '../components/Provider';
 import api from '../utils/api';
-import { dataInitialState, dataReducer, DataEvent, DataState } from '../reducers/data';
 import {
-  STATE_EVENTS,
-  STATE_STATUSES,
-} from '../constants';
+  dataInitialState,
+  dataReducer,
+  DataEvent,
+  DataState,
+} from '../reducers/data';
+import { STATE_EVENTS, STATE_STATUSES } from '../constants';
 
-function useStateMachine (path: string): [DataState, Dispatch<DataEvent>] {
+function useStateMachine(path: string): [DataState, Dispatch<DataEvent>] {
   const appDispatch = useAppDispatch();
   const [state, dispatch] = useReducer(dataReducer, dataInitialState);
   const { status } = state;

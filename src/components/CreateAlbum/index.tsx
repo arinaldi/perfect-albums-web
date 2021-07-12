@@ -15,7 +15,7 @@ const CreateAlbumContainer: FC = () => {
   const [album, setAlbum] = useState({
     artist: '',
     title: '',
-    year: (new Date()).getFullYear().toString(),
+    year: new Date().getFullYear().toString(),
     cd: false,
     aotd: false,
     favorite: false,
@@ -37,7 +37,9 @@ const CreateAlbumContainer: FC = () => {
   }, [location.search]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { target: { name, value } } = event;
+    const {
+      target: { name, value },
+    } = event;
     let newValue = value;
 
     if (name === 'year') {
@@ -51,7 +53,9 @@ const CreateAlbumContainer: FC = () => {
   };
 
   const handleRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { target: { name, value } } = event;
+    const {
+      target: { name, value },
+    } = event;
 
     setAlbum({
       ...album,

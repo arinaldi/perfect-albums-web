@@ -27,25 +27,26 @@ interface Props {
 }
 
 const TopAlbums: FC<Props> = ({ data, error, isLoading, refresh }) => {
-  const { user: { isAuthenticated } } = useAppState();
+  const {
+    user: { isAuthenticated },
+  } = useAppState();
 
   return (
     <>
       <Container maxWidth="container.lg" marginBottom={6}>
         <Flex align="center" marginBottom={3}>
-          <Heading as="h3" size="lg">Top Albums
-            {data && data.favorites
-              ? (
-                <Badge
-                  borderRadius="4px"
-                  fontSize="0.9em"
-                  marginLeft={1}
-                  verticalAlign="baseline"
-                >
-                  {data.favorites.length.toLocaleString()}
-                </Badge>
-              )
-              : null}
+          <Heading as="h3" size="lg">
+            Top Albums
+            {data && data.favorites ? (
+              <Badge
+                borderRadius="4px"
+                fontSize="0.9em"
+                marginLeft={1}
+                verticalAlign="baseline"
+              >
+                {data.favorites.length.toLocaleString()}
+              </Badge>
+            ) : null}
           </Heading>
           <Spacer />
           {isAuthenticated && (
@@ -60,23 +61,20 @@ const TopAlbums: FC<Props> = ({ data, error, isLoading, refresh }) => {
           )}
         </Flex>
         {error ? <AppMessage /> : null}
-        {data && data.favorites
-          ? (
-            <SimpleGrid minChildWidth="240px" spacing="24px">
-              {Object
-                .entries(formatFavorites(data.favorites))
-                .sort(sortDesc)
-                .map(([year, favorites]) => (
-                  <AlbumCol
-                    key={year}
-                    data={favorites}
-                    year={year}
-                    total={favorites.length}
-                  />
-                ))}
-            </SimpleGrid>
-          )
-          : null}
+        {data && data.favorites ? (
+          <SimpleGrid minChildWidth="240px" spacing="24px">
+            {Object.entries(formatFavorites(data.favorites))
+              .sort(sortDesc)
+              .map(([year, favorites]) => (
+                <AlbumCol
+                  key={year}
+                  data={favorites}
+                  year={year}
+                  total={favorites.length}
+                />
+              ))}
+          </SimpleGrid>
+        ) : null}
       </Container>
       <TopLink />
     </>

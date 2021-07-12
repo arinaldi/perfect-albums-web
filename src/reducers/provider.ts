@@ -26,21 +26,21 @@ export const providerInitialState = {
   },
 };
 
-export function providerReducer (state: State, action: Action): State {
+export function providerReducer(state: State, action: Action): State {
   switch (action.type) {
-  case DISPATCH_TYPES.SIGN_IN_USER:
-    setToken(action.payload);
-    return {
-      ...state,
-      user: { isAuthenticated: true },
-    };
-  case DISPATCH_TYPES.SIGN_OUT_USER:
-    removeToken();
-    return {
-      ...state,
-      user: { isAuthenticated: false },
-    };
-  default:
-    return state;
+    case DISPATCH_TYPES.SIGN_IN_USER:
+      setToken(action.payload);
+      return {
+        ...state,
+        user: { isAuthenticated: true },
+      };
+    case DISPATCH_TYPES.SIGN_OUT_USER:
+      removeToken();
+      return {
+        ...state,
+        user: { isAuthenticated: false },
+      };
+    default:
+      return state;
   }
 }

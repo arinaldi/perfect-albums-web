@@ -22,16 +22,36 @@ import Sandbox from '../Sandbox';
 const AppRoutes = () => (
   <ErrorBoundary>
     <Switch>
-      <Route path="/top-albums"><TopAlbums /></Route>
-      <Route path="/featured-songs"><FeaturedSongs /></Route>
-      <Route path="/new-releases"><NewReleases /></Route>
-      <AuthRoute path="/admin/new"><CreateAlbum /></AuthRoute>
-      <AuthRoute path="/admin/edit/:id"><EditAlbum /></AuthRoute>
-      <AuthRoute path="/admin/delete/:id"><DeleteAlbum /></AuthRoute>
-      <AuthRoute path="/admin"><Admin /></AuthRoute>
-      <AuthRoute path="/sandbox"><Sandbox /></AuthRoute>
-      <Route path="/signin"><SignIn /></Route>
-      <Route><Redirect to="/top-albums" /></Route>
+      <Route path="/top-albums">
+        <TopAlbums />
+      </Route>
+      <Route path="/featured-songs">
+        <FeaturedSongs />
+      </Route>
+      <Route path="/new-releases">
+        <NewReleases />
+      </Route>
+      <AuthRoute path="/admin/new">
+        <CreateAlbum />
+      </AuthRoute>
+      <AuthRoute path="/admin/edit/:id">
+        <EditAlbum />
+      </AuthRoute>
+      <AuthRoute path="/admin/delete/:id">
+        <DeleteAlbum />
+      </AuthRoute>
+      <AuthRoute path="/admin">
+        <Admin />
+      </AuthRoute>
+      <AuthRoute path="/sandbox">
+        <Sandbox />
+      </AuthRoute>
+      <Route path="/signin">
+        <SignIn />
+      </Route>
+      <Route>
+        <Redirect to="/top-albums" />
+      </Route>
     </Switch>
   </ErrorBoundary>
 );

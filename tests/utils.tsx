@@ -13,9 +13,7 @@ interface Props {
 const Providers = ({ children, route }: Props) => (
   <ChakraProvider>
     <Provider>
-      <MemoryRouter initialEntries={[route]}>
-        {children}
-      </MemoryRouter>
+      <MemoryRouter initialEntries={[route]}>{children}</MemoryRouter>
     </Provider>
   </ChakraProvider>
 );
@@ -25,9 +23,5 @@ Providers.defaultProps = {
 };
 
 export default (component: ReactElement, route = '/'): RenderResult => ({
-  ...render(
-    <Providers route={route}>
-      {component}
-    </Providers>,
-  ),
+  ...render(<Providers route={route}>{component}</Providers>),
 });

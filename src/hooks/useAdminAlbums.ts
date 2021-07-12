@@ -11,9 +11,11 @@ interface Payload {
   total: number;
 }
 
-function useAdminAlbums (url: string, preventFetch = false): Payload {
+function useAdminAlbums(url: string, preventFetch = false): Payload {
   const key = preventFetch ? null : url;
-  const { data, error, mutate } = useSWR(key, fetcher, { dedupingInterval: 10000 });
+  const { data, error, mutate } = useSWR(key, fetcher, {
+    dedupingInterval: 10000,
+  });
   const payload = {
     albums: [],
     hasError: error,

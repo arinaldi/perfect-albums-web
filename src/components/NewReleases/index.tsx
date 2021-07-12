@@ -33,13 +33,10 @@ const NewReleasesContainer: FC = () => {
     onClose: onDeleteClose,
     onOpen: onDeleteOpen,
   } = useDisclosure();
-  const {
-    data,
-    error,
-    loading,
-    networkStatus,
-    refetch,
-  } = useQuery(GET_RELEASES, { notifyOnNetworkStatusChange: true });
+  const { data, error, loading, networkStatus, refetch } = useQuery(
+    GET_RELEASES,
+    { notifyOnNetworkStatusChange: true },
+  );
   const isLoading = loading || networkStatus === NetworkStatus.refetch;
 
   const refresh = () => {
@@ -72,10 +69,7 @@ const NewReleasesContainer: FC = () => {
         modal={modal}
         refresh={refresh}
       />
-      <CreateReleaseModal
-        isOpen={isCreateOpen}
-        onClose={onCreateClose}
-      />
+      <CreateReleaseModal isOpen={isCreateOpen} onClose={onCreateClose} />
       <EditReleaseModal
         data={currentRelease}
         isOpen={isEditOpen}

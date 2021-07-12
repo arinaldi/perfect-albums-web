@@ -24,14 +24,7 @@ interface Props {
 }
 
 const DeleteDataModal: FC<Props> = (props) => {
-  const {
-    data,
-    dataType,
-    isDeleting,
-    isOpen,
-    onClose,
-    onDelete,
-  } = props;
+  const { data, dataType, isDeleting, isOpen, onClose, onDelete } = props;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -44,11 +37,7 @@ const DeleteDataModal: FC<Props> = (props) => {
             <Text>{`Are you sure you want to delete ${data.artist} – ${data.title}?`}</Text>
           </ModalBody>
           <ModalFooter>
-            <Button
-              marginRight={2}
-              onClick={onClose}
-              variant="outline"
-            >
+            <Button marginRight={2} onClick={onClose} variant="outline">
               Close
             </Button>
             <SubmitButton

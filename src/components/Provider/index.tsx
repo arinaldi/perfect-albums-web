@@ -64,7 +64,7 @@ const Provider: FC<Props> = ({ children }) => {
   );
 };
 
-function useAppState (): State {
+function useAppState(): State {
   const context = useContext(StateContext);
 
   if (context === undefined) {
@@ -74,7 +74,7 @@ function useAppState (): State {
   return context;
 }
 
-function useAppDispatch (): Dispatch<Action> {
+function useAppDispatch(): Dispatch<Action> {
   const context = useContext(DispatchContext);
 
   if (context === undefined) {
@@ -84,7 +84,7 @@ function useAppDispatch (): Dispatch<Action> {
   return context;
 }
 
-function useApp (): [State, Dispatch<Action>] {
+function useApp(): [State, Dispatch<Action>] {
   return [useAppState(), useAppDispatch()];
 }
 

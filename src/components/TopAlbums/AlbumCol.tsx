@@ -20,20 +20,12 @@ interface Props {
 const AlbumCol: FC<Props> = ({ data, year, total }) => (
   <Box>
     <Flex align="center" marginBottom={2}>
-      <Heading
-        as="h5"
-        id={year}
-        size="md"
-      >
+      <Heading as="h5" id={year} size="md">
         {year}
       </Heading>
       <Spacer />
       <Box>
-        <Badge
-          borderRadius="4px"
-          fontSize="1.25em"
-          marginLeft={1}
-        >
+        <Badge borderRadius="4px" fontSize="1.25em" marginLeft={1}>
           {total}
         </Badge>
       </Box>

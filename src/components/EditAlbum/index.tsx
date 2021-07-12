@@ -49,7 +49,9 @@ const EditAlbumContainer: FC = () => {
   }, [data, status]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { target: { name, value } } = event;
+    const {
+      target: { name, value },
+    } = event;
     let newValue = value;
 
     if (name === 'year') {
@@ -63,7 +65,9 @@ const EditAlbumContainer: FC = () => {
   };
 
   const handleRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { target: { name, value } } = event;
+    const {
+      target: { name, value },
+    } = event;
 
     setAlbum({
       ...album,

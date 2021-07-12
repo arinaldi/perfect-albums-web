@@ -5,16 +5,19 @@ import render from '../utils';
 import { mockAdminData } from '../mocks';
 import useAdminAlbums from '../../src/hooks/useAdminAlbums';
 
-const mockAdminAlbums = (useAdminAlbums as jest.Mock);
+const mockAdminAlbums = useAdminAlbums as jest.Mock;
 
-global.fetch = jest.fn(() => Promise.resolve({
-  json: () => Promise.resolve({
-    data: mockAdminData,
-    count: mockAdminData.length,
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () =>
+      Promise.resolve({
+        data: mockAdminData,
+        count: mockAdminData.length,
+      }),
   }),
-})) as jest.Mock;
+) as jest.Mock;
 
-jest.mock('../../src/hooks/useAdminAlbums', () => (
+jest.mock('../../src/hooks/useAdminAlbums', () =>
   jest.fn().mockImplementation(() => {
     return {
       albums: mockAdminData,
@@ -22,8 +25,8 @@ jest.mock('../../src/hooks/useAdminAlbums', () => (
       hasError: false,
       isLoading: false,
     };
-  })
-));
+  }),
+);
 
 afterAll(() => {
   mockAdminAlbums.mockClear();
@@ -32,7 +35,9 @@ afterAll(() => {
 describe('Admin container', () => {
   test('filters data by search', async () => {
     const value = 'nirvana';
-    const { getByPlaceholderText, getByTestId, getByText } = render(<AdminContainer />);
+    const { getByPlaceholderText, getByTestId, getByText } = render(
+      <AdminContainer />,
+    );
     const searchInput = getByPlaceholderText(/search/i) as HTMLInputElement;
     const total = getByTestId('total');
     const clearButton = getByText('Clear');

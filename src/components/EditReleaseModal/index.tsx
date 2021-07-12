@@ -31,7 +31,9 @@ const EditReleaseContainer: FC<Props> = ({ data, isOpen, onClose }) => {
   }, [data]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { target: { name, value } } = event;
+    const {
+      target: { name, value },
+    } = event;
 
     setRelease({
       ...release,

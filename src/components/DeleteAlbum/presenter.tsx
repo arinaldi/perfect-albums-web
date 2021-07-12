@@ -1,12 +1,6 @@
 import { FC, FormEvent } from 'react';
 import { useHistory } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Container,
-  Heading,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Button, Container, Heading, Text } from '@chakra-ui/react';
 
 import { Album } from '../../utils/types';
 import { STATE_STATUSES } from '../../constants';
@@ -21,7 +15,13 @@ interface Props {
   status: string;
 }
 
-const DeleteAlbum: FC<Props> = ({ data, isDeleting = false, onSubmit, query = '', status }) => {
+const DeleteAlbum: FC<Props> = ({
+  data,
+  isDeleting = false,
+  onSubmit,
+  query = '',
+  status,
+}) => {
   const history = useHistory();
 
   const handleCancel = () => {
@@ -30,18 +30,16 @@ const DeleteAlbum: FC<Props> = ({ data, isDeleting = false, onSubmit, query = ''
 
   return (
     <Container maxWidth="container.lg" marginBottom={3}>
-      <Heading as="h3" size="lg">Delete Album</Heading>
+      <Heading as="h3" size="lg">
+        Delete Album
+      </Heading>
       {data && (
         <form onSubmit={onSubmit}>
           <Text marginY={4}>
             {`Are you sure you want to delete ${data.artist} – ${data.title}?`}
           </Text>
           <Box marginBottom={6}>
-            <Button
-              onClick={handleCancel}
-              marginRight={2}
-              variant="outline"
-            >
+            <Button onClick={handleCancel} marginRight={2} variant="outline">
               Cancel
             </Button>
             <SubmitButton

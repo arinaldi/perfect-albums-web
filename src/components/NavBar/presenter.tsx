@@ -18,7 +18,9 @@ import SignOut from './SignOut';
 import MobileNav from './MobileNav';
 
 const NavBar: FC = () => {
-  const { user: { isAuthenticated } } = useAppState();
+  const {
+    user: { isAuthenticated },
+  } = useAppState();
   const { isOpen, onClose, onToggle } = useDisclosure();
 
   return (
@@ -38,7 +40,9 @@ const NavBar: FC = () => {
         >
           <IconButton
             aria-label="Toggle Navigation"
-            icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
+            icon={
+              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
+            }
             onClick={onToggle}
             variant="ghost"
             _active={{ background: 'gray.700' }}
@@ -60,13 +64,7 @@ const NavBar: FC = () => {
                 return null;
               }
 
-              return (
-                <LinkWrapper
-                  key={to}
-                  label={label}
-                  to={to}
-                />
-              );
+              return <LinkWrapper key={to} label={label} to={to} />;
             })}
           </Flex>
         </Flex>
@@ -78,9 +76,11 @@ const NavBar: FC = () => {
           spacing={6}
         >
           <Box display={{ base: 'none', md: 'inline-flex' }}>
-            {isAuthenticated
-              ? <SignOut />
-              : <LinkWrapper label="Sign In" to="/signin" />}
+            {isAuthenticated ? (
+              <SignOut />
+            ) : (
+              <LinkWrapper label="Sign In" to="/signin" />
+            )}
           </Box>
         </Stack>
       </Flex>

@@ -19,25 +19,18 @@ interface Props {
 }
 
 const DateCol: FC<Props> = (props) => {
+  const { data, date, onEditOpen, onDeleteOpen } = props;
   const {
-    data,
-    date,
-    onEditOpen,
-    onDeleteOpen,
-  } = props;
-  const { user: { isAuthenticated } } = useAppState();
+    user: { isAuthenticated },
+  } = useAppState();
 
   return (
     <Box>
-      <Heading
-        as="h5"
-        marginBottom={2}
-        size="md"
-      >
+      <Heading as="h5" marginBottom={2} size="md">
         {date}
       </Heading>
       <UnorderedList data-testid={`list-${date}`} pl={3}>
-        {data.map(release => (
+        {data.map((release) => (
           <ListItem key={release.id}>
             <span>
               {release.artist} &ndash; {release.title}

@@ -4,12 +4,14 @@ import SignInContainer from '../../src/components/SignIn';
 import mockApi from '../../src/utils/api';
 import render from '../utils';
 
-jest.mock('../../src/utils/api', () => (
-  jest.fn(() => Promise.resolve({
-    data: { token: 'token' },
-  }))
-));
-const mockedApi = (mockApi as jest.Mock);
+jest.mock('../../src/utils/api', () =>
+  jest.fn(() =>
+    Promise.resolve({
+      data: { token: 'token' },
+    }),
+  ),
+);
+const mockedApi = mockApi as jest.Mock;
 
 afterAll(() => {
   mockedApi.mockClear();
@@ -30,10 +32,9 @@ test('SignInContainer submits credentials', async () => {
   fireEvent.click(submitButton);
 
   expect(mockApi).toHaveBeenCalledTimes(1);
-  expect(mockApi).toHaveBeenCalledWith(
-    '/api/signin',
-    { body: { username, password } },
-  );
+  expect(mockApi).toHaveBeenCalledWith('/api/signin', {
+    body: { username, password },
+  });
 
   await waitFor(() => {
     const titleHeader = queryByText('Sign In');

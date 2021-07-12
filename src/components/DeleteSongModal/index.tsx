@@ -17,10 +17,10 @@ interface Props {
 const DeleteSongContainer: FC<Props> = ({ data, isOpen, onClose }) => {
   const [deleteSong] = useMutation(DELETE_SONG, {
     refetchQueries: [{ query: GET_SONGS }],
-    update (cache, { data: { deleteSong } }) {
+    update(cache, { data: { deleteSong } }) {
       cache.modify({
         fields: {
-          songs (existingSongs = []) {
+          songs(existingSongs = []) {
             cache.writeFragment({
               data: deleteSong,
               fragment: gql`
@@ -29,7 +29,9 @@ const DeleteSongContainer: FC<Props> = ({ data, isOpen, onClose }) => {
                 }
               `,
             });
-            return existingSongs.filter((song: Song) => song.id !== deleteSong.id);
+            return existingSongs.filter(
+              (song: Song) => song.id !== deleteSong.id,
+            );
           },
         },
       });

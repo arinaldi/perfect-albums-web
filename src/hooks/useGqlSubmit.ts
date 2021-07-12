@@ -14,12 +14,8 @@ interface Payload {
   isSaving: boolean;
 }
 
-function useGqlSubmit (options: Options): Payload {
-  const {
-    callback,
-    submitFunc,
-    successMessage,
-  } = options;
+function useGqlSubmit(options: Options): Payload {
+  const { callback, submitFunc, successMessage } = options;
   const [isSaving, setIsSaving] = useState(false);
   const toast = useToast();
 

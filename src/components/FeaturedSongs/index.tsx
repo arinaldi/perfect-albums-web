@@ -27,13 +27,9 @@ const FeaturedSongsContainer: FC = () => {
     onClose: onDeleteClose,
     onOpen: onDeleteOpen,
   } = useDisclosure();
-  const {
-    data,
-    error,
-    loading,
-    networkStatus,
-    refetch,
-  } = useQuery(GET_SONGS, { notifyOnNetworkStatusChange: true });
+  const { data, error, loading, networkStatus, refetch } = useQuery(GET_SONGS, {
+    notifyOnNetworkStatusChange: true,
+  });
   const isLoading = loading || networkStatus === NetworkStatus.refetch;
 
   const refresh = () => {
@@ -60,10 +56,7 @@ const FeaturedSongsContainer: FC = () => {
         modal={modal}
         refresh={refresh}
       />
-      <CreateSongModal
-        isOpen={isCreateOpen}
-        onClose={onCreateClose}
-      />
+      <CreateSongModal isOpen={isCreateOpen} onClose={onCreateClose} />
       <DeleteSongModal
         data={currentSong}
         isOpen={isDeleteOpen}

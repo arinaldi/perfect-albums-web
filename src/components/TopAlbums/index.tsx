@@ -7,13 +7,10 @@ import ProgressLoader from '../ProgressLoader/presenter';
 import TopAlbums from './presenter';
 
 const TopAlbumsContainer: FC = () => {
-  const {
-    data,
-    error,
-    loading,
-    networkStatus,
-    refetch,
-  } = useQuery(GET_FAVORITES, { notifyOnNetworkStatusChange: true });
+  const { data, error, loading, networkStatus, refetch } = useQuery(
+    GET_FAVORITES,
+    { notifyOnNetworkStatusChange: true },
+  );
   const isLoading = loading || networkStatus === NetworkStatus.refetch;
 
   const refresh = () => {

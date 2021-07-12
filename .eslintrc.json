@@ -6,7 +6,8 @@
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "standard",
-    "standard-jsx"
+    "standard-jsx",
+    "prettier"
   ],
   "env": {
     "browser": true,
@@ -32,12 +33,12 @@
   "rules": {
     "comma-dangle": ["error", "always-multiline"],
     "eol-last": "error",
-    "indent": ["error", 2],
     "import/no-unresolved": "off",
     "import/order": [
       "error",
       { "groups": ["builtin", "external", "parent", "sibling", "index"] }
     ],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
     "jsx-quotes": ["error", "prefer-double"],
     "no-console": "warn",
     "quotes": ["error", "single"],
@@ -49,7 +50,7 @@
     "react/jsx-handler-names": "off",
     "react/prop-types": "off",
     "semi": ["error", "always"],
-    "space-before-function-paren": "error",
+    "space-before-function-paren": "off",
     "spaced-comment": "error",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-unused-vars": "error",

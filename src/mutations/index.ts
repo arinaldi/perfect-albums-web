@@ -12,7 +12,12 @@ export const CREATE_RELEASE = gql`
 `;
 
 export const EDIT_RELEASE = gql`
-  mutation EditRelease($id: ID!, $artist: String!, $title: String!, $date: Date) {
+  mutation EditRelease(
+    $id: ID!
+    $artist: String!
+    $title: String!
+    $date: Date
+  ) {
     editRelease(id: $id, artist: $artist, title: $title, date: $date) {
       id
       artist
@@ -38,7 +43,7 @@ export const CREATE_SONG = gql`
       title
       link
     }
-}
+  }
 `;
 
 export const DELETE_SONG = gql`

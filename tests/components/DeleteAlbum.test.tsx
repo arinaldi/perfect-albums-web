@@ -15,7 +15,9 @@ test('DeleteAlbum renders with data', () => {
     />,
   );
   const titleHeader = getByText('Delete Album');
-  const confirmText = getByText(`Are you sure you want to delete ${artist} – ${title}?`);
+  const confirmText = getByText(
+    `Are you sure you want to delete ${artist} – ${title}?`,
+  );
   const cancelButton = getByText('Cancel');
   const deleteButton = getByText('Delete');
 

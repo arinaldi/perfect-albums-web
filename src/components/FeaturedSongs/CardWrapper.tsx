@@ -1,12 +1,5 @@
 import { FC } from 'react';
-import {
-  Box,
-  Flex,
-  Heading,
-  IconButton,
-  Link,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Flex, Heading, IconButton, Link, Text } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 
 import { Song } from '../../utils/types';
@@ -18,23 +11,22 @@ interface Props {
 }
 
 const CardWrapper: FC<Props> = ({ onDeleteOpen, song }) => {
-  const { user: { isAuthenticated } } = useAppState();
+  const {
+    user: { isAuthenticated },
+  } = useAppState();
 
   const handleClick = () => {
     onDeleteOpen(song);
   };
 
   return (
-    <Box
-      borderWidth="1px"
-      maxWidth="sm"
-      p={5}
-      rounded="md"
-    >
+    <Box borderWidth="1px" maxWidth="sm" p={5} rounded="md">
       <Heading size="md">{song.title}</Heading>
       <Text my={1}>{song.artist}</Text>
       <Flex align="center">
-        <Link color="blue.500" href={song.link} isExternal>Listen</Link>
+        <Link color="blue.500" href={song.link} isExternal>
+          Listen
+        </Link>
         {isAuthenticated && (
           <IconButton
             aria-label="Delete Song"

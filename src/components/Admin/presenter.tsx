@@ -82,55 +82,35 @@ const Admin: FC = () => {
       size="sm"
       variant="outline"
     >
-      <Button
-        isDisabled={isFirstPage}
-        onClick={onFirst}
-      >
+      <Button isDisabled={isFirstPage} onClick={onFirst}>
         <ArrowBackIcon />
       </Button>
-      <Button
-        isDisabled={isFirstPage}
-        onClick={onPrevious}
-      >
+      <Button isDisabled={isFirstPage} onClick={onPrevious}>
         <ChevronLeftIcon />
       </Button>
-      <Button isDisabled>
-        {currentPage}
-      </Button>
-      <Button
-        isDisabled={isLastPage}
-        onClick={onNext}
-      >
+      <Button isDisabled>{currentPage}</Button>
+      <Button isDisabled={isLastPage} onClick={onNext}>
         <ChevronRightIcon />
       </Button>
-      <Button
-        isDisabled={isLastPage}
-        onClick={onLast}
-      >
+      <Button isDisabled={isLastPage} onClick={onLast}>
         <ArrowForwardIcon />
       </Button>
     </ButtonGroup>
   );
 
-  const Content = (
-    albums.length === 0 && !isLoading
-      ? (
-        <AppMessage
-          type={ALERT_TYPES.INFO}
-          message={MESSAGES.NO_DATA}
-        />
-      )
-      : (
-        <AdminTable
-          data={albums}
-          direction={direction}
-          isLoading={isLoading}
-          onSort={onSort}
-          searchText={searchText}
-          sort={sort}
-        />
-      )
-  );
+  const Content =
+    albums.length === 0 && !isLoading ? (
+      <AppMessage type={ALERT_TYPES.INFO} message={MESSAGES.NO_DATA} />
+    ) : (
+      <AdminTable
+        data={albums}
+        direction={direction}
+        isLoading={isLoading}
+        onSort={onSort}
+        searchText={searchText}
+        sort={sort}
+      />
+    );
 
   return (
     <>
@@ -138,7 +118,9 @@ const Admin: FC = () => {
       <Container maxWidth="container.lg" marginBottom={6}>
         <Flex align="center" justify="space-between" marginBottom={3}>
           <Flex align="center">
-            <Heading as="h3" size="lg">Admin</Heading>
+            <Heading as="h3" size="lg">
+              Admin
+            </Heading>
             <Code marginLeft={2}>{process.env.npm_package_version}</Code>
           </Flex>
           <Heading as="h3" size="lg">
@@ -163,17 +145,10 @@ const Admin: FC = () => {
             value={searchText}
           />
           <Flex>
-            <Button
-              marginRight={1}
-              onClick={onClear}
-              variant="outline"
-            >
+            <Button marginRight={1} onClick={onClear} variant="outline">
               Clear
             </Button>
-            <Button
-              onClick={handleNavigate}
-              variant="outline"
-            >
+            <Button onClick={handleNavigate} variant="outline">
               New
             </Button>
           </Flex>

@@ -7,25 +7,28 @@ import { User } from '../../src/reducers/provider';
 import render from '../utils';
 
 beforeAll(() => {
-  window.matchMedia = window.matchMedia || function () {
-    return {
-      matches: false,
-      addListener: jest.fn,
-      removeListener: jest.fn,
+  window.matchMedia =
+    window.matchMedia ||
+    function () {
+      return {
+        matches: false,
+        addListener: jest.fn,
+        removeListener: jest.fn,
+      };
     };
-  };
 });
 afterEach(cleanup);
 
-const renderProviders = (user: User) => render(
-  <StateContext.Provider value={{ user }}>
-    <DispatchContext.Provider value={jest.fn()}>
-      <MemoryRouter>
-        <NavBar />
-      </MemoryRouter>
-    </DispatchContext.Provider>
-  </StateContext.Provider>,
-);
+const renderProviders = (user: User) =>
+  render(
+    <StateContext.Provider value={{ user }}>
+      <DispatchContext.Provider value={jest.fn()}>
+        <MemoryRouter>
+          <NavBar />
+        </MemoryRouter>
+      </DispatchContext.Provider>
+    </StateContext.Provider>,
+  );
 
 test('NavBar renders when not authenticated', () => {
   const user = { isAuthenticated: false };
