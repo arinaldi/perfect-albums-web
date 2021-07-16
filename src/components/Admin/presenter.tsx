@@ -27,6 +27,7 @@ import ProgressLoader from '../ProgressLoader/presenter';
 const Admin: FC = () => {
   const {
     albums,
+    cdTotal,
     currentPage,
     direction,
     handlers,
@@ -115,24 +116,37 @@ const Admin: FC = () => {
   return (
     <>
       <ProgressLoader isVisible={false} />
-      <Container maxWidth="container.lg" marginBottom={6}>
+      <Container maxWidth="container.xl" marginBottom={6}>
         <Flex align="center" justify="space-between" marginBottom={3}>
           <Flex align="center">
             <Heading as="h3" size="lg">
               Admin
             </Heading>
-            <Code marginLeft={2}>{process.env.npm_package_version}</Code>
+            <Heading as="h3" marginLeft={3} size="lg">
+              <Badge
+                borderRadius="4px"
+                data-testid="total"
+                fontSize="0.9em"
+                verticalAlign="baseline"
+              >
+                {isLoading ? '—' : total.toLocaleString()}
+              </Badge>
+            </Heading>
           </Flex>
-          <Heading as="h3" size="lg">
-            <Badge
-              borderRadius="4px"
-              data-testid="total"
-              fontSize="0.9em"
-              verticalAlign="baseline"
-            >
-              {isLoading ? '—' : total.toLocaleString()}
-            </Badge>
-          </Heading>
+          <Flex align="center">
+            <Code marginLeft={2}>{process.env.npm_package_version}</Code>
+            <Heading as="h5" marginLeft={3} marginRight={1} size="md">
+              <Badge
+                borderRadius="4px"
+                data-testid="cdTotal"
+                fontSize="0.9em"
+                verticalAlign="baseline"
+              >
+                {cdTotal.toLocaleString()}
+              </Badge>
+            </Heading>
+            CDs
+          </Flex>
         </Flex>
         <Flex align="center" justify="space-between" marginBottom={4}>
           <Input

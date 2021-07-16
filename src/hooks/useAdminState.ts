@@ -28,6 +28,7 @@ interface Handlers {
 
 interface Payload {
   albums: Album[];
+  cdTotal: number;
   currentPage: number;
   direction: SORT_DIRECTION;
   handlers: Handlers;
@@ -55,7 +56,7 @@ export default function useAdminState(): Payload {
   const debouncedSearch = useDebounce(searchText, 500);
   const url = `/api/albums?page=${currentPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
   const preventFetch = !debouncedSearch && Boolean(searchText);
-  const { albums, hasError, isLoading, total } = useAdminAlbums(
+  const { albums, cdTotal, hasError, isLoading, total } = useAdminAlbums(
     url,
     preventFetch,
   );
@@ -152,6 +153,7 @@ export default function useAdminState(): Payload {
 
   return {
     albums,
+    cdTotal,
     currentPage,
     direction,
     handlers,

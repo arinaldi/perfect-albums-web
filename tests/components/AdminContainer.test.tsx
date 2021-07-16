@@ -21,9 +21,10 @@ jest.mock('../../src/hooks/useAdminAlbums', () =>
   jest.fn().mockImplementation(() => {
     return {
       albums: mockAdminData,
-      total: mockAdminData.length,
+      cdTotal: 2,
       hasError: false,
       isLoading: false,
+      total: mockAdminData.length,
     };
   }),
 );
@@ -40,9 +41,11 @@ describe('Admin container', () => {
     );
     const searchInput = getByPlaceholderText(/search/i) as HTMLInputElement;
     const total = getByTestId('total');
+    const cdTotal = getByTestId('cdTotal');
     const clearButton = getByText('Clear');
 
     expect(total.textContent).toEqual(mockAdminData.length.toString());
+    expect(cdTotal.textContent).toEqual('2');
 
     fireEvent.change(searchInput, { target: { value } });
 

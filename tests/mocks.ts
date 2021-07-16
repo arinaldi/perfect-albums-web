@@ -79,7 +79,7 @@ export const mockAdminData = [
     artist: 'HIM',
     title: 'Razorblade Romance',
     year: '1999',
-    cd: true,
+    cd: false,
     aotd: true,
     favorite: true,
     createdAt: '',
