@@ -7,9 +7,10 @@ import {
   IconButton,
   Stack,
   useBreakpointValue,
+  useColorMode,
   useDisclosure,
 } from '@chakra-ui/react';
-import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
+import { CloseIcon, HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 import { NAV_LINKS } from '../../constants';
 import { useAppState } from '../Provider';
@@ -21,6 +22,7 @@ const NavBar: FC = () => {
   const {
     user: { isAuthenticated },
   } = useAppState();
+  const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onClose, onToggle } = useDisclosure();
 
   return (
@@ -39,7 +41,7 @@ const NavBar: FC = () => {
           display={{ base: 'flex', md: 'none' }}
         >
           <IconButton
-            aria-label="Toggle Navigation"
+            aria-label="Toggle navigation"
             icon={
               isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
             }
@@ -69,12 +71,23 @@ const NavBar: FC = () => {
           </Flex>
         </Flex>
         <Stack
+          alignItems="center"
           direction="row"
           flex={{ base: 1, md: 0 }}
           justify="flex-end"
           minWidth="fit-content"
-          spacing={6}
+          spacing={4}
         >
+          <IconButton
+            aria-label="Toggle dark mode"
+            borderRadius="4px"
+            icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+            onClick={toggleColorMode}
+            size="sm"
+            variant="outline"
+            _active={{ background: 'gray.700' }}
+            _hover={{ background: 'gray.700' }}
+          />
           <Box display={{ base: 'none', md: 'inline-flex' }}>
             {isAuthenticated ? (
               <SignOut />

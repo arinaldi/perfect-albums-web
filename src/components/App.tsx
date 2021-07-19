@@ -9,6 +9,7 @@ import { setContext } from '@apollo/client/link/context';
 import { ChakraProvider } from '@chakra-ui/react';
 
 import { getToken } from '../utils/storage';
+import theme from '../utils/theme';
 import { BASE_URL } from '../constants';
 import ErrorBoundary from './ErrorBoundary';
 import { Provider } from './Provider';
@@ -37,7 +38,7 @@ const client = new ApolloClient({
 const App: FC = () => (
   <ErrorBoundary>
     <ApolloProvider client={client}>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <Provider>
           <Routes />
         </Provider>
