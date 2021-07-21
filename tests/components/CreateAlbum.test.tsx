@@ -4,18 +4,15 @@ import render from '../utils';
 import { mockAdminData } from '../mocks';
 
 const { artist, title, year, cd, aotd, favorite } = mockAdminData[0];
-const handleChange = () => jest.fn;
-const handleRadioChange = () => jest.fn;
-const handleSubmit = () => jest.fn;
 
 test('CreateEditAlbum renders with data', () => {
   const { container, getByText } = render(
     <CreateAlbum
       data={mockAdminData[0]}
       header="Create"
-      onChange={handleChange}
-      onRadioChange={handleRadioChange}
-      onSubmit={handleSubmit}
+      onChange={jest.fn}
+      onRadioChange={jest.fn}
+      onSubmit={jest.fn}
       status={STATE_STATUSES.SUCCESS}
     />,
   );

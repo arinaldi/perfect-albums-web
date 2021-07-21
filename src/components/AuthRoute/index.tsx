@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
 import { Route, Redirect, useLocation } from 'react-router-dom';
 
-import { useAppState } from '../Provider';
+import useAuth from '../../hooks/useAuth';
 
 interface Props {
   children: ReactNode;
@@ -9,12 +9,10 @@ interface Props {
 }
 
 const AuthRoute: FC<Props> = ({ children, ...props }) => {
-  const {
-    user: { isAuthenticated },
-  } = useAppState();
+  const { hasAuth } = useAuth();
   const location = useLocation();
 
-  return isAuthenticated ? (
+  return hasAuth ? (
     <Route {...props}>{children}</Route>
   ) : (
     <Redirect to={{ pathname: '/top-albums', state: { from: location } }} />

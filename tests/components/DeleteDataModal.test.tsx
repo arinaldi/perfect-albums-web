@@ -4,8 +4,6 @@ import { mockFeaturedSongsData } from '../mocks';
 import render from '../utils';
 
 const data = mockFeaturedSongsData[0];
-const handleClose = () => jest.fn;
-const handleDelete = () => jest.fn;
 
 test('DeleteDataModal renders with data', () => {
   const { getByText } = render(
@@ -14,8 +12,8 @@ test('DeleteDataModal renders with data', () => {
       dataType={ModalDataType.song}
       isDeleting={false}
       isOpen
-      onClose={handleClose}
-      onDelete={handleDelete}
+      onClose={jest.fn}
+      onDelete={jest.fn}
     />,
   );
   const titleHeader = getByText('Delete Song');

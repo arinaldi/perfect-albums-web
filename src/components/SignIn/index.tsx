@@ -1,15 +1,14 @@
 import { ChangeEvent, FC, FormEvent, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { DISPATCH_TYPES } from '../../constants';
 import api from '../../utils/api';
-import { useApp } from '../Provider';
+import useAuth from '../../hooks/useAuth';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import SignIn from './presenter';
 
 const SignInContainer: FC = () => {
-  const [state, dispatch] = useApp();
+  const { hasAuth, signIn } = useAuth();
   const [credentials, setCredentials] = useState({
     username: '',
     password: '',
@@ -38,17 +37,14 @@ const SignInContainer: FC = () => {
       const { data } = await api('/api/signin', { body: credentials });
 
       setIsSubmitting(false);
-      dispatch({
-        payload: data.token,
-        type: DISPATCH_TYPES.SIGN_IN_USER,
-      });
+      signIn(data.token);
     } catch (err) {
       setIsSubmitting(false);
       setError(err.message);
     }
   };
 
-  if (state.user.isAuthenticated) {
+  if (hasAuth) {
     return <Redirect to="/admin" />;
   }
 

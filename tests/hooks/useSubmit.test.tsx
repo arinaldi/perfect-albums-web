@@ -1,10 +1,8 @@
-import { ReactNode } from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 
 import mockApi from '../../src/utils/api';
 import { Method } from '../../src/utils/types';
 import useSubmit from '../../src/hooks/useSubmit';
-import { Provider } from '../../src/components/Provider';
 import { mockAdminData } from '../mocks';
 
 jest.mock('../../src/utils/api', () => jest.fn());
@@ -13,10 +11,6 @@ const mockedApi = mockApi as jest.Mock;
 afterAll(() => {
   mockedApi.mockClear();
 });
-
-const wrapper = ({ children }: { children: ReactNode }) => (
-  <Provider>{children}</Provider>
-);
 
 test('useSubmit handles successful data posting', async () => {
   mockedApi.mockImplementation(() =>
@@ -31,7 +25,7 @@ test('useSubmit handles successful data posting', async () => {
     path: '/api/albums',
     successMessage: 'OK',
   };
-  const { result } = renderHook(() => useSubmit(options), { wrapper });
+  const { result } = renderHook(() => useSubmit(options));
   const state = result.current;
 
   expect(state).toEqual({

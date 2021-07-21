@@ -1,10 +1,12 @@
 import { cleanup } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import { DispatchContext, StateContext } from '../../src/components/Provider';
 import NavBar from '../../src/components/NavBar/presenter';
-import { User } from '../../src/reducers/provider';
+import useAuth from '../../src/hooks/useAuth';
 import render from '../utils';
+
+jest.mock('../../src/hooks/useAuth', () => jest.fn());
+const mockedUseAuth = useAuth as unknown as jest.Mock;
 
 beforeAll(() => {
   window.matchMedia =
@@ -19,20 +21,19 @@ beforeAll(() => {
 });
 afterEach(cleanup);
 
-const renderProviders = (user: User) =>
+const renderProviders = () =>
   render(
-    <StateContext.Provider value={{ user }}>
-      <DispatchContext.Provider value={jest.fn()}>
-        <MemoryRouter>
-          <NavBar />
-        </MemoryRouter>
-      </DispatchContext.Provider>
-    </StateContext.Provider>,
+    <MemoryRouter>
+      <NavBar />
+    </MemoryRouter>,
   );
 
 test('NavBar renders when not authenticated', () => {
-  const user = { isAuthenticated: false };
-  const { getAllByText, getByText } = renderProviders(user);
+  mockedUseAuth.mockImplementation(() => ({
+    hasAuth: false,
+  }));
+
+  const { getAllByText, getByText } = renderProviders();
   const appHeader = getByText('Perfect Albums');
   const albumsLinks = getAllByText('Top Albums');
   const featuredLinks = getAllByText('Featured Songs');
@@ -47,8 +48,11 @@ test('NavBar renders when not authenticated', () => {
 });
 
 test('NavBar renders when authenticated', () => {
-  const user = { isAuthenticated: true };
-  const { getAllByText } = renderProviders(user);
+  mockedUseAuth.mockImplementation(() => ({
+    hasAuth: true,
+  }));
+
+  const { getAllByText } = renderProviders();
   const adminLinks = getAllByText('Admin');
   const signOutLinks = getAllByText('Sign Out');
 

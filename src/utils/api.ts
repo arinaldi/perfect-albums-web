@@ -1,11 +1,11 @@
-import { Dispatch } from 'react';
 import { mutate } from 'swr';
 import { createStandaloneToast } from '@chakra-ui/react';
 
-import { BASE_URL, DISPATCH_TYPES, MESSAGES } from '../constants';
-import { Action } from '../reducers/provider';
+import { BASE_URL, MESSAGES } from '../constants';
 import { getToken } from './storage';
 import { Method } from './types';
+
+type SignOut = () => void;
 
 export async function fetcher(url: string): Promise<any> {
   const token = getToken();
@@ -29,12 +29,10 @@ export function fetchAndCache(key: string): Promise<any> {
   return request;
 }
 
-const logout = (dispatch: Dispatch<Action>) => {
+const logout = (signOut: SignOut) => {
   const toast = createStandaloneToast();
 
-  dispatch({
-    type: DISPATCH_TYPES.SIGN_OUT_USER,
-  });
+  signOut();
   toast({
     description: MESSAGES.UNAUTHORIZED,
     duration: 4000,
@@ -44,17 +42,14 @@ const logout = (dispatch: Dispatch<Action>) => {
   });
 };
 
-const handleResponse = async (
-  response: Response,
-  dispatch: Dispatch<Action>,
-) => {
+const handleResponse = async (response: Response, signOut: SignOut) => {
   const { status, url } = response;
 
   if (status === 401) {
     if (url.includes('signin')) {
       return Promise.reject(new Error(MESSAGES.SIGNIN));
     } else {
-      logout(dispatch);
+      logout(signOut);
       return Promise.reject(new Error(MESSAGES.UNAUTHORIZED));
     }
   }
@@ -80,7 +75,7 @@ interface Config {
 }
 
 async function api(endpoint: string, options: Options = {}): Promise<any> {
-  const { body, dispatch, ...customConfig } = options;
+  const { body, signOut, ...customConfig } = options;
   const token = getToken();
   // eslint-disable-next-line no-undef
   const headers: HeadersInit = {
@@ -105,7 +100,7 @@ async function api(endpoint: string, options: Options = {}): Promise<any> {
   }
 
   const response = await window.fetch(`${BASE_URL}${endpoint}`, config);
-  return handleResponse(response, dispatch);
+  return handleResponse(response, signOut);
 }
 
 export default api;

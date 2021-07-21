@@ -1,17 +1,10 @@
 import { FC } from 'react';
 import { Box, Link } from '@chakra-ui/react';
 
-import { DISPATCH_TYPES } from '../../constants';
-import { useAppDispatch } from '../Provider';
+import useAuth from '../../hooks/useAuth';
 
 const SignOut: FC = () => {
-  const dispatch = useAppDispatch();
-
-  const signOut = () => {
-    dispatch({
-      type: DISPATCH_TYPES.SIGN_OUT_USER,
-    });
-  };
+  const { signOut } = useAuth();
 
   return (
     <Box>

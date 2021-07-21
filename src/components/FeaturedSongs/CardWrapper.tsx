@@ -3,7 +3,7 @@ import { Box, Flex, Heading, IconButton, Link, Text } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 
 import { Song } from '../../utils/types';
-import { useAppState } from '../Provider';
+import useAuth from '../../hooks/useAuth';
 
 interface Props {
   onDeleteOpen: (song: Song) => void;
@@ -11,9 +11,7 @@ interface Props {
 }
 
 const CardWrapper: FC<Props> = ({ onDeleteOpen, song }) => {
-  const {
-    user: { isAuthenticated },
-  } = useAppState();
+  const { hasAuth } = useAuth();
 
   const handleClick = () => {
     onDeleteOpen(song);
@@ -27,7 +25,7 @@ const CardWrapper: FC<Props> = ({ onDeleteOpen, song }) => {
         <Link color="blue.500" href={song.link} isExternal>
           Listen
         </Link>
-        {isAuthenticated && (
+        {hasAuth ? (
           <IconButton
             aria-label="Delete Song"
             icon={<DeleteIcon />}
@@ -36,7 +34,7 @@ const CardWrapper: FC<Props> = ({ onDeleteOpen, song }) => {
             size="xs"
             variant="ghost"
           />
-        )}
+        ) : null}
       </Flex>
     </Box>
   );

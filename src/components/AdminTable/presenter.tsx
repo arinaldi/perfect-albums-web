@@ -26,7 +26,7 @@ const getSortIcon = (direction: SORT_DIRECTION) => {
     return <ArrowDownIcon mr={1} verticalAlign="text-bottom" />;
 };
 
-const AdminTable: FC<Props> = props => {
+const AdminTable: FC<Props> = (props) => {
   const { data, direction, isLoading, onSort, searchText = '', sort } = props;
 
   return (
@@ -35,15 +35,15 @@ const AdminTable: FC<Props> = props => {
         <Thead>
           <Tr>
             <Th cursor="pointer" onClick={() => onSort('artist')}>
-              {sort === 'artist' && getSortIcon(direction)}
+              {sort === 'artist' ? getSortIcon(direction) : null}
               Artist
             </Th>
             <Th cursor="pointer" onClick={() => onSort('title')}>
-              {sort === 'title' && getSortIcon(direction)}
+              {sort === 'title' ? getSortIcon(direction) : null}
               Title
             </Th>
             <Th cursor="pointer" onClick={() => onSort('year')}>
-              {sort === 'year' && getSortIcon(direction)}
+              {sort === 'year' ? getSortIcon(direction) : null}
               Year
             </Th>
             <Th>CD</Th>
@@ -56,7 +56,7 @@ const AdminTable: FC<Props> = props => {
           <AdminTableSkeleton />
         ) : (
           <Tbody>
-            {data.map(item => (
+            {data.map((item) => (
               <AdminTableRow
                 key={item.id}
                 item={item}

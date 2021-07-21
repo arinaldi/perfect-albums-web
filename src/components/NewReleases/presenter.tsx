@@ -12,7 +12,7 @@ import { ApolloError } from '@apollo/client';
 
 import { formatReleases, sortByDate } from '../../utils';
 import { Release } from '../../utils/types';
-import { useAppState } from '../Provider';
+import useAuth from '../../hooks/useAuth';
 import AppMessage from '../AppMessage/presenter';
 import DateCol from './DateCol';
 
@@ -40,9 +40,7 @@ const NewReleases: FC<Props> = (props) => {
     modal: { onCreateOpen, onDeleteOpen, onEditOpen },
     refresh,
   } = props;
-  const {
-    user: { isAuthenticated },
-  } = useAppState();
+  const { hasAuth } = useAuth();
 
   return (
     <Container maxWidth="container.lg" marginBottom={6}>
@@ -51,7 +49,7 @@ const NewReleases: FC<Props> = (props) => {
           New Releases
         </Heading>
         <Spacer />
-        {isAuthenticated ? (
+        {hasAuth ? (
           <Box>
             <Button
               variant="outline"

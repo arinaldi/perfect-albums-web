@@ -12,7 +12,6 @@ import { getToken } from '../utils/storage';
 import theme from '../utils/theme';
 import { BASE_URL } from '../constants';
 import ErrorBoundary from './ErrorBoundary';
-import { Provider } from './Provider';
 import Routes from './Routes';
 
 const httpLink = createHttpLink({
@@ -39,9 +38,7 @@ const App: FC = () => (
   <ErrorBoundary>
     <ApolloProvider client={client}>
       <ChakraProvider theme={theme}>
-        <Provider>
-          <Routes />
-        </Provider>
+        <Routes />
       </ChakraProvider>
     </ApolloProvider>
   </ErrorBoundary>

@@ -12,7 +12,7 @@ import { ApolloError } from '@apollo/client';
 
 import { formatFavorites, sortDesc } from '../../utils';
 import { Favorite } from '../../utils/types';
-import { useAppState } from '../Provider';
+import useAuth from '../../hooks/useAuth';
 import AppMessage from '../AppMessage/presenter';
 import AlbumCol from './AlbumCol';
 import TopLink from './TopLink';
@@ -27,9 +27,7 @@ interface Props {
 }
 
 const TopAlbums: FC<Props> = ({ data, error, isLoading, refresh }) => {
-  const {
-    user: { isAuthenticated },
-  } = useAppState();
+  const { hasAuth } = useAuth();
 
   return (
     <>
@@ -49,7 +47,7 @@ const TopAlbums: FC<Props> = ({ data, error, isLoading, refresh }) => {
             ) : null}
           </Heading>
           <Spacer />
-          {isAuthenticated && (
+          {hasAuth ? (
             <Button
               isDisabled={isLoading}
               marginRight={1}
@@ -58,7 +56,7 @@ const TopAlbums: FC<Props> = ({ data, error, isLoading, refresh }) => {
             >
               Refresh
             </Button>
-          )}
+          ) : null}
         </Flex>
         {error ? <AppMessage /> : null}
         {data && data.favorites ? (

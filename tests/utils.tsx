@@ -3,8 +3,6 @@ import { MemoryRouter } from 'react-router-dom';
 import { render, RenderResult } from '@testing-library/react';
 import { ChakraProvider } from '@chakra-ui/react';
 
-import { Provider } from '../src/components/Provider';
-
 interface Props {
   children: ReactNode;
   route: string;
@@ -12,9 +10,7 @@ interface Props {
 
 const Providers = ({ children, route }: Props) => (
   <ChakraProvider>
-    <Provider>
-      <MemoryRouter initialEntries={[route]}>{children}</MemoryRouter>
-    </Provider>
+    <MemoryRouter initialEntries={[route]}>{children}</MemoryRouter>
   </ChakraProvider>
 );
 

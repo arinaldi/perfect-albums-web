@@ -13,15 +13,13 @@ import {
 import { CloseIcon, HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 import { NAV_LINKS } from '../../constants';
-import { useAppState } from '../Provider';
+import useAuth from '../../hooks/useAuth';
 import LinkWrapper from './LinkWrapper';
 import SignOut from './SignOut';
 import MobileNav from './MobileNav';
 
 const NavBar: FC = () => {
-  const {
-    user: { isAuthenticated },
-  } = useAppState();
+  const { hasAuth } = useAuth();
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onClose, onToggle } = useDisclosure();
 
@@ -62,7 +60,7 @@ const NavBar: FC = () => {
           </Heading>
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             {NAV_LINKS.map(({ label, needsAuth, to }) => {
-              if (needsAuth && !isAuthenticated) {
+              if (needsAuth && !hasAuth) {
                 return null;
               }
 
@@ -89,7 +87,7 @@ const NavBar: FC = () => {
             _hover={{ background: 'gray.700' }}
           />
           <Box display={{ base: 'none', md: 'inline-flex' }}>
-            {isAuthenticated ? (
+            {hasAuth ? (
               <SignOut />
             ) : (
               <LinkWrapper label="Sign In" to="/signin" />

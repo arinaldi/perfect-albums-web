@@ -61,11 +61,6 @@ export enum STATE_STATUSES {
   FAILURE = 'failure',
 }
 
-export enum DISPATCH_TYPES {
-  SIGN_IN_USER = 'SIGN_IN_USER',
-  SIGN_OUT_USER = 'SIGN_OUT_USER',
-}
-
 export const MONTHS = [
   'Jan',
   'Feb',

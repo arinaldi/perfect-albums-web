@@ -9,7 +9,7 @@ import {
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 
 import { Release } from '../../utils/types';
-import { useAppState } from '../Provider';
+import useAuth from '../../hooks/useAuth';
 
 interface Props {
   data: Release[];
@@ -20,9 +20,7 @@ interface Props {
 
 const DateCol: FC<Props> = (props) => {
   const { data, date, onEditOpen, onDeleteOpen } = props;
-  const {
-    user: { isAuthenticated },
-  } = useAppState();
+  const { hasAuth } = useAuth();
 
   return (
     <Box>
@@ -35,7 +33,7 @@ const DateCol: FC<Props> = (props) => {
             <span>
               {release.artist} &ndash; {release.title}
             </span>
-            {isAuthenticated && (
+            {hasAuth ? (
               <Box as="span" ml={1}>
                 <IconButton
                   aria-label="Edit Release"
@@ -52,7 +50,7 @@ const DateCol: FC<Props> = (props) => {
                   variant="ghost"
                 />
               </Box>
-            )}
+            ) : null}
           </ListItem>
         ))}
       </UnorderedList>

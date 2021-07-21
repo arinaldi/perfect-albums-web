@@ -3,15 +3,13 @@ import { SORT_DIRECTION } from '../../src/constants';
 import render from '../utils';
 import { mockAdminData } from '../mocks';
 
-const handleSort = () => jest.fn;
-
 test('AdminTable renders with data', () => {
   const { container, getByTestId } = render(
     <AdminTable
       data={mockAdminData}
       direction={SORT_DIRECTION.ASC}
       isLoading={false}
-      onSort={handleSort}
+      onSort={jest.fn}
       searchText=""
       sort="artist"
     />,
