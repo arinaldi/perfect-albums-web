@@ -24,6 +24,10 @@ export const MESSAGES = {
   NO_DATA: 'No Data',
 };
 
+export enum ERRORS {
+  INVALID_USER = 'User not valid',
+}
+
 export const DECADES = [
   {
     label: '10s',

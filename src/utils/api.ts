@@ -3,9 +3,7 @@ import { createStandaloneToast } from '@chakra-ui/react';
 
 import { BASE_URL, MESSAGES } from '../constants';
 import { getToken } from './storage';
-import { Method } from './types';
-
-type SignOut = () => void;
+import { Method, SignOut } from './types';
 
 export async function fetcher(url: string): Promise<any> {
   const token = getToken();
