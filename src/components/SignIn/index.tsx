@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { FC, FormEvent, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import api from '../../utils/api';
@@ -9,32 +9,21 @@ import SignIn from './presenter';
 
 const SignInContainer: FC = () => {
   const { hasAuth, signIn } = useAuth();
-  const [credentials, setCredentials] = useState({
-    username: '',
-    password: '',
-  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const {
-      target: { name, value },
-    } = event;
-
-    if (error) setError('');
-
-    setCredentials({
-      ...credentials,
-      [name]: value,
-    });
-  };
-
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    const { username, password } = event.target as HTMLFormElement;
     setIsSubmitting(true);
 
     try {
-      const { data } = await api('/api/signin', { body: credentials });
+      const { data } = await api('/api/signin', {
+        body: {
+          username: username.value,
+          password: password.value,
+        },
+      });
 
       setIsSubmitting(false);
       signIn(data.token);
@@ -54,10 +43,8 @@ const SignInContainer: FC = () => {
       <SignIn
         error={error}
         isSubmitting={isSubmitting}
-        onChange={handleChange}
+        onError={setError}
         onSubmit={handleSubmit}
-        password={credentials.password}
-        username={credentials.username}
       />
     </ErrorBoundary>
   );

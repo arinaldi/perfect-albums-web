@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, FormEvent } from 'react';
+import { ChangeEvent, FC, FormEvent, useState } from 'react';
 import {
   Box,
   Container,
@@ -13,23 +13,31 @@ import SubmitButton from '../SubmitButton/presenter';
 import AppMessage from '../AppMessage/presenter';
 
 interface Props {
-  error?: string;
-  isSubmitting?: boolean;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  error: string;
+  isSubmitting: boolean;
+  onError: (error: string) => void;
   onSubmit: (event: FormEvent) => void;
-  password: string;
-  username: string;
 }
 
 const SignIn: FC<Props> = (props) => {
-  const {
-    error = '',
-    isSubmitting = false,
-    onChange,
-    onSubmit,
-    password,
-    username,
-  } = props;
+  const { error, isSubmitting, onError, onSubmit } = props;
+  const [credentials, setCredentials] = useState({
+    username: '',
+    password: '',
+  });
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { name, value },
+    } = event;
+
+    if (error) onError('');
+
+    setCredentials({
+      ...credentials,
+      [name]: value,
+    });
+  };
 
   return (
     <Container maxWidth="container.lg" marginBottom={6}>
@@ -47,9 +55,9 @@ const SignIn: FC<Props> = (props) => {
               autoComplete="username"
               isRequired
               name="username"
-              onChange={onChange}
+              onChange={handleChange}
               type="text"
-              value={username}
+              value={credentials.username}
             />
           </FormControl>
           <FormControl id="password" isRequired my={4}>
@@ -58,9 +66,9 @@ const SignIn: FC<Props> = (props) => {
               autoComplete="current-password"
               isRequired
               name="password"
-              onChange={onChange}
+              onChange={handleChange}
               type="password"
-              value={password}
+              value={credentials.password}
             />
           </FormControl>
           <SubmitButton
