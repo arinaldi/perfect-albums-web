@@ -1,4 +1,5 @@
 import create from 'zustand';
+import { devtools } from 'zustand/middleware';
 
 import api from '../utils/api';
 import { getToken, removeToken, setToken } from '../utils/storage';
@@ -9,17 +10,19 @@ export interface AuthState {
   signOut: () => void;
 }
 
-const useAuth = create<AuthState>((set) => ({
-  hasAuth: Boolean(getToken()),
-  signIn: (token: string) => {
-    setToken(token);
-    set(() => ({ hasAuth: true }));
-  },
-  signOut: () => {
-    removeToken();
-    set(() => ({ hasAuth: false }));
-  },
-}));
+const useAuth = create<AuthState>(
+  devtools((set) => ({
+    hasAuth: Boolean(getToken()),
+    signIn: (token: string) => {
+      setToken(token);
+      set(() => ({ hasAuth: true }));
+    },
+    signOut: () => {
+      removeToken();
+      set(() => ({ hasAuth: false }));
+    },
+  })),
+);
 
 async function checkUser() {
   const token = getToken();
