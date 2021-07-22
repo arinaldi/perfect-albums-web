@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 
-import { fetcher } from '../utils/api';
+import { fetcher } from '../utils/fetcher';
 import { Album } from '../utils/types';
 
 interface Payload {

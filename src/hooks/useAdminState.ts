@@ -10,7 +10,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 import { PER_PAGE, SORT_DIRECTION } from '../constants';
 import { getQuery } from '../utils';
-import { fetchAndCache } from '../utils/api';
+import { fetchAndCache } from '../utils/fetcher';
 import { Album } from '../utils/types';
 import useDebounce from '../hooks/useDebounce';
 import useAdminAlbums from '../hooks/useAdminAlbums';

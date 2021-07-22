@@ -2,7 +2,7 @@ import { FC } from 'react';
 import useSWR from 'swr';
 import { ListItem, Text, UnorderedList } from '@chakra-ui/react';
 
-import { fetcher } from '../../utils/api';
+import { fetcher } from '../../utils/fetcher';
 import { Album } from '../../utils/types';
 
 interface Props {

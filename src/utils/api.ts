@@ -1,36 +1,14 @@
-import { mutate } from 'swr';
 import { createStandaloneToast } from '@chakra-ui/react';
 
 import { BASE_URL, MESSAGES } from '../constants';
+import useAuth from '../hooks/useAuth';
 import { getToken } from './storage';
-import { Method, SignOut } from './types';
+import { Method } from './types';
 
-export async function fetcher(url: string): Promise<any> {
-  const token = getToken();
-  // eslint-disable-next-line no-undef
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json',
-  };
-
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  return window
-    .fetch(`${BASE_URL}${url}`, { headers })
-    .then((res) => res.json());
-}
-
-export function fetchAndCache(key: string): Promise<any> {
-  const request = fetcher(key);
-  mutate(key, request, false);
-  return request;
-}
-
-const logout = (signOut: SignOut) => {
+const logout = () => {
   const toast = createStandaloneToast();
 
-  signOut();
+  useAuth.getState().signOut();
   toast({
     description: MESSAGES.UNAUTHORIZED,
     duration: 4000,
@@ -40,14 +18,14 @@ const logout = (signOut: SignOut) => {
   });
 };
 
-const handleResponse = async (response: Response, signOut: SignOut) => {
+const handleResponse = async (response: Response) => {
   const { status, url } = response;
 
   if (status === 401) {
     if (url.includes('signin')) {
       return Promise.reject(new Error(MESSAGES.SIGNIN));
     } else {
-      logout(signOut);
+      logout();
       return Promise.reject(new Error(MESSAGES.UNAUTHORIZED));
     }
   }
@@ -73,7 +51,7 @@ interface Config {
 }
 
 async function api(endpoint: string, options: Options = {}): Promise<any> {
-  const { body, signOut, ...customConfig } = options;
+  const { body, ...customConfig } = options;
   const token = getToken();
   // eslint-disable-next-line no-undef
   const headers: HeadersInit = {
@@ -98,7 +76,7 @@ async function api(endpoint: string, options: Options = {}): Promise<any> {
   }
 
   const response = await window.fetch(`${BASE_URL}${endpoint}`, config);
-  return handleResponse(response, signOut);
+  return handleResponse(response);
 }
 
 export default api;

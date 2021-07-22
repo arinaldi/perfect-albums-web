@@ -1,4 +1,5 @@
-import { fireEvent, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import SignInContainer from '../../src/components/SignIn';
 import mockApi from '../../src/utils/api';
@@ -11,10 +12,9 @@ jest.mock('../../src/utils/api', () =>
     }),
   ),
 );
-const mockedApi = mockApi as jest.Mock;
 
 afterAll(() => {
-  mockedApi.mockClear();
+  jest.clearAllMocks();
 });
 
 test('SignInContainer submits credentials', async () => {
@@ -27,9 +27,9 @@ test('SignInContainer submits credentials', async () => {
   const passwordInput = getByLabelText(/password/i);
   const submitButton = getByText('Submit');
 
-  fireEvent.change(usernameInput, { target: { value: username } });
-  fireEvent.change(passwordInput, { target: { value: password } });
-  fireEvent.click(submitButton);
+  userEvent.type(usernameInput, username);
+  userEvent.type(passwordInput, password);
+  userEvent.click(submitButton);
 
   expect(mockApi).toHaveBeenCalledTimes(1);
   expect(mockApi).toHaveBeenCalledWith('/api/signin', {

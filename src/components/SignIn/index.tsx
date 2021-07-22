@@ -14,7 +14,8 @@ const SignInContainer: FC = () => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const { username, password } = event.target as HTMLFormElement;
+    const { elements } = event.target as HTMLFormElement;
+    const [username, password] = Array.from(elements) as HTMLInputElement[];
     setIsSubmitting(true);
 
     try {

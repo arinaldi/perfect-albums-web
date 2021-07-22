@@ -4,7 +4,6 @@ import { useToast } from '@chakra-ui/react';
 import { MESSAGES } from '../constants';
 import api from '../utils/api';
 import { AlbumBase } from '../utils/types';
-import useAuth from '../hooks/useAuth';
 
 type Callback = () => void;
 
@@ -23,7 +22,6 @@ interface Payload {
 
 function useSubmit(options: Options): Payload {
   const { body, callbacks, method, path, successMessage } = options;
-  const { signOut } = useAuth();
   const [isSaving, setIsSaving] = useState(false);
   const toast = useToast();
 
@@ -32,7 +30,7 @@ function useSubmit(options: Options): Payload {
     setIsSaving(true);
 
     try {
-      await api(path, { body, method, signOut });
+      await api(path, { body, method });
       setIsSaving(false);
 
       callbacks.forEach((cb: Callback) => {

@@ -69,5 +69,3 @@ export enum ModalDataType {
   release = 'Release',
   song = 'Song',
 }
-
-export type SignOut = () => void;

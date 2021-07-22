@@ -1,6 +1,5 @@
 import { Dispatch, useEffect, useReducer } from 'react';
 
-import useAuth from '../hooks/useAuth';
 import api from '../utils/api';
 import {
   dataInitialState,
@@ -11,7 +10,6 @@ import {
 import { STATE_EVENTS, STATE_STATUSES } from '../constants';
 
 function useStateMachine(path: string): [DataState, Dispatch<DataEvent>] {
-  const { signOut } = useAuth();
   const [state, dispatch] = useReducer(dataReducer, dataInitialState);
   const { status } = state;
 
@@ -25,7 +23,6 @@ function useStateMachine(path: string): [DataState, Dispatch<DataEvent>] {
       try {
         const { data } = await api(path, {
           options: { signal: controller.signal },
-          signOut,
         });
 
         dispatch({ type: STATE_EVENTS.RESOLVE, data });
@@ -42,7 +39,7 @@ function useStateMachine(path: string): [DataState, Dispatch<DataEvent>] {
         controller.abort();
       };
     }
-  }, [path, signOut, status]);
+  }, [path, status]);
 
   return [state, dispatch];
 }
