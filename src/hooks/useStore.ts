@@ -10,8 +10,10 @@ export interface AuthState {
   signOut: () => void;
 }
 
+const token = getToken();
+
 const store = (set: SetState<AuthState>) => ({
-  hasAuth: Boolean(getToken()),
+  hasAuth: Boolean(token),
   signIn: (token: string) => {
     setToken(token);
     set(() => ({ hasAuth: true }));
@@ -27,8 +29,6 @@ const useStore = create<AuthState>(
 );
 
 async function checkUser() {
-  const token = getToken();
-
   if (token) {
     try {
       const { status } = await api('/api/auth');
