@@ -5,6 +5,7 @@ import {
   Flex,
   Heading,
   IconButton,
+  Link,
   Stack,
   useBreakpointValue,
   useColorMode,
@@ -13,13 +14,13 @@ import {
 import { CloseIcon, HamburgerIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 import { NAV_LINKS } from '../../constants';
-import useAuth from '../../hooks/useAuth';
+import useStore from '../../hooks/useStore';
 import LinkWrapper from './LinkWrapper';
-import SignOut from './SignOut';
 import MobileNav from './MobileNav';
 
 const NavBar: FC = () => {
-  const { hasAuth } = useAuth();
+  const hasAuth = useStore((state) => state.hasAuth);
+  const signOut = useStore((state) => state.signOut);
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onClose, onToggle } = useDisclosure();
 
@@ -88,7 +89,11 @@ const NavBar: FC = () => {
           />
           <Box display={{ base: 'none', md: 'inline-flex' }}>
             {hasAuth ? (
-              <SignOut />
+              <Box>
+                <Link>
+                  <span onClick={signOut}>Sign Out</span>
+                </Link>
+              </Box>
             ) : (
               <LinkWrapper label="Sign In" to="/signin" />
             )}
@@ -96,7 +101,7 @@ const NavBar: FC = () => {
         </Stack>
       </Flex>
       <Collapse in={isOpen} animateOpacity>
-        <MobileNav onClose={onClose} />
+        <MobileNav hasAuth={hasAuth} onClose={onClose} onSignOut={signOut} />
       </Collapse>
     </Box>
   );

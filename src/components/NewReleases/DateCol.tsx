@@ -9,7 +9,7 @@ import {
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 
 import { Release } from '../../utils/types';
-import useAuth from '../../hooks/useAuth';
+import useStore from '../../hooks/useStore';
 
 interface Props {
   data: Release[];
@@ -20,7 +20,7 @@ interface Props {
 
 const DateCol: FC<Props> = (props) => {
   const { data, date, onEditOpen, onDeleteOpen } = props;
-  const { hasAuth } = useAuth();
+  const hasAuth = useStore((state) => state.hasAuth);
 
   return (
     <Box>

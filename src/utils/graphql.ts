@@ -4,7 +4,7 @@ import { onError } from '@apollo/client/link/error';
 
 import { BASE_URL, ERRORS } from '../constants';
 import { getToken } from '../utils/storage';
-import useAuth from '../hooks/useAuth';
+import useStore from '../hooks/useStore';
 
 const httpLink = createHttpLink({
   uri: `${BASE_URL}/graphql`,
@@ -26,7 +26,7 @@ const errorLink = onError(({ graphQLErrors }) => {
     const [error] = graphQLErrors;
 
     if (error.message === ERRORS.INVALID_USER) {
-      useAuth.getState().signOut();
+      useStore.getState().signOut();
     }
   }
 });

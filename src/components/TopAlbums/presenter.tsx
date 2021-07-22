@@ -12,7 +12,7 @@ import { ApolloError } from '@apollo/client';
 
 import { formatFavorites, sortDesc } from '../../utils';
 import { Favorite } from '../../utils/types';
-import useAuth from '../../hooks/useAuth';
+import useStore from '../../hooks/useStore';
 import AppMessage from '../AppMessage/presenter';
 import AlbumCol from './AlbumCol';
 import TopLink from './TopLink';
@@ -27,7 +27,7 @@ interface Props {
 }
 
 const TopAlbums: FC<Props> = ({ data, error, isLoading, refresh }) => {
-  const { hasAuth } = useAuth();
+  const hasAuth = useStore((state) => state.hasAuth);
 
   return (
     <>

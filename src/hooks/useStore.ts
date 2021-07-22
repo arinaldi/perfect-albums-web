@@ -1,4 +1,4 @@
-import create from 'zustand';
+import create, { SetState } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 import api from '../utils/api';
@@ -10,18 +10,20 @@ export interface AuthState {
   signOut: () => void;
 }
 
+const store = (set: SetState<AuthState>) => ({
+  hasAuth: Boolean(getToken()),
+  signIn: (token: string) => {
+    setToken(token);
+    set(() => ({ hasAuth: true }));
+  },
+  signOut: () => {
+    removeToken();
+    set(() => ({ hasAuth: false }));
+  },
+});
+
 const useStore = create<AuthState>(
-  devtools((set) => ({
-    hasAuth: Boolean(getToken()),
-    signIn: (token: string) => {
-      setToken(token);
-      set(() => ({ hasAuth: true }));
-    },
-    signOut: () => {
-      removeToken();
-      set(() => ({ hasAuth: false }));
-    },
-  })),
+  process.env.NODE_ENV === 'development' ? devtools(store) : store,
 );
 
 async function checkUser() {

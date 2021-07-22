@@ -12,7 +12,7 @@ import { ApolloError } from '@apollo/client';
 
 import { formatReleases, sortByDate } from '../../utils';
 import { Release } from '../../utils/types';
-import useAuth from '../../hooks/useAuth';
+import useStore from '../../hooks/useStore';
 import AppMessage from '../AppMessage/presenter';
 import DateCol from './DateCol';
 
@@ -40,7 +40,7 @@ const NewReleases: FC<Props> = (props) => {
     modal: { onCreateOpen, onDeleteOpen, onEditOpen },
     refresh,
   } = props;
-  const { hasAuth } = useAuth();
+  const hasAuth = useStore((state) => state.hasAuth);
 
   return (
     <Container maxWidth="container.lg" marginBottom={6}>

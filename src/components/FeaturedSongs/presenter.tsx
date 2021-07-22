@@ -11,7 +11,7 @@ import {
 import { ApolloError } from '@apollo/client';
 
 import { Song } from '../../utils/types';
-import useAuth from '../../hooks/useAuth';
+import useStore from '../../hooks/useStore';
 import AppMessage from '../AppMessage/presenter';
 import CardWrapper from './CardWrapper';
 
@@ -38,7 +38,7 @@ const FeaturedSongs: FC<Props> = (props) => {
     modal: { onCreateOpen, onDeleteOpen },
     refresh,
   } = props;
-  const { hasAuth } = useAuth();
+  const hasAuth = useStore((state) => state.hasAuth);
 
   return (
     <Container maxWidth="container.lg" marginBottom={6}>

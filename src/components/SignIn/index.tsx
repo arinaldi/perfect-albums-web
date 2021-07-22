@@ -2,13 +2,14 @@ import { FC, FormEvent, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import api from '../../utils/api';
-import useAuth from '../../hooks/useAuth';
+import useStore from '../../hooks/useStore';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import SignIn from './presenter';
 
 const SignInContainer: FC = () => {
-  const { hasAuth, signIn } = useAuth();
+  const hasAuth = useStore((state) => state.hasAuth);
+  const signIn = useStore((state) => state.signIn);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 

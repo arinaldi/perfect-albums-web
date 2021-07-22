@@ -1,14 +1,14 @@
 import { createStandaloneToast } from '@chakra-ui/react';
 
 import { BASE_URL, MESSAGES } from '../constants';
-import useAuth from '../hooks/useAuth';
+import useStore from '../hooks/useStore';
 import { getToken } from './storage';
 import { Method } from './types';
 
 const logout = () => {
   const toast = createStandaloneToast();
 
-  useAuth.getState().signOut();
+  useStore.getState().signOut();
   toast({
     description: MESSAGES.UNAUTHORIZED,
     duration: 4000,

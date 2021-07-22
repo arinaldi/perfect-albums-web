@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
 import { Route, Redirect, useLocation } from 'react-router-dom';
 
-import useAuth from '../../hooks/useAuth';
+import useStore from '../../hooks/useStore';
 
 interface Props {
   children: ReactNode;
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const AuthRoute: FC<Props> = ({ children, ...props }) => {
-  const { hasAuth } = useAuth();
+  const hasAuth = useStore((state) => state.hasAuth);
   const location = useLocation();
 
   return hasAuth ? (

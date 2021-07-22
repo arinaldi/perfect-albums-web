@@ -3,7 +3,7 @@ import { Box, Flex, Heading, IconButton, Link, Text } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 
 import { Song } from '../../utils/types';
-import useAuth from '../../hooks/useAuth';
+import useStore from '../../hooks/useStore';
 
 interface Props {
   onDeleteOpen: (song: Song) => void;
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const CardWrapper: FC<Props> = ({ onDeleteOpen, song }) => {
-  const { hasAuth } = useAuth();
+  const hasAuth = useStore((state) => state.hasAuth);
 
   const handleClick = () => {
     onDeleteOpen(song);

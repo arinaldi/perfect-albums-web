@@ -2,11 +2,11 @@ import { cleanup } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import NavBar from '../../src/components/NavBar/presenter';
-import useAuth from '../../src/hooks/useAuth';
+import useStore from '../../src/hooks/useStore';
 import render from '../utils';
 
-jest.mock('../../src/hooks/useAuth', () => jest.fn());
-const mockedUseAuth = useAuth as unknown as jest.Mock;
+jest.mock('../../src/hooks/useStore', () => jest.fn());
+const mockedUseStore = useStore as unknown as jest.Mock;
 
 beforeAll(() => {
   window.matchMedia =
@@ -29,9 +29,9 @@ const renderProviders = () =>
   );
 
 test('NavBar renders when not authenticated', () => {
-  mockedUseAuth.mockImplementation(() => ({
-    hasAuth: false,
-  }));
+  mockedUseStore
+    .mockImplementationOnce(() => false)
+    .mockImplementationOnce(() => jest.fn);
 
   const { getAllByText, getByText } = renderProviders();
   const appHeader = getByText('Perfect Albums');
@@ -48,9 +48,11 @@ test('NavBar renders when not authenticated', () => {
 });
 
 test('NavBar renders when authenticated', () => {
-  mockedUseAuth.mockImplementation(() => ({
-    hasAuth: true,
-  }));
+  mockedUseStore
+    .mockImplementationOnce(() => true)
+    .mockImplementationOnce(() => jest.fn)
+    .mockImplementationOnce(() => true)
+    .mockImplementationOnce(() => jest.fn);
 
   const { getAllByText } = renderProviders();
   const adminLinks = getAllByText('Admin');
