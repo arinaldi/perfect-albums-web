@@ -67,21 +67,21 @@ const Admin: FC = () => {
       variant="outline"
     >
       <Button
-        isDisabled={SMALL === perPage}
+        isDisabled={perPage === SMALL}
         onClick={() => onPerPageChange(SMALL)}
         variant="outline"
       >
         {SMALL}
       </Button>
       <Button
-        isDisabled={MEDIUM === perPage}
+        isDisabled={perPage === MEDIUM}
         onClick={() => onPerPageChange(MEDIUM)}
         variant="outline"
       >
         {MEDIUM}
       </Button>
       <Button
-        isDisabled={LARGE === perPage}
+        isDisabled={perPage === LARGE}
         onClick={() => onPerPageChange(LARGE)}
         variant="outline"
       >
