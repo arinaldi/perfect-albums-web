@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   Badge,
   Box,
@@ -51,9 +51,10 @@ const Admin: FC = () => {
     onSort,
   } = handlers;
   const history = useHistory();
+  const { search } = useLocation();
 
   const handleNavigate = () => {
-    history.push(`/admin/new?${searchText}`);
+    history.push(`/admin/new${search}`);
   };
 
   const PerPageSelector = (
@@ -108,7 +109,6 @@ const Admin: FC = () => {
         direction={direction}
         isLoading={isLoading}
         onSort={onSort}
-        searchText={searchText}
         sort={sort}
       />
     );

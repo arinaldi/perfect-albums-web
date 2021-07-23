@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Box, Table, Thead, Tbody, Th, Tr } from '@chakra-ui/react';
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
 
-import { SORT_DIRECTION } from '../../constants';
+import { SORT_DIRECTION, SORT_VALUE } from '../../constants';
 import { Album } from '../../utils/types';
 import AdminTableRow from '../AdminTable/AdminTableRow';
 import AdminTableSkeleton from '../AdminTable/AdminTableSkeleton';
@@ -12,11 +12,10 @@ interface Props {
   direction: SORT_DIRECTION;
   isLoading: boolean;
   onSort: (value: string) => void;
-  searchText?: string;
   sort: string;
 }
 
-const getSortIcon = (direction: SORT_DIRECTION) => {
+function getSortIcon(direction: SORT_DIRECTION) {
   const { ASC, DESC } = SORT_DIRECTION;
 
   if (!direction) return '';
@@ -24,26 +23,27 @@ const getSortIcon = (direction: SORT_DIRECTION) => {
     return <ArrowUpIcon mr={1} verticalAlign="text-bottom" />;
   if (direction === DESC)
     return <ArrowDownIcon mr={1} verticalAlign="text-bottom" />;
-};
+}
 
 const AdminTable: FC<Props> = (props) => {
-  const { data, direction, isLoading, onSort, searchText = '', sort } = props;
+  const { data, direction, isLoading, onSort, sort } = props;
+  const { ARTIST, TITLE, YEAR } = SORT_VALUE;
 
   return (
     <Box overflowX="auto">
       <Table size="sm" variant="striped">
         <Thead>
           <Tr>
-            <Th cursor="pointer" onClick={() => onSort('artist')}>
-              {sort === 'artist' ? getSortIcon(direction) : null}
+            <Th cursor="pointer" onClick={() => onSort(ARTIST)}>
+              {sort === ARTIST ? getSortIcon(direction) : null}
               Artist
             </Th>
-            <Th cursor="pointer" onClick={() => onSort('title')}>
-              {sort === 'title' ? getSortIcon(direction) : null}
+            <Th cursor="pointer" onClick={() => onSort(TITLE)}>
+              {sort === TITLE ? getSortIcon(direction) : null}
               Title
             </Th>
-            <Th cursor="pointer" onClick={() => onSort('year')}>
-              {sort === 'year' ? getSortIcon(direction) : null}
+            <Th cursor="pointer" onClick={() => onSort(YEAR)}>
+              {sort === YEAR ? getSortIcon(direction) : null}
               Year
             </Th>
             <Th>CD</Th>
@@ -57,11 +57,7 @@ const AdminTable: FC<Props> = (props) => {
         ) : (
           <Tbody>
             {data.map((item) => (
-              <AdminTableRow
-                key={item.id}
-                item={item}
-                searchText={searchText}
-              />
+              <AdminTableRow key={item.id} item={item} />
             ))}
           </Tbody>
         )}

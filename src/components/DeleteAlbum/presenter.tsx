@@ -1,5 +1,5 @@
 import { FC, FormEvent } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Box, Button, Container, Heading, Text } from '@chakra-ui/react';
 
 import { Album } from '../../utils/types';
@@ -11,7 +11,6 @@ interface Props {
   data: Album | null;
   isDeleting?: boolean;
   onSubmit: (event: FormEvent) => void;
-  query?: string;
   status: string;
 }
 
@@ -19,14 +18,14 @@ const DeleteAlbum: FC<Props> = ({
   data,
   isDeleting = false,
   onSubmit,
-  query = '',
   status,
 }) => {
   const history = useHistory();
+  const { search } = useLocation();
 
-  const handleCancel = () => {
-    history.push(`/admin?${query}`);
-  };
+  function handleCancel() {
+    history.push(`/admin${search}`);
+  }
 
   return (
     <Container maxWidth="container.lg" marginBottom={3}>
@@ -39,7 +38,7 @@ const DeleteAlbum: FC<Props> = ({
             {`Are you sure you want to delete ${data.artist} – ${data.title}?`}
           </Text>
           <Box marginBottom={6}>
-            <Button onClick={handleCancel} marginRight={2} variant="outline">
+            <Button marginRight={2} onClick={handleCancel} variant="outline">
               Cancel
             </Button>
             <SubmitButton

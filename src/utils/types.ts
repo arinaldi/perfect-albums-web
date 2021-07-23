@@ -1,3 +1,5 @@
+import { SORT_DIRECTION, SORT_VALUE } from '../constants';
+
 export interface AlbumBase {
   aotd: boolean;
   artist: string;
@@ -68,4 +70,17 @@ export enum ModalDataType {
   default = 'Item',
   release = 'Release',
   song = 'Song',
+}
+
+export interface GenericObject {
+  [key: string]: string;
+}
+
+export interface QueryParams {
+  direction: SORT_DIRECTION;
+  page: string;
+  perPage: string;
+  search: string;
+  sort: SORT_VALUE;
+  [key: string]: string;
 }

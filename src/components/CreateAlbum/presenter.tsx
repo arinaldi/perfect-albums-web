@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, FormEvent } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -28,7 +28,6 @@ interface Props {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onRadioChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (event: FormEvent) => void;
-  query?: string;
   status: string;
 }
 
@@ -41,10 +40,14 @@ const CreateEditAlbum: FC<Props> = (props) => {
     onChange,
     onRadioChange,
     onSubmit,
-    query = '',
     status,
   } = props;
   const history = useHistory();
+  const { search } = useLocation();
+
+  function handleCancel() {
+    history.push(`/admin${search}`);
+  }
 
   return (
     <Container maxWidth="container.lg" marginBottom={6}>
@@ -142,11 +145,7 @@ const CreateEditAlbum: FC<Props> = (props) => {
             </Box>
           </Flex>
           <Box marginTop={{ base: 8, md: 4 }} marginBottom={6}>
-            <Button
-              onClick={() => history.push(`/admin?${query}`)}
-              marginRight={1}
-              variant="outline"
-            >
+            <Button marginRight={2} onClick={handleCancel} variant="outline">
               Cancel
             </Button>
             <SubmitButton

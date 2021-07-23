@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Button, Td, Tr } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 
@@ -7,15 +7,15 @@ import { Album } from '../../utils/types';
 
 interface Props {
   item: Album;
-  searchText: string;
 }
 
-const AdminTableRow: FC<Props> = ({ item, searchText = '' }) => {
+const AdminTableRow: FC<Props> = ({ item }) => {
   const history = useHistory();
+  const { search } = useLocation();
   const { id, artist, title, year, cd, aotd, favorite } = item;
 
   const navigate = (path: string) => {
-    history.push(`/admin/${path}/${id}?${searchText}`);
+    history.push(`/admin/${path}/${id}${search}`);
   };
 
   return (

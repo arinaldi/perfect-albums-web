@@ -8,12 +8,12 @@ import {
 } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import { PER_PAGE, SORT_DIRECTION } from '../constants';
-import { getQuery } from '../utils';
+import { PER_PAGE, SORT_DIRECTION, SORT_VALUE } from '../constants';
 import { fetchAndCache } from '../utils/fetcher';
-import { Album } from '../utils/types';
+import { Album, GenericObject } from '../utils/types';
 import useDebounce from '../hooks/useDebounce';
 import useAdminAlbums from '../hooks/useAdminAlbums';
+import useQueryParams from '../hooks/useQueryParams';
 
 interface Handlers {
   onClear: () => void;
@@ -23,7 +23,7 @@ interface Handlers {
   onPerPageChange: (value: number) => void;
   onPrevious: () => void;
   onSearchChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onSort: (value: string) => void;
+  onSort: (value: SORT_VALUE) => void;
 }
 
 interface Payload {
@@ -39,19 +39,25 @@ interface Payload {
   perPage: number;
   searchInput: RefObject<HTMLInputElement>;
   searchText: string;
-  sort: string;
+  sort: SORT_VALUE;
   total: number;
 }
 
 export default function useAdminState(): Payload {
   const history = useHistory();
   const location = useLocation();
-  const initialSearch = location.search ? getQuery(location.search) : '';
-  const [searchText, setSearchText] = useState(initialSearch);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [perPage, setPerPage] = useState(PER_PAGE[0]);
-  const [sort, setSort] = useState('');
-  const [direction, setDirection] = useState(SORT_DIRECTION.NONE);
+  const queryParams = useQueryParams();
+  const [searchText, setSearchText] = useState(queryParams.search || '');
+  const [currentPage, setCurrentPage] = useState(
+    parseInt(queryParams.page) || 1,
+  );
+  const [perPage, setPerPage] = useState(
+    parseInt(queryParams.perPage) || PER_PAGE[0],
+  );
+  const [sort, setSort] = useState(queryParams.sort || SORT_VALUE.NONE);
+  const [direction, setDirection] = useState(
+    queryParams.direction || SORT_DIRECTION.NONE,
+  );
   const searchInput = useRef<HTMLInputElement | null>(null);
   const debouncedSearch = useDebounce(searchText, 500);
   const url = `/api/albums?page=${currentPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
@@ -64,11 +70,11 @@ export default function useAdminState(): Payload {
   const isLastPage = currentPage === Math.ceil(total / perPage);
 
   useEffect(() => {
-    if (!location.search) {
+    if (!queryParams.search) {
       const nextUrl = '/api/albums?page=2&per_page=25&search=&sort=&direction=';
       fetchAndCache(nextUrl);
     }
-  }, [location.search]);
+  }, [queryParams.search]);
 
   useEffect(() => {
     if (searchInput && searchInput.current) {
@@ -76,80 +82,97 @@ export default function useAdminState(): Payload {
     }
   }, [searchInput]);
 
-  const handlers = useMemo(
-    () => ({
+  const handlers = useMemo(() => {
+    const searchParams = new URLSearchParams(location.search);
+
+    function updateQueryParams(keyValuePairs: GenericObject): void {
+      Object.entries(keyValuePairs).forEach(([key, value]) => {
+        searchParams.set(key, value);
+      });
+
+      history.replace(`/admin?${searchParams.toString()}`);
+    }
+
+    return {
       onPrevious: () => {
         const newPage = currentPage - 2;
         const previousUrl = `/api/albums?page=${newPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
 
         if (newPage !== 0) fetchAndCache(previousUrl);
-        setCurrentPage((page) => page - 1);
+
+        const prevPage = currentPage - 1;
+        setCurrentPage(prevPage);
+        updateQueryParams({ page: prevPage.toString() });
       },
       onNext: () => {
         const nextUrl = `/api/albums?page=${
           currentPage + 2
         }&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
         fetchAndCache(nextUrl);
-        setCurrentPage((page) => page + 1);
+
+        const nextPage = currentPage + 1;
+        setCurrentPage(nextPage);
+        updateQueryParams({ page: nextPage.toString() });
       },
       onFirst: () => {
         setCurrentPage(1);
+        updateQueryParams({ page: '1' });
       },
       onLast: () => {
-        const page = Math.ceil(total / perPage);
+        const lastPage = Math.ceil(total / perPage);
         const prevUrl = `/api/albums?page=${
-          page - 1
+          lastPage - 1
         }&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
         fetchAndCache(prevUrl);
-        setCurrentPage(page);
+
+        setCurrentPage(lastPage);
+        updateQueryParams({ page: lastPage.toString() });
       },
       onPerPageChange: (value: number) => {
         setPerPage(value);
         setCurrentPage(1);
+        updateQueryParams({ page: '1', perPage: value.toString() });
       },
       onSearchChange: (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
+
         setCurrentPage(1);
         setSearchText(value);
+        updateQueryParams({ page: '1', search: value });
       },
       onClear: () => {
-        setCurrentPage(1);
-        setSearchText('');
-
-        if (searchInput && searchInput.current) {
+        if (searchInput?.current) {
           searchInput.current.focus();
         }
 
-        if (location.search) {
-          location.search = '';
-          history.replace(location);
-        }
-      },
-      onSort: (value: string) => {
-        const { ASC, DESC } = SORT_DIRECTION;
-
-        setSort(value);
-        setDirection((direction) => {
-          if (sort !== value || !direction || direction === DESC) {
-            return ASC;
-          }
-
-          return DESC;
-        });
         setCurrentPage(1);
+        setSearchText('');
+        updateQueryParams({ page: '1', search: '' });
       },
-    }),
-    [
-      currentPage,
-      debouncedSearch,
-      direction,
-      history,
-      location,
-      perPage,
-      sort,
-      total,
-    ],
-  );
+      onSort: (value: SORT_VALUE) => {
+        const { ASC, DESC } = SORT_DIRECTION;
+        let newDirection = DESC;
+
+        if (sort !== value || !direction || direction === DESC) {
+          newDirection = ASC;
+        }
+
+        setCurrentPage(1);
+        setSort(value);
+        setDirection(newDirection);
+        updateQueryParams({ page: '1', sort: value, direction: newDirection });
+      },
+    };
+  }, [
+    currentPage,
+    debouncedSearch,
+    direction,
+    history,
+    location.search,
+    perPage,
+    sort,
+    total,
+  ]);
 
   return {
     albums,

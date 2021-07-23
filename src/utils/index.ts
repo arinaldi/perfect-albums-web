@@ -16,10 +16,6 @@ export function sortDesc(a: Tuple, b: Tuple): number {
   return b[0] - a[0];
 }
 
-export function getQuery(query: string): string {
-  return decodeURI(query.substring(1));
-}
-
 function addZeroPrefix(value: number) {
   return value < 10 ? `0${value}` : value.toString();
 }

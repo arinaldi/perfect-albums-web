@@ -2,6 +2,13 @@ export const BASE_URL = process.env.API_URL;
 
 export const PER_PAGE = [25, 50, 100];
 
+export enum SORT_VALUE {
+  ARTIST = 'artist',
+  NONE = '',
+  TITLE = 'title',
+  YEAR = 'year',
+}
+
 export enum SORT_DIRECTION {
   ASC = 'asc',
   DESC = 'desc',
@@ -14,18 +21,32 @@ export enum ALERT_TYPES {
   SUCCESS = 'success',
 }
 
-export const MESSAGES = {
-  ALBUM_PREFIX: 'Album successfully',
-  SONG_PREFIX: 'Song successfully',
-  RELEASE_PREFIX: 'Release successfully',
-  UNAUTHORIZED: 'You are unauthorized to perform this operation',
-  SIGNIN: 'Invalid username or password',
-  ERROR: 'Something went wrong',
-  NO_DATA: 'No Data',
-};
+export enum MESSAGES {
+  ALBUM_PREFIX = 'Album successfully',
+  SONG_PREFIX = 'Song successfully',
+  RELEASE_PREFIX = 'Release successfully',
+  UNAUTHORIZED = 'You are unauthorized to perform this operation',
+  SIGNIN = 'Invalid username or password',
+  ERROR = 'Something went wrong',
+  NO_DATA = 'No Data',
+}
 
 export enum ERRORS {
   INVALID_USER = 'User not valid',
+}
+
+export enum STATE_EVENTS {
+  FETCH = 'fetch',
+  RESOLVE = 'resolve',
+  REJECT = 'reject',
+  CANCEL = 'cancel',
+}
+
+export enum STATE_STATUSES {
+  IDLE = 'idle',
+  LOADING = 'loading',
+  SUCCESS = 'success',
+  FAILURE = 'failure',
 }
 
 export const DECADES = [
@@ -50,20 +71,6 @@ export const DECADES = [
     link: '#1976',
   },
 ];
-
-export enum STATE_EVENTS {
-  FETCH = 'fetch',
-  RESOLVE = 'resolve',
-  REJECT = 'reject',
-  CANCEL = 'cancel',
-}
-
-export enum STATE_STATUSES {
-  IDLE = 'idle',
-  LOADING = 'loading',
-  SUCCESS = 'success',
-  FAILURE = 'failure',
-}
 
 export const MONTHS = [
   'Jan',

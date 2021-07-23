@@ -1,6 +1,6 @@
 {
   "name": "perfect-albums-web",
-  "version": "3.2.1",
+  "version": "3.3.0",
   "description": "frontend",
   "scripts": {
     "build": "NODE_ENV=production parcel build src/index.html --no-scope-hoist",
