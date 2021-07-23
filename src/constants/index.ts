@@ -1,6 +1,10 @@
 export const BASE_URL = process.env.API_URL;
 
-export const PER_PAGE = [25, 50, 100];
+export enum PER_PAGE {
+  SMALL = 25,
+  MEDIUM = 50,
+  LARGE = 100,
+}
 
 export enum SORT_VALUE {
   ARTIST = 'artist',

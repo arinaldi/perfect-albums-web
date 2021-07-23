@@ -24,6 +24,8 @@ import AdminTable from '../AdminTable/presenter';
 import AppMessage from '../AppMessage/presenter';
 import ProgressLoader from '../ProgressLoader/presenter';
 
+const { SMALL, MEDIUM, LARGE } = PER_PAGE;
+
 const Admin: FC = () => {
   const {
     albums,
@@ -64,16 +66,27 @@ const Admin: FC = () => {
       size="sm"
       variant="outline"
     >
-      {PER_PAGE.map((page, index) => (
-        <Button
-          key={index}
-          isDisabled={page === perPage}
-          onClick={() => onPerPageChange(page)}
-          variant="outline"
-        >
-          {page}
-        </Button>
-      ))}
+      <Button
+        isDisabled={SMALL === perPage}
+        onClick={() => onPerPageChange(SMALL)}
+        variant="outline"
+      >
+        {SMALL}
+      </Button>
+      <Button
+        isDisabled={MEDIUM === perPage}
+        onClick={() => onPerPageChange(MEDIUM)}
+        variant="outline"
+      >
+        {MEDIUM}
+      </Button>
+      <Button
+        isDisabled={LARGE === perPage}
+        onClick={() => onPerPageChange(LARGE)}
+        variant="outline"
+      >
+        {LARGE}
+      </Button>
     </ButtonGroup>
   );
 

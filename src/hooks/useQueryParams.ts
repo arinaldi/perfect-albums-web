@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 
-import { SORT_DIRECTION, SORT_VALUE } from '../constants';
+import { PER_PAGE, SORT_DIRECTION, SORT_VALUE } from '../constants';
 import { QueryParams } from '../utils/types';
 
 function useQueryParams(): QueryParams {
@@ -8,7 +8,7 @@ function useQueryParams(): QueryParams {
   const params: QueryParams = {
     direction: SORT_DIRECTION.NONE,
     page: '1',
-    perPage: '25',
+    perPage: PER_PAGE.SMALL.toString(),
     search: '',
     sort: SORT_VALUE.NONE,
   };
