@@ -11,7 +11,7 @@ interface Props {
   data: Album[];
   direction: SORT_DIRECTION;
   isLoading: boolean;
-  onSort: (value: string) => void;
+  onSort: (value: SORT_VALUE) => void;
   sort: string;
 }
 

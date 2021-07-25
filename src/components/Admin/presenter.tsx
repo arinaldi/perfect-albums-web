@@ -30,12 +30,12 @@ const Admin: FC = () => {
   const {
     albums,
     cdTotal,
-    currentPage,
     direction,
     handlers,
     isFirstPage,
     isLastPage,
     isLoading,
+    page,
     perPage,
     searchInput,
     searchText,
@@ -103,7 +103,7 @@ const Admin: FC = () => {
       <Button isDisabled={isFirstPage} onClick={onPrevious}>
         <ChevronLeftIcon />
       </Button>
-      <Button isDisabled>{currentPage}</Button>
+      <Button isDisabled>{page}</Button>
       <Button isDisabled={isLastPage} onClick={onNext}>
         <ChevronRightIcon />
       </Button>

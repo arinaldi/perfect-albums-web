@@ -7,13 +7,19 @@ function useQueryParams(): QueryParams {
   const { search } = useLocation();
   const params: QueryParams = {
     direction: SORT_DIRECTION.NONE,
-    page: '1',
-    perPage: PER_PAGE.SMALL.toString(),
+    page: 1,
+    perPage: PER_PAGE.SMALL,
     search: '',
     sort: SORT_VALUE.NONE,
   };
   new URLSearchParams(search).forEach((value, key) => {
-    params[key] = value;
+    let newValue: string | number = value;
+
+    if (['page', 'perPage'].includes(key)) {
+      newValue = parseInt(newValue);
+    }
+
+    params[key] = newValue;
   });
 
   return params;

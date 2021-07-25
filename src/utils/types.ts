@@ -1,4 +1,4 @@
-import { SORT_DIRECTION, SORT_VALUE } from '../constants';
+import { PER_PAGE, SORT_DIRECTION, SORT_VALUE } from '../constants';
 
 export interface AlbumBase {
   aotd: boolean;
@@ -78,9 +78,9 @@ export interface GenericObject {
 
 export interface QueryParams {
   direction: SORT_DIRECTION;
-  page: string;
-  perPage: string;
+  page: number;
+  perPage: PER_PAGE;
   search: string;
   sort: SORT_VALUE;
-  [key: string]: string;
+  [key: string]: string | number;
 }

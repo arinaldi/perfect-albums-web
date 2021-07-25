@@ -29,14 +29,14 @@ interface Handlers {
 interface Payload {
   albums: Album[];
   cdTotal: number;
-  currentPage: number;
   direction: SORT_DIRECTION;
   handlers: Handlers;
   hasError: boolean;
   isFirstPage: boolean;
   isLastPage: boolean;
   isLoading: boolean;
-  perPage: number;
+  page: number;
+  perPage: PER_PAGE;
   searchInput: RefObject<HTMLInputElement>;
   searchText: string;
   sort: SORT_VALUE;
@@ -47,34 +47,25 @@ export default function useAdminState(): Payload {
   const history = useHistory();
   const location = useLocation();
   const queryParams = useQueryParams();
-  const [searchText, setSearchText] = useState(queryParams.search || '');
-  const [currentPage, setCurrentPage] = useState(
-    parseInt(queryParams.page) || 1,
-  );
-  const [perPage, setPerPage] = useState(
-    parseInt(queryParams.perPage) || PER_PAGE.SMALL,
-  );
-  const [sort, setSort] = useState(queryParams.sort || SORT_VALUE.NONE);
-  const [direction, setDirection] = useState(
-    queryParams.direction || SORT_DIRECTION.NONE,
-  );
+  const { direction, page, perPage, search, sort } = queryParams;
+  const [searchText, setSearchText] = useState(search);
   const searchInput = useRef<HTMLInputElement | null>(null);
   const debouncedSearch = useDebounce(searchText, 500);
-  const url = `/api/albums?page=${currentPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
+  const url = `/api/albums?page=${page}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
   const preventFetch = !debouncedSearch && Boolean(searchText);
   const { albums, cdTotal, hasError, isLoading, total } = useAdminAlbums(
     url,
     preventFetch,
   );
-  const isFirstPage = currentPage === 1;
-  const isLastPage = currentPage === Math.ceil(total / perPage);
+  const isFirstPage = page === 1;
+  const isLastPage = page === Math.ceil(total / perPage);
 
   useEffect(() => {
-    if (!queryParams.search) {
+    if (!search) {
       const nextUrl = `/api/albums?page=2&per_page=${PER_PAGE.SMALL}&search=&sort=&direction=`;
       fetchAndCache(nextUrl);
     }
-  }, [queryParams.search]);
+  }, [search]);
 
   useEffect(() => {
     if (searchInput && searchInput.current) {
@@ -95,27 +86,24 @@ export default function useAdminState(): Payload {
 
     return {
       onPrevious: () => {
-        const newPage = currentPage - 2;
+        const newPage = page - 2;
         const previousUrl = `/api/albums?page=${newPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
 
         if (newPage !== 0) fetchAndCache(previousUrl);
 
-        const prevPage = currentPage - 1;
-        setCurrentPage(prevPage);
+        const prevPage = page - 1;
         updateQueryParams({ page: prevPage.toString() });
       },
       onNext: () => {
         const nextUrl = `/api/albums?page=${
-          currentPage + 2
+          page + 2
         }&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
         fetchAndCache(nextUrl);
 
-        const nextPage = currentPage + 1;
-        setCurrentPage(nextPage);
+        const nextPage = page + 1;
         updateQueryParams({ page: nextPage.toString() });
       },
       onFirst: () => {
-        setCurrentPage(1);
         updateQueryParams({ page: '1' });
       },
       onLast: () => {
@@ -125,18 +113,14 @@ export default function useAdminState(): Payload {
         }&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
         fetchAndCache(prevUrl);
 
-        setCurrentPage(lastPage);
         updateQueryParams({ page: lastPage.toString() });
       },
       onPerPageChange: (value: number) => {
-        setPerPage(value);
-        setCurrentPage(1);
         updateQueryParams({ page: '1', perPage: value.toString() });
       },
       onSearchChange: (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
 
-        setCurrentPage(1);
         setSearchText(value);
         updateQueryParams({ page: '1', search: value });
       },
@@ -145,7 +129,6 @@ export default function useAdminState(): Payload {
           searchInput.current.focus();
         }
 
-        setCurrentPage(1);
         setSearchText('');
         updateQueryParams({ page: '1', search: '' });
       },
@@ -157,18 +140,15 @@ export default function useAdminState(): Payload {
           newDirection = ASC;
         }
 
-        setCurrentPage(1);
-        setSort(value);
-        setDirection(newDirection);
         updateQueryParams({ page: '1', sort: value, direction: newDirection });
       },
     };
   }, [
-    currentPage,
     debouncedSearch,
     direction,
     history,
     location.search,
+    page,
     perPage,
     sort,
     total,
@@ -177,13 +157,13 @@ export default function useAdminState(): Payload {
   return {
     albums,
     cdTotal,
-    currentPage,
     direction,
     handlers,
     hasError,
     isFirstPage,
     isLastPage,
     isLoading,
+    page,
     perPage,
     searchInput,
     searchText,
