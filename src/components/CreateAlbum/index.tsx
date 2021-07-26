@@ -1,9 +1,8 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import { Method } from '../../utils/types';
 import useSubmit from '../../hooks/useSubmit';
-import { MESSAGES } from '../../constants';
+import { MESSAGES, METHODS } from '../../constants';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import CreateEditAlbum from './presenter';
@@ -22,7 +21,7 @@ const CreateAlbumContainer: FC = () => {
   const options = {
     body: album,
     callbacks: [() => history.push(`/admin${search}`)],
-    method: Method.post,
+    method: METHODS.POST,
     path: '/api/albums',
     successMessage: `${MESSAGES.ALBUM_PREFIX} created`,
   };

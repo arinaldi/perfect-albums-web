@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { gql, useMutation } from '@apollo/client';
 
-import { MESSAGES } from '../../constants';
-import { ModalDataType, Song } from '../..//utils/types';
+import { MESSAGES, MODAL_DATA_TYPES } from '../../constants';
+import { Song } from '../..//utils/types';
 import useGqlSubmit from '../../hooks/useGqlSubmit';
 import { GET_SONGS } from '../../queries';
 import { DELETE_SONG } from '../../mutations';
@@ -54,7 +54,7 @@ const DeleteSongContainer: FC<Props> = ({ data, isOpen, onClose }) => {
   return (
     <DeleteDataModal
       data={data}
-      dataType={ModalDataType.song}
+      dataType={MODAL_DATA_TYPES.SONG}
       isDeleting={isSaving}
       isOpen={isOpen}
       onClose={onClose}

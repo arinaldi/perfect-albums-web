@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
-import { AlbumParams, Method } from '../../utils/types';
-import { MESSAGES, STATE_STATUSES } from '../../constants';
+import { AlbumParams } from '../../utils/types';
+import { MESSAGES, METHODS, STATE_STATUSES } from '../../constants';
 import useStateMachine from '../../hooks/useStateMachine';
 import useSubmit from '../../hooks/useSubmit';
 import ErrorBoundary from '../ErrorBoundary';
@@ -17,7 +17,7 @@ const DeleteAlbumContainer: FC = () => {
   const { data, status } = state;
   const options = {
     callbacks: [() => history.push(`/admin${search}`)],
-    method: Method.delete,
+    method: METHODS.DELETE,
     path: `/api/albums/${id}`,
     successMessage: `${MESSAGES.ALBUM_PREFIX} deleted`,
   };

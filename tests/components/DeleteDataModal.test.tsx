@@ -1,5 +1,5 @@
 import DeleteDataModal from '../../src/components/DeleteDataModal/presenter';
-import { ModalDataType } from '../../src/utils/types';
+import { MODAL_DATA_TYPES } from '../../src/constants';
 import { mockFeaturedSongsData } from '../mocks';
 import render from '../utils';
 
@@ -9,7 +9,7 @@ test('DeleteDataModal renders with data', () => {
   const { getByText } = render(
     <DeleteDataModal
       data={data}
-      dataType={ModalDataType.song}
+      dataType={MODAL_DATA_TYPES.SONG}
       isDeleting={false}
       isOpen
       onClose={jest.fn}

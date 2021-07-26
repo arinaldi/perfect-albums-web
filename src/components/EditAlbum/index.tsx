@@ -1,10 +1,10 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
-import { AlbumParams, Method } from '../../utils/types';
+import { AlbumParams } from '../../utils/types';
 import useStateMachine from '../../hooks/useStateMachine';
 import useSubmit from '../../hooks/useSubmit';
-import { MESSAGES, STATE_STATUSES } from '../../constants';
+import { MESSAGES, METHODS, STATE_STATUSES } from '../../constants';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import CreateEditAlbum from '../CreateAlbum/presenter';
@@ -27,7 +27,7 @@ const EditAlbumContainer: FC = () => {
   const options = {
     body: album,
     callbacks: [() => history.push(`/admin${search}`)],
-    method: Method.put,
+    method: METHODS.PUT,
     path: `/api/albums/${id}`,
     successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,
   };

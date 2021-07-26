@@ -1,9 +1,8 @@
 import { createStandaloneToast } from '@chakra-ui/react';
 
-import { BASE_URL, MESSAGES } from '../constants';
+import { BASE_URL, MESSAGES, METHODS } from '../constants';
 import useStore from '../hooks/useStore';
 import { getToken } from './storage';
-import { Method } from './types';
 
 const logout = () => {
   const toast = createStandaloneToast();
@@ -47,7 +46,7 @@ interface Options {
 interface Config {
   body?: string;
   headers: HeadersInit; // eslint-disable-line no-undef
-  method: Method;
+  method: METHODS;
 }
 
 async function api(endpoint: string, options: Options = {}): Promise<any> {
@@ -63,7 +62,7 @@ async function api(endpoint: string, options: Options = {}): Promise<any> {
   }
 
   const config: Config = {
-    method: body ? Method.post : Method.get,
+    method: body ? METHODS.POST : METHODS.GET,
     ...customConfig,
     headers: {
       ...headers,

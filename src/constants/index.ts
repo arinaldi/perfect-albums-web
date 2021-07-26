@@ -53,6 +53,19 @@ export enum STATE_STATUSES {
   FAILURE = 'failure',
 }
 
+export enum METHODS {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+}
+
+export enum MODAL_DATA_TYPES {
+  DEFAULT = 'Item',
+  RELEASE = 'Release',
+  SONG = 'Song',
+}
+
 export const DECADES = [
   {
     label: '10s',

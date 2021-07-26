@@ -115,7 +115,7 @@ export default function useAdminState(): Payload {
 
         updateQueryParams({ page: lastPage.toString() });
       },
-      onPerPageChange: (value: number) => {
+      onPerPageChange: (value: PER_PAGE) => {
         updateQueryParams({ page: '1', perPage: value.toString() });
       },
       onSearchChange: (event: ChangeEvent<HTMLInputElement>) => {

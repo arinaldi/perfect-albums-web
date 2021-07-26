@@ -59,19 +59,6 @@ export interface AlbumParams {
   id: string;
 }
 
-export enum Method {
-  get = 'GET',
-  post = 'POST',
-  put = 'PUT',
-  delete = 'DELETE',
-}
-
-export enum ModalDataType {
-  default = 'Item',
-  release = 'Release',
-  song = 'Song',
-}
-
 export interface GenericObject {
   [key: string]: string;
 }

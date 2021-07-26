@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import { gql, useMutation } from '@apollo/client';
 
-import { ModalDataType, Release } from '../../utils/types';
+import { MESSAGES, MODAL_DATA_TYPES } from '../../constants';
+import { Release } from '../../utils/types';
 import useGqlSubmit from '../../hooks/useGqlSubmit';
 import { GET_RELEASES } from '../../queries';
 import { DELETE_RELEASE } from '../../mutations';
-import { MESSAGES } from '../../constants';
 import DeleteDataModal from '../DeleteDataModal/presenter';
 
 interface Props {
@@ -54,7 +54,7 @@ const DeleteReleaseContainer: FC<Props> = ({ data, isOpen, onClose }) => {
   return (
     <DeleteDataModal
       data={data}
-      dataType={ModalDataType.release}
+      dataType={MODAL_DATA_TYPES.RELEASE}
       isDeleting={isSaving}
       isOpen={isOpen}
       onClose={onClose}

@@ -11,12 +11,13 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-import { ModalDataType, Release, Song } from '../../utils/types';
+import { MODAL_DATA_TYPES } from '../../constants';
+import { Release, Song } from '../../utils/types';
 import SubmitButton from '../SubmitButton/presenter';
 
 interface Props {
   data: Release | Song;
-  dataType: ModalDataType;
+  dataType: MODAL_DATA_TYPES;
   isDeleting: boolean;
   isOpen: boolean;
   onClose: () => void;
