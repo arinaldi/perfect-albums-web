@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Td, Tr } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
 
@@ -10,13 +10,13 @@ interface Props {
 }
 
 const AdminTableRow: FC<Props> = ({ item }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { search } = useLocation();
   const { id, artist, title, year, cd, aotd, favorite } = item;
 
-  const navigate = (path: string) => {
-    history.push(`/admin/${path}/${id}${search}`);
-  };
+  function handleNavigate(path: string) {
+    navigate(`/admin/${path}/${id}${search}`);
+  }
 
   return (
     <Tr data-testid={id}>
@@ -29,7 +29,7 @@ const AdminTableRow: FC<Props> = ({ item }) => {
       <Td>
         <Button
           marginRight={1}
-          onClick={() => navigate('edit')}
+          onClick={() => handleNavigate('edit')}
           size="sm"
           variant="outline"
         >
@@ -37,7 +37,7 @@ const AdminTableRow: FC<Props> = ({ item }) => {
         </Button>
         <Button
           marginRight={1}
-          onClick={() => navigate('delete')}
+          onClick={() => handleNavigate('delete')}
           size="sm"
           variant="outline"
         >

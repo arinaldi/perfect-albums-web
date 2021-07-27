@@ -1,21 +1,21 @@
-import { FC, ReactNode } from 'react';
-import { Route, Redirect, useLocation } from 'react-router-dom';
+import { FC, ReactElement } from 'react';
+import { useLocation, Navigate, Route } from 'react-router-dom';
 
 import useStore from '../../hooks/useStore';
 
 interface Props {
-  children: ReactNode;
+  element: ReactElement;
   path: string;
 }
 
-const AuthRoute: FC<Props> = ({ children, ...props }) => {
+const AuthRoute: FC<Props> = ({ ...props }) => {
   const hasAuth = useStore((state) => state.hasAuth);
   const location = useLocation();
 
   return hasAuth ? (
-    <Route {...props}>{children}</Route>
+    <Route {...props} />
   ) : (
-    <Redirect to={{ pathname: '/top-albums', state: { from: location } }} />
+    <Navigate to="/top-albums" state={{ from: location }} />
   );
 };
 

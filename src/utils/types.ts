@@ -55,10 +55,6 @@ export interface Song extends SongBase {
   id: string;
 }
 
-export interface AlbumParams {
-  id: string;
-}
-
 export interface GenericObject {
   [key: string]: string;
 }

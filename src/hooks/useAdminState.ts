@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { PER_PAGE, SORT_DIRECTION, SORT_VALUE } from '../constants';
 import { fetchAndCache } from '../utils/fetcher';
@@ -44,7 +44,7 @@ interface Payload {
 }
 
 export default function useAdminState(): Payload {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const queryParams = useQueryParams();
   const { direction, page, perPage, search, sort } = queryParams;
@@ -81,7 +81,7 @@ export default function useAdminState(): Payload {
         searchParams.set(key, value);
       });
 
-      history.replace(`/admin?${searchParams.toString()}`);
+      navigate(`/admin?${searchParams.toString()}`, { replace: true });
     }
 
     return {
@@ -146,8 +146,8 @@ export default function useAdminState(): Payload {
   }, [
     debouncedSearch,
     direction,
-    history,
     location.search,
+    navigate,
     page,
     perPage,
     sort,
