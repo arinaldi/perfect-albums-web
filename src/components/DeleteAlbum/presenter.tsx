@@ -1,5 +1,5 @@
 import { FC, FormEvent } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Button, Container, Heading, Text } from '@chakra-ui/react';
 
 import { Album } from '../../utils/types';
@@ -20,11 +20,11 @@ const DeleteAlbum: FC<Props> = ({
   onSubmit,
   status,
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { search } = useLocation();
 
   function handleCancel() {
-    history.push(`/admin${search}`);
+    navigate(`/admin${search}`);
   }
 
   return (

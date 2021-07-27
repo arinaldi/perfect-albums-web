@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import useSubmit from '../../hooks/useSubmit';
 import { MESSAGES, METHODS } from '../../constants';
@@ -8,7 +8,7 @@ import ProgressLoader from '../ProgressLoader/presenter';
 import CreateEditAlbum from './presenter';
 
 const CreateAlbumContainer: FC = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { search } = useLocation();
   const [album, setAlbum] = useState({
     artist: '',
@@ -20,7 +20,7 @@ const CreateAlbumContainer: FC = () => {
   });
   const options = {
     body: album,
-    callbacks: [() => history.push(`/admin${search}`)],
+    callbacks: [() => navigate(`/admin${search}`)],
     method: METHODS.POST,
     path: '/api/albums',
     successMessage: `${MESSAGES.ALBUM_PREFIX} created`,

@@ -1,5 +1,5 @@
 import { FC, FormEvent, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import api from '../../utils/api';
 import useStore from '../../hooks/useStore';
@@ -36,7 +36,7 @@ const SignInContainer: FC = () => {
   };
 
   if (hasAuth) {
-    return <Redirect to="/admin" />;
+    return <Navigate to="/admin" />;
   }
 
   return (

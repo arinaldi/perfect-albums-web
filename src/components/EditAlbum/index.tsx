@@ -1,7 +1,6 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { AlbumParams } from '../../utils/types';
 import useStateMachine from '../../hooks/useStateMachine';
 import useSubmit from '../../hooks/useSubmit';
 import { MESSAGES, METHODS, STATE_STATUSES } from '../../constants';
@@ -10,9 +9,9 @@ import ProgressLoader from '../ProgressLoader/presenter';
 import CreateEditAlbum from '../CreateAlbum/presenter';
 
 const EditAlbumContainer: FC = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { search } = useLocation();
-  const { id } = useParams<AlbumParams>();
+  const { id } = useParams();
   const [album, setAlbum] = useState({
     aotd: false,
     artist: '',
@@ -26,7 +25,7 @@ const EditAlbumContainer: FC = () => {
   const isLoading = status === STATE_STATUSES.LOADING;
   const options = {
     body: album,
-    callbacks: [() => history.push(`/admin${search}`)],
+    callbacks: [() => navigate(`/admin${search}`)],
     method: METHODS.PUT,
     path: `/api/albums/${id}`,
     successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,

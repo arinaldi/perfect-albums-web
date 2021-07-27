@@ -1,10 +1,5 @@
 import { FC } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import ErrorBoundary from '../ErrorBoundary';
 import NavBar from '../NavBar/presenter';
@@ -19,52 +14,34 @@ import DeleteAlbum from '../DeleteAlbum';
 import AuthRoute from '../AuthRoute';
 import Sandbox from '../Sandbox';
 
-const AppRoutes = () => (
+const NestedRoutes = () => (
   <ErrorBoundary>
-    <Switch>
-      <Route path="/top-albums">
-        <TopAlbums />
-      </Route>
-      <Route path="/featured-songs">
-        <FeaturedSongs />
-      </Route>
-      <Route path="/new-releases">
-        <NewReleases />
-      </Route>
-      <AuthRoute path="/admin/new">
-        <CreateAlbum />
-      </AuthRoute>
-      <AuthRoute path="/admin/edit/:id">
-        <EditAlbum />
-      </AuthRoute>
-      <AuthRoute path="/admin/delete/:id">
-        <DeleteAlbum />
-      </AuthRoute>
-      <AuthRoute path="/admin">
-        <Admin />
-      </AuthRoute>
-      <AuthRoute path="/sandbox">
-        <Sandbox />
-      </AuthRoute>
-      <Route path="/signin">
-        <SignIn />
-      </Route>
+    <Routes>
+      <Route path="top-albums" element={<TopAlbums />} />
+      <Route path="featured-songs" element={<FeaturedSongs />} />
+      <Route path="new-releases" element={<NewReleases />} />
+      <AuthRoute path="admin" element={<Admin />} />
+      <AuthRoute path="admin/new" element={<CreateAlbum />} />
+      <AuthRoute path="admin/edit/:id" element={<EditAlbum />} />
+      <AuthRoute path="admin/delete/:id" element={<DeleteAlbum />} />
+      <AuthRoute path="sandbox" element={<Sandbox />} />
+      <Route path="signin" element={<SignIn />} />
       <Route>
-        <Redirect to="/top-albums" />
+        <Navigate to="top-albums" />
       </Route>
-    </Switch>
+    </Routes>
   </ErrorBoundary>
 );
 
-const Routes: FC = () => {
+const AppRoutes: FC = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <>
         <NavBar />
-        <AppRoutes />
+        <NestedRoutes />
       </>
-    </Router>
+    </BrowserRouter>
   );
 };
 
-export default Routes;
+export default AppRoutes;

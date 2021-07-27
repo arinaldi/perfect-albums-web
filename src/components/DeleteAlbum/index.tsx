@@ -1,7 +1,6 @@
 import { FC } from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { AlbumParams } from '../../utils/types';
 import { MESSAGES, METHODS, STATE_STATUSES } from '../../constants';
 import useStateMachine from '../../hooks/useStateMachine';
 import useSubmit from '../../hooks/useSubmit';
@@ -10,13 +9,13 @@ import ProgressLoader from '../ProgressLoader/presenter';
 import DeleteAlbum from './presenter';
 
 const DeleteAlbumContainer: FC = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { search } = useLocation();
-  const { id } = useParams<AlbumParams>();
+  const { id } = useParams();
   const [state] = useStateMachine(`/api/albums/${id}`);
   const { data, status } = state;
   const options = {
-    callbacks: [() => history.push(`/admin${search}`)],
+    callbacks: [() => navigate(`/admin${search}`)],
     method: METHODS.DELETE,
     path: `/api/albums/${id}`,
     successMessage: `${MESSAGES.ALBUM_PREFIX} deleted`,
