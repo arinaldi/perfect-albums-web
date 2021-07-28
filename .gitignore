@@ -12,6 +12,7 @@ coverage
 
 # production
 dist
+dist-ssr
 
 # misc
 .DS_Store
@@ -19,3 +20,4 @@ dist
 .env.*
 npm-debug.log
 .prettierignore
+*.local

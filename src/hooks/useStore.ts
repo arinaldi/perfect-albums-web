@@ -25,7 +25,7 @@ const store = (set: SetState<AuthState>) => ({
 });
 
 const useStore = create<AuthState>(
-  process.env.NODE_ENV === 'development' ? devtools(store) : store,
+  import.meta.env.DEV ? devtools(store) : store,
 );
 
 async function checkUser() {

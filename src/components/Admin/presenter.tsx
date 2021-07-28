@@ -147,7 +147,7 @@ const Admin: FC = () => {
             </Heading>
           </Flex>
           <Flex align="center">
-            <Code marginLeft={2}>{process.env.npm_package_version}</Code>
+            <Code marginLeft={2}>{import.meta.env.PACKAGE_VERSION}</Code>
             <Heading as="h5" marginLeft={3} marginRight={1} size="md">
               <Badge
                 borderRadius="4px"
