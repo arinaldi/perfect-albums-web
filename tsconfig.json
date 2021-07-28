@@ -1,19 +1,22 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
+    "skipLibCheck": false,
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "paths": {
-      "~/*": ["./*"]
-    },
-    "jsx": "react-jsx",
+    "allowSyntheticDefaultImports": true,
     "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
     "typeRoots": ["node_modules/@types"]
   },
-  "include": [
-    "src/**/*",
-    "tests/**/*"
-  ],
+  "include": ["./src"],
   "exclude": ["node_modules"]
 }
