@@ -1,10 +1,12 @@
 {
   "name": "perfect-albums-web",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "scripts": {
     "build": "tsc && vite build",
+    "deploy": "npm run build && mv dist/index.html dist/200.html && surge dist --domain perfectalbums.surge.sh",
     "serve": "vite preview",
-    "start": "vite"
+    "start": "vite",
+    "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "@apollo/client": "^3.3.20",
