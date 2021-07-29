@@ -2,7 +2,6 @@ import { createStandaloneToast } from '@chakra-ui/react';
 
 import { BASE_URL, MESSAGES, METHODS } from '../constants';
 import useStore from '../hooks/useStore';
-import { getToken } from './storage';
 
 const logout = () => {
   const toast = createStandaloneToast();
@@ -51,7 +50,7 @@ interface Config {
 
 async function api(endpoint: string, options: Options = {}): Promise<any> {
   const { body, ...customConfig } = options;
-  const token = getToken();
+  const token = useStore.getState().getSessionToken();
   // eslint-disable-next-line no-undef
   const headers: HeadersInit = {
     'Content-Type': 'application/json',

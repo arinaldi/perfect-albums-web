@@ -1,50 +1,47 @@
-import create, { SetState } from 'zustand';
+import create from 'zustand';
 import { devtools } from 'zustand/middleware';
+import { Provider, Session, User } from '@supabase/supabase-js';
 
-import api from '../utils/api';
-import { getToken, removeToken, setToken } from '../utils/storage';
+import supabase from '../utils/supabase';
 
-export interface AuthState {
-  hasAuth: boolean;
-  signIn: (token: string) => void;
-  signOut: () => void;
+interface Response {
+  error: Error | null;
+  data: Session | null;
+  provider?: Provider | undefined;
+  session: Session | null;
+  url?: string | null | undefined;
+  user: User | null;
 }
 
-const token = getToken();
+interface ErrorResponse {
+  error: Error | null;
+}
 
-const store = (set: SetState<AuthState>) => ({
-  hasAuth: Boolean(token),
-  signIn: (token: string) => {
-    setToken(token);
-    set(() => ({ hasAuth: true }));
-  },
-  signOut: () => {
-    removeToken();
-    set(() => ({ hasAuth: false }));
-  },
+interface AuthState {
+  hasAuth: boolean;
+  getSessionToken: () => string;
+  signIn: (email: string, password: string) => Promise<Response>;
+  signOut: () => Promise<ErrorResponse>;
+}
+
+const { auth } = supabase;
+
+const store = () => ({
+  hasAuth: false,
+  getSessionToken: () => auth.session()?.access_token || '',
+  signIn: async (email: string, password: string) =>
+    await auth.signIn({ email, password }),
+  signOut: async () => await auth.signOut(),
 });
 
 const useStore = create<AuthState>(
   import.meta.env.DEV ? devtools(store) : store,
 );
 
-async function checkUser() {
-  if (token) {
-    try {
-      const { status } = await api('/api/auth');
+auth.onAuthStateChange((event, session) => {
+  const hasAuth = Boolean(session?.user);
 
-      if (status === 200) {
-        useStore.setState({ hasAuth: true });
-      } else {
-        throw new Error();
-      }
-    } catch (err) {
-      removeToken();
-      useStore.setState({ hasAuth: false });
-    }
-  }
-}
-
-checkUser();
+  useStore.setState({ hasAuth });
+});
 
 export default useStore;

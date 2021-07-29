@@ -3,7 +3,6 @@ import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 
 import { BASE_URL, ERRORS } from '../constants';
-import { getToken } from '../utils/storage';
 import useStore from '../hooks/useStore';
 
 const httpLink = createHttpLink({
@@ -11,7 +10,7 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = getToken();
+  const token = useStore.getState().getSessionToken();
 
   return {
     headers: {

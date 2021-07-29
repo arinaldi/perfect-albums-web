@@ -1,10 +1,10 @@
 import { mutate } from 'swr';
 
 import { BASE_URL } from '../constants';
-import { getToken } from './storage';
+import useStore from '../hooks/useStore';
 
 export async function fetcher(url: string): Promise<any> {
-  const token = getToken();
+  const token = useStore.getState().getSessionToken();
   // eslint-disable-next-line no-undef
   const headers: HeadersInit = {
     'Content-Type': 'application/json',

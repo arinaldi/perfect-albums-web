@@ -22,7 +22,7 @@ interface Props {
 const SignIn: FC<Props> = (props) => {
   const { error, isSubmitting, onError, onSubmit } = props;
   const [credentials, setCredentials] = useState({
-    username: '',
+    email: '',
     password: '',
   });
 
@@ -48,16 +48,16 @@ const SignIn: FC<Props> = (props) => {
       </Flex>
       <Box maxWidth={{ base: '100%', md: '400px' }} margin="0 auto">
         <form onSubmit={onSubmit}>
-          <FormControl id="username" isRequired>
-            <FormLabel>Username</FormLabel>
+          <FormControl id="email" isRequired>
+            <FormLabel>Email</FormLabel>
             <Input
               autoCapitalize="off"
-              autoComplete="username"
+              autoComplete="email"
               isRequired
-              name="username"
+              name="email"
               onChange={handleChange}
-              type="text"
-              value={credentials.username}
+              type="email"
+              value={credentials.email}
             />
           </FormControl>
           <FormControl id="password" isRequired my={4}>
