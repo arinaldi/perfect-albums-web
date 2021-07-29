@@ -27,7 +27,7 @@ interface AuthState {
 const { auth } = supabase;
 
 const store = () => ({
-  hasAuth: false,
+  hasAuth: Boolean(auth.user()),
   getSessionToken: () => auth.session()?.access_token || '',
   signIn: async (email: string, password: string) =>
     await auth.signIn({ email, password }),
@@ -38,8 +38,12 @@ const useStore = create<AuthState>(
   import.meta.env.DEV ? devtools(store) : store,
 );
 
-auth.onAuthStateChange((event, session) => {
+auth.onAuthStateChange((_, session) => {
   const hasAuth = Boolean(session?.user);
+
+  if (!hasAuth) {
+    useStore.getState().signOut();
+  }
 
   useStore.setState({ hasAuth });
 });
