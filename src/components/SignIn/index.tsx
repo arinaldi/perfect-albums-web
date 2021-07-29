@@ -1,7 +1,6 @@
 import { FC, FormEvent, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
-import api from '../../utils/api';
 import useStore from '../../hooks/useStore';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
@@ -16,22 +15,17 @@ const SignInContainer: FC = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     const { elements } = event.target as HTMLFormElement;
-    const [username, password] = Array.from(elements) as HTMLInputElement[];
-    setIsSubmitting(true);
+    const [email, password] = Array.from(elements) as HTMLInputElement[];
 
     try {
-      const { data } = await api('/api/signin', {
-        body: {
-          username: username.value,
-          password: password.value,
-        },
-      });
+      setIsSubmitting(true);
+      const { error } = await signIn(email.value, password.value);
 
-      setIsSubmitting(false);
-      signIn(data.token);
+      if (error) throw error;
     } catch (err) {
+      setError(err.error_description || err.message);
+    } finally {
       setIsSubmitting(false);
-      setError(err.message);
     }
   };
 
