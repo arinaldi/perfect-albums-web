@@ -4,6 +4,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { MESSAGES, METHODS, STATE_STATUSES } from '../../constants';
 import useStateMachine from '../../hooks/useStateMachine';
 import useSubmit from '../../hooks/useSubmit';
+import api from '../../utils/api';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import DeleteAlbum from './presenter';
@@ -14,10 +15,18 @@ const DeleteAlbumContainer: FC = () => {
   const { id } = useParams();
   const [state] = useStateMachine(`/api/albums/${id}`);
   const { data, status } = state;
+
+  function handleNavigate() {
+    navigate(`/admin${search}`);
+  }
+
+  async function submitFn() {
+    await api(`/api/albums/${id}`, { method: METHODS.DELETE });
+  }
+
   const options = {
-    callbacks: [() => navigate(`/admin${search}`)],
-    method: METHODS.DELETE,
-    path: `/api/albums/${id}`,
+    callbacks: [handleNavigate],
+    submitFn,
     successMessage: `${MESSAGES.ALBUM_PREFIX} deleted`,
   };
   const { handleSubmit, isSaving } = useSubmit(options);

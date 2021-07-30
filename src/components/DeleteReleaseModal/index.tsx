@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { MESSAGES, MODAL_DATA_TYPES } from '../../constants';
-import useGqlSubmit from '../../hooks/useGqlSubmit';
+import useSubmit from '../../hooks/useSubmit';
 import useNewReleases from '../../hooks/useNewReleases';
 import { graphQLClient } from '../../utils/fetcher';
 import { Release } from '../../utils/types';
@@ -17,16 +17,16 @@ interface Props {
 const DeleteReleaseContainer: FC<Props> = ({ data, isOpen, onClose }) => {
   const { mutate } = useNewReleases();
 
-  async function submitFunc() {
+  async function submitFn() {
     await graphQLClient.request(DELETE_RELEASE, { id: data.id });
   }
 
   const options = {
     callbacks: [onClose, mutate],
-    submitFunc,
+    submitFn,
     successMessage: `${MESSAGES.RELEASE_PREFIX} deleted`,
   };
-  const { handleSubmit, isSaving } = useGqlSubmit(options);
+  const { handleSubmit, isSaving } = useSubmit(options);
 
   return (
     <DeleteDataModal

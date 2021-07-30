@@ -74,7 +74,7 @@ const CreateReleaseModal: FC<Props> = (props) => {
                 name="date"
                 onChange={onChange}
                 type="date"
-                value={release.date || undefined}
+                value={release.date || ''}
               />
             </FormControl>
           </ModalBody>

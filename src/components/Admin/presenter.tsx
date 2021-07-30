@@ -114,7 +114,7 @@ const Admin: FC = () => {
   );
 
   const Content =
-    albums.length === 0 && !isLoading ? (
+    albums?.length === 0 && !isLoading ? (
       <AppMessage type={ALERT_TYPES.INFO} message={MESSAGES.NO_DATA} />
     ) : (
       <AdminTable

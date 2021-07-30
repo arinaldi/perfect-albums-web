@@ -1,9 +1,10 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
+import { MESSAGES, METHODS, STATE_STATUSES } from '../../constants';
 import useStateMachine from '../../hooks/useStateMachine';
 import useSubmit from '../../hooks/useSubmit';
-import { MESSAGES, METHODS, STATE_STATUSES } from '../../constants';
+import api from '../../utils/api';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import CreateEditAlbum from '../CreateAlbum/presenter';
@@ -23,14 +24,6 @@ const EditAlbumContainer: FC = () => {
   const [state] = useStateMachine(`/api/albums/${id}`);
   const { data, status } = state;
   const isLoading = status === STATE_STATUSES.LOADING;
-  const options = {
-    body: album,
-    callbacks: [() => navigate(`/admin${search}`)],
-    method: METHODS.PUT,
-    path: `/api/albums/${id}`,
-    successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,
-  };
-  const { handleSubmit, isSaving } = useSubmit(options);
 
   useEffect(() => {
     if (status === STATE_STATUSES.SUCCESS && data) {
@@ -65,6 +58,21 @@ const EditAlbumContainer: FC = () => {
       [name]: value === 'true',
     });
   }
+
+  function handleNavigate() {
+    navigate(`/admin${search}`);
+  }
+
+  async function submitFn() {
+    await api(`/api/albums/${id}`, { body: album, method: METHODS.PUT });
+  }
+
+  const options = {
+    callbacks: [handleNavigate],
+    submitFn,
+    successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,
+  };
+  const { handleSubmit, isSaving } = useSubmit(options);
 
   return (
     <ErrorBoundary>

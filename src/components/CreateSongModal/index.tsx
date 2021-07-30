@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useState } from 'react';
 
 import useFeaturedSongs from '../../hooks/useFeaturedSongs';
-import useGqlSubmit from '../../hooks/useGqlSubmit';
+import useSubmit from '../../hooks/useSubmit';
 import { graphQLClient } from '../../utils/fetcher';
 import { CREATE_SONG } from '../../mutations';
 import { MESSAGES } from '../../constants';
@@ -40,16 +40,16 @@ const CreateSongContainer: FC<Props> = ({ isOpen, onClose }) => {
     });
   }
 
-  async function submitFunc() {
+  async function submitFn() {
     await graphQLClient.request(CREATE_SONG, song);
   }
 
   const options = {
     callbacks: [handleClose, mutate],
-    submitFunc,
+    submitFn,
     successMessage: `${MESSAGES.SONG_PREFIX} created`,
   };
-  const { handleSubmit, isSaving } = useGqlSubmit(options);
+  const { handleSubmit, isSaving } = useSubmit(options);
 
   return (
     <CreateSongModal

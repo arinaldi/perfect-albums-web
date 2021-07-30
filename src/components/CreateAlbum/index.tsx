@@ -1,8 +1,9 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import useSubmit from '../../hooks/useSubmit';
 import { MESSAGES, METHODS } from '../../constants';
+import useSubmit from '../../hooks/useSubmit';
+import api from '../../utils/api';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import CreateEditAlbum from './presenter';
@@ -18,11 +19,18 @@ const CreateAlbumContainer: FC = () => {
     aotd: false,
     favorite: false,
   });
+
+  function handleNavigate() {
+    navigate(`/admin${search}`);
+  }
+
+  async function submitFn() {
+    await api('/api/albums', { body: album, method: METHODS.POST });
+  }
+
   const options = {
-    body: album,
-    callbacks: [() => navigate(`/admin${search}`)],
-    method: METHODS.POST,
-    path: '/api/albums',
+    callbacks: [handleNavigate],
+    submitFn,
     successMessage: `${MESSAGES.ALBUM_PREFIX} created`,
   };
   const { handleSubmit, isSaving } = useSubmit(options);

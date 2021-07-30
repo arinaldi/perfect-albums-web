@@ -3,7 +3,7 @@ import { ChangeEvent, FC, useEffect, useState } from 'react';
 import useNewReleases from '../../hooks/useNewReleases';
 import { formatDate } from '../../utils';
 import { Release } from '../../utils/types';
-import useGqlSubmit from '../../hooks/useGqlSubmit';
+import useSubmit from '../../hooks/useSubmit';
 import { graphQLClient } from '../../utils/fetcher';
 import { EDIT_RELEASE } from '../../mutations';
 import { MESSAGES } from '../../constants';
@@ -51,19 +51,19 @@ const EditReleaseContainer: FC<Props> = ({ data, isOpen, onClose }) => {
     });
   }
 
-  const submitFunc = async () => {
+  async function submitFn() {
     await graphQLClient.request(EDIT_RELEASE, {
       ...release,
       id: data.id,
     });
-  };
+  }
 
   const options = {
     callbacks: [handleClose, mutate],
-    submitFunc,
+    submitFn,
     successMessage: `${MESSAGES.RELEASE_PREFIX} edited`,
   };
-  const { handleSubmit, isSaving } = useGqlSubmit(options);
+  const { handleSubmit, isSaving } = useSubmit(options);
 
   return (
     <EditReleaseModal

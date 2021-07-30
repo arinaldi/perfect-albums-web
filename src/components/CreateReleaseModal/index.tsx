@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useState } from 'react';
 
 import useNewReleases from '../../hooks/useNewReleases';
-import useGqlSubmit from '../../hooks/useGqlSubmit';
+import useSubmit from '../../hooks/useSubmit';
 import { graphQLClient } from '../../utils/fetcher';
 import { CREATE_RELEASE } from '../../mutations';
 import { MESSAGES } from '../../constants';
@@ -40,16 +40,16 @@ const CreateReleaseContainer: FC<Props> = ({ isOpen, onClose }) => {
     });
   }
 
-  const submitFunc = async () => {
+  async function submitFn() {
     await graphQLClient.request(CREATE_RELEASE, release);
-  };
+  }
 
   const options = {
     callbacks: [handleClose, mutate],
-    submitFunc,
+    submitFn,
     successMessage: `${MESSAGES.RELEASE_PREFIX} created`,
   };
-  const { handleSubmit, isSaving } = useGqlSubmit(options);
+  const { handleSubmit, isSaving } = useSubmit(options);
 
   return (
     <CreateReleaseModal

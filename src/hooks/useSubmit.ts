@@ -2,14 +2,11 @@ import { FormEvent, useState } from 'react';
 import { useToast } from '@chakra-ui/react';
 
 import { ALERT_TYPES, MESSAGES } from '../constants';
-import api from '../utils/api';
-import { AlbumBase, Callback } from '../utils/types';
+import { Callback } from '../utils/types';
 
 interface Options {
-  body?: AlbumBase;
   callbacks: Callback[];
-  method: string;
-  path: string;
+  submitFn: () => Promise<void>;
   successMessage: string;
 }
 
@@ -19,16 +16,16 @@ interface Payload {
 }
 
 function useSubmit(options: Options): Payload {
-  const { body, callbacks, method, path, successMessage } = options;
+  const { callbacks, submitFn, successMessage } = options;
   const [isSaving, setIsSaving] = useState(false);
   const toast = useToast();
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    setIsSaving(true);
 
     try {
-      await api(path, { body, method });
+      setIsSaving(true);
+      await submitFn();
       setIsSaving(false);
 
       callbacks.forEach((cb: Callback) => {
