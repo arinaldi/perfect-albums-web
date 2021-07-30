@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { MESSAGES, METHODS } from '../../constants';
 import useSubmit from '../../hooks/useSubmit';
+import useTitle from '../../hooks/useTitle';
 import api from '../../utils/api';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
@@ -19,6 +20,7 @@ const CreateAlbumContainer: FC = () => {
     aotd: false,
     favorite: false,
   });
+  useTitle('Create Album');
 
   function handleNavigate() {
     navigate(`/admin${search}`);

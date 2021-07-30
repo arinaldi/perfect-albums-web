@@ -4,6 +4,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { MESSAGES, METHODS, STATE_STATUSES } from '../../constants';
 import useStateMachine from '../../hooks/useStateMachine';
 import useSubmit from '../../hooks/useSubmit';
+import useTitle from '../../hooks/useTitle';
 import api from '../../utils/api';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
@@ -15,6 +16,7 @@ const DeleteAlbumContainer: FC = () => {
   const { id } = useParams();
   const [state] = useStateMachine(`/api/albums/${id}`);
   const { data, status } = state;
+  useTitle('Delete Album');
 
   function handleNavigate() {
     navigate(`/admin${search}`);

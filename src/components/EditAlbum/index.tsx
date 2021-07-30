@@ -4,6 +4,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { MESSAGES, METHODS, STATE_STATUSES } from '../../constants';
 import useStateMachine from '../../hooks/useStateMachine';
 import useSubmit from '../../hooks/useSubmit';
+import useTitle from '../../hooks/useTitle';
 import api from '../../utils/api';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
@@ -24,6 +25,7 @@ const EditAlbumContainer: FC = () => {
   const [state] = useStateMachine(`/api/albums/${id}`);
   const { data, status } = state;
   const isLoading = status === STATE_STATUSES.LOADING;
+  useTitle('Edit Album');
 
   useEffect(() => {
     if (status === STATE_STATUSES.SUCCESS && data) {

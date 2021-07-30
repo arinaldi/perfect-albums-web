@@ -9,4 +9,5 @@ export default defineConfig({
     chunkSizeWarningLimit: 700,
   },
   plugins: [reactJsx(), reactRefresh(), loadVersion()],
+  server: { port: 3333 },
 });
