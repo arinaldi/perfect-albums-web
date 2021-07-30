@@ -1,8 +1,8 @@
 import { ChangeEvent, FC, useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
 
+import useFeaturedSongs from '../../hooks/useFeaturedSongs';
 import useGqlSubmit from '../../hooks/useGqlSubmit';
-import { GET_SONGS } from '../../queries';
+import { graphQLClient } from '../../utils/fetcher';
 import { CREATE_SONG } from '../../mutations';
 import { MESSAGES } from '../../constants';
 import CreateSongModal from './presenter';
@@ -13,36 +13,14 @@ interface Props {
 }
 
 const CreateSongContainer: FC<Props> = ({ isOpen, onClose }) => {
-  const [createSong] = useMutation(CREATE_SONG, {
-    refetchQueries: [{ query: GET_SONGS }],
-    update(cache, { data: { createSong } }) {
-      cache.modify({
-        fields: {
-          songs(existingSongs = []) {
-            const newSongRef = cache.writeFragment({
-              data: createSong,
-              fragment: gql`
-                fragment NewSong on Song {
-                  id
-                  artist
-                  title
-                  link
-                }
-              `,
-            });
-            return [...existingSongs, newSongRef];
-          },
-        },
-      });
-    },
-  });
+  const { mutate } = useFeaturedSongs();
   const [song, setSong] = useState({
     artist: '',
     title: '',
     link: '',
   });
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const {
       target: { name, value },
     } = event;
@@ -51,25 +29,23 @@ const CreateSongContainer: FC<Props> = ({ isOpen, onClose }) => {
       ...song,
       [name]: value,
     });
-  };
+  }
 
-  const handleClose = () => {
+  function handleClose() {
     onClose();
     setSong({
       artist: '',
       title: '',
       link: '',
     });
-  };
+  }
 
-  const submitFunc = async () => {
-    await createSong({
-      variables: song,
-    });
-  };
+  async function submitFunc() {
+    await graphQLClient.request(CREATE_SONG, song);
+  }
 
   const options = {
-    callback: handleClose,
+    callbacks: [handleClose, mutate],
     submitFunc,
     successMessage: `${MESSAGES.SONG_PREFIX} created`,
   };

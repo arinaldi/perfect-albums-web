@@ -26,7 +26,7 @@ const SignIn: FC<Props> = (props) => {
     password: '',
   });
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const {
       target: { name, value },
     } = event;
@@ -37,7 +37,7 @@ const SignIn: FC<Props> = (props) => {
       ...credentials,
       [name]: value,
     });
-  };
+  }
 
   return (
     <Container maxWidth="container.lg" marginBottom={6}>

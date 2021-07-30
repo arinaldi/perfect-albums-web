@@ -1,6 +1,6 @@
 {
   "name": "perfect-albums-web",
-  "version": "3.5.1",
+  "version": "4.0.0",
   "scripts": {
     "build": "tsc && vite build",
     "deploy": "npm run build && mv dist/index.html dist/200.html && surge dist --domain perfectalbums.surge.sh",
@@ -10,7 +10,6 @@
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
-    "@apollo/client": "^3.3.21",
     "@chakra-ui/icons": "^1.0.14",
     "@chakra-ui/react": "^1.6.5",
     "@emotion/react": "^11.4.0",
@@ -19,6 +18,7 @@
     "@supabase/supabase-js": "^1.21.0",
     "framer-motion": "^4.1.17",
     "graphql": "^15.5.1",
+    "graphql-request": "^3.5.0",
     "history": "^5.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { gql, useMutation } from '@apollo/client';
 
 import { MESSAGES, MODAL_DATA_TYPES } from '../../constants';
-import { Release } from '../../utils/types';
 import useGqlSubmit from '../../hooks/useGqlSubmit';
-import { GET_RELEASES } from '../../queries';
+import useNewReleases from '../../hooks/useNewReleases';
+import { graphQLClient } from '../../utils/fetcher';
+import { Release } from '../../utils/types';
 import { DELETE_RELEASE } from '../../mutations';
 import DeleteDataModal from '../DeleteDataModal/presenter';
 
@@ -15,37 +15,14 @@ interface Props {
 }
 
 const DeleteReleaseContainer: FC<Props> = ({ data, isOpen, onClose }) => {
-  const [deleteRelease] = useMutation(DELETE_RELEASE, {
-    refetchQueries: [{ query: GET_RELEASES }],
-    update(cache, { data: { deleteRelease } }) {
-      cache.modify({
-        fields: {
-          songs(existingReleases = []) {
-            cache.writeFragment({
-              data: deleteRelease,
-              fragment: gql`
-                fragment DeleteRelease on Release {
-                  id
-                }
-              `,
-            });
-            return existingReleases.filter(
-              (release: Release) => release.id !== deleteRelease.id,
-            );
-          },
-        },
-      });
-    },
-  });
+  const { mutate } = useNewReleases();
 
-  const submitFunc = async () => {
-    await deleteRelease({
-      variables: { id: data.id },
-    });
-  };
+  async function submitFunc() {
+    await graphQLClient.request(DELETE_RELEASE, { id: data.id });
+  }
 
   const options = {
-    callback: onClose,
+    callbacks: [onClose, mutate],
     submitFunc,
     successMessage: `${MESSAGES.RELEASE_PREFIX} deleted`,
   };

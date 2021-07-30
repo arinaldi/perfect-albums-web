@@ -12,7 +12,7 @@ const SignInContainer: FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = async (event: FormEvent) => {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     const { elements } = event.target as HTMLFormElement;
     const [email, password] = Array.from(elements) as HTMLInputElement[];
@@ -27,7 +27,7 @@ const SignInContainer: FC = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }
 
   if (hasAuth) {
     return <Navigate to="/admin" />;

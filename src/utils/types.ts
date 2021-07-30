@@ -67,3 +67,12 @@ export interface QueryParams {
   sort: SORT_VALUE;
   [key: string]: string | number;
 }
+
+export type Callback = () => void;
+
+export interface SwrPayload<T = unknown> {
+  data: T | null;
+  hasError: boolean;
+  isLoading: boolean;
+  mutate: () => void;
+}

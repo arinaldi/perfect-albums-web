@@ -4,12 +4,12 @@ function useDebounce(value: string, delay = 500): string {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
-    const handler = setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setDebouncedValue(value.trim());
     }, delay);
 
     return () => {
-      clearTimeout(handler);
+      clearTimeout(timeoutId);
     };
   }, [value, delay]);
 

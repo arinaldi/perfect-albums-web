@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import {
-  Box,
   Button,
   Container,
   Flex,
@@ -8,7 +7,6 @@ import {
   SimpleGrid,
   Spacer,
 } from '@chakra-ui/react';
-import { ApolloError } from '@apollo/client';
 
 import { Song } from '../../utils/types';
 import useStore from '../../hooks/useStore';
@@ -24,19 +22,15 @@ interface Props {
   data: {
     songs: Song[];
   };
-  error?: ApolloError;
-  isLoading?: boolean;
+  hasError: boolean;
   modal: Modal;
-  refresh: () => void;
 }
 
 const FeaturedSongs: FC<Props> = (props) => {
   const {
     data,
-    error,
-    isLoading = false,
+    hasError,
     modal: { onCreateOpen, onDeleteOpen },
-    refresh,
   } = props;
   const hasAuth = useStore((state) => state.hasAuth);
 
@@ -48,23 +42,13 @@ const FeaturedSongs: FC<Props> = (props) => {
         </Heading>
         <Spacer />
         {hasAuth ? (
-          <Box>
-            <Button
-              variant="outline"
-              isDisabled={isLoading}
-              onClick={refresh}
-              marginRight={1}
-            >
-              Refresh
-            </Button>
-            <Button variant="outline" onClick={onCreateOpen}>
-              New
-            </Button>
-          </Box>
+          <Button variant="outline" onClick={onCreateOpen}>
+            New
+          </Button>
         ) : null}
       </Flex>
-      {error ? <AppMessage /> : null}
-      {data && data.songs ? (
+      {hasError ? <AppMessage /> : null}
+      {data?.songs ? (
         <SimpleGrid data-testid="card-row" minChildWidth="240px" spacing="24px">
           {data.songs.map((song: Song) => (
             <CardWrapper

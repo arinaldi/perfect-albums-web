@@ -1,8 +1,8 @@
 import { ChangeEvent, FC, useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
 
+import useNewReleases from '../../hooks/useNewReleases';
 import useGqlSubmit from '../../hooks/useGqlSubmit';
-import { GET_RELEASES } from '../../queries';
+import { graphQLClient } from '../../utils/fetcher';
 import { CREATE_RELEASE } from '../../mutations';
 import { MESSAGES } from '../../constants';
 import CreateReleaseModal from './presenter';
@@ -13,36 +13,14 @@ interface Props {
 }
 
 const CreateReleaseContainer: FC<Props> = ({ isOpen, onClose }) => {
-  const [createRelease] = useMutation(CREATE_RELEASE, {
-    refetchQueries: [{ query: GET_RELEASES }],
-    update(cache, { data: { createRelease } }) {
-      cache.modify({
-        fields: {
-          songs(existingReleases = []) {
-            const newReleaseRef = cache.writeFragment({
-              data: createRelease,
-              fragment: gql`
-                fragment NewRelease on Release {
-                  id
-                  artist
-                  title
-                  date
-                }
-              `,
-            });
-            return [...existingReleases, newReleaseRef];
-          },
-        },
-      });
-    },
-  });
+  const { mutate } = useNewReleases();
   const [release, setRelease] = useState({
     artist: '',
     title: '',
     date: '',
   });
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const {
       target: { name, value },
     } = event;
@@ -51,25 +29,23 @@ const CreateReleaseContainer: FC<Props> = ({ isOpen, onClose }) => {
       ...release,
       [name]: value,
     });
-  };
+  }
 
-  const handleClose = () => {
+  function handleClose() {
     onClose();
     setRelease({
       artist: '',
       title: '',
       date: '',
     });
-  };
+  }
 
   const submitFunc = async () => {
-    await createRelease({
-      variables: release,
-    });
+    await graphQLClient.request(CREATE_RELEASE, release);
   };
 
   const options = {
-    callback: handleClose,
+    callbacks: [handleClose, mutate],
     submitFunc,
     successMessage: `${MESSAGES.RELEASE_PREFIX} created`,
   };

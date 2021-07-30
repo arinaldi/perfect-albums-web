@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from 'graphql-request';
 
 export const CREATE_RELEASE = gql`
   mutation CreateRelease($artist: String!, $title: String!, $date: Date) {
