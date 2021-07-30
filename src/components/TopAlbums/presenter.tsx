@@ -2,15 +2,13 @@ import { FC } from 'react';
 import { Badge, Container, Flex, Heading, SimpleGrid } from '@chakra-ui/react';
 
 import { formatFavorites, sortDesc } from '../../utils';
-import { Favorite } from '../../utils/types';
+import { Favorites } from '../../utils/types';
 import AppMessage from '../AppMessage/presenter';
 import AlbumCol from './AlbumCol';
 import TopLink from './TopLink';
 
 interface Props {
-  data: {
-    favorites: Favorite[];
-  };
+  data: Favorites | null;
   hasError: boolean;
 }
 

@@ -1,12 +1,8 @@
 import useSWR from 'swr';
 
 import { gqlFetcher } from '../utils/fetcher';
-import { Favorite, SwrPayload } from '../utils/types';
+import { Favorites, SwrPayload } from '../utils/types';
 import { GET_FAVORITES } from '../queries';
-
-interface Favorites {
-  favorites: Favorite[];
-}
 
 function useTopAlbums(): SwrPayload<Favorites> {
   const { data, error, mutate } = useSWR(GET_FAVORITES, gqlFetcher);

@@ -8,7 +8,7 @@ import {
   Spacer,
 } from '@chakra-ui/react';
 
-import { Song } from '../../utils/types';
+import { Song, Songs } from '../../utils/types';
 import useStore from '../../hooks/useStore';
 import AppMessage from '../AppMessage/presenter';
 import CardWrapper from './CardWrapper';
@@ -19,9 +19,7 @@ interface Modal {
 }
 
 interface Props {
-  data: {
-    songs: Song[];
-  };
+  data: Songs | null;
   hasError: boolean;
   modal: Modal;
 }

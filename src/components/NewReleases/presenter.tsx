@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 
 import { formatReleases, sortByDate } from '../../utils';
-import { Release } from '../../utils/types';
+import { Release, Releases } from '../../utils/types';
 import useStore from '../../hooks/useStore';
 import AppMessage from '../AppMessage/presenter';
 import DateCol from './DateCol';
@@ -21,9 +21,7 @@ interface Modal {
 }
 
 interface Props {
-  data: {
-    releases: Release[];
-  };
+  data: Releases | null;
   hasError: boolean;
   modal: Modal;
 }

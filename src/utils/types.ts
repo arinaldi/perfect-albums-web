@@ -26,6 +26,10 @@ export interface Favorite {
   year: string;
 }
 
+export interface Favorites {
+  favorites: Favorite[];
+}
+
 export interface ReleaseBase {
   artist: string;
   title: string;
@@ -41,6 +45,10 @@ export interface Release extends ReleaseBase {
   date: string | null;
 }
 
+export interface Releases {
+  releases: Release[];
+}
+
 export interface SongBase {
   artist: string;
   title: string;
@@ -53,6 +61,10 @@ export interface SongData extends SongBase, Document {
 
 export interface Song extends SongBase {
   id: string;
+}
+
+export interface Songs {
+  songs: Song[];
 }
 
 export interface GenericObject {
