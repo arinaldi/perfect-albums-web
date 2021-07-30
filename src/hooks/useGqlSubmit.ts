@@ -2,9 +2,10 @@ import { FormEvent, useState } from 'react';
 import { useToast } from '@chakra-ui/react';
 
 import { MESSAGES } from '../constants';
+import { Callback } from '../utils/types';
 
 interface Options {
-  callback: () => void;
+  callbacks: Callback[];
   submitFunc: () => Promise<void>;
   successMessage: string;
 }
@@ -15,11 +16,11 @@ interface Payload {
 }
 
 function useGqlSubmit(options: Options): Payload {
-  const { callback, submitFunc, successMessage } = options;
+  const { callbacks, submitFunc, successMessage } = options;
   const [isSaving, setIsSaving] = useState(false);
   const toast = useToast();
 
-  const handleSubmit = async (event: FormEvent) => {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     setIsSaving(true);
 
@@ -27,7 +28,10 @@ function useGqlSubmit(options: Options): Payload {
       await submitFunc();
       setIsSaving(false);
 
-      callback();
+      callbacks.forEach((cb: Callback) => {
+        cb();
+      });
+
       toast({
         description: successMessage,
         duration: 4000,
@@ -45,7 +49,7 @@ function useGqlSubmit(options: Options): Payload {
         title: 'Error',
       });
     }
-  };
+  }
 
   return {
     handleSubmit,

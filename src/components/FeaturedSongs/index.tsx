@@ -1,9 +1,8 @@
 import { FC, useState } from 'react';
-import { NetworkStatus, useQuery } from '@apollo/client';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { Song } from '../../utils/types';
-import { GET_SONGS } from '../../queries';
+import useFeaturedSongs from '../../hooks/useFeaturedSongs';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import CreateSongModal from '../CreateSongModal';
@@ -11,6 +10,7 @@ import DeleteSongModal from '../DeleteSongModal';
 import FeaturedSongs from './presenter';
 
 const FeaturedSongsContainer: FC = () => {
+  const { data, hasError, isLoading } = useFeaturedSongs();
   const [currentSong, setCurrentSong] = useState<Song>({
     artist: '',
     id: '',
@@ -27,19 +27,11 @@ const FeaturedSongsContainer: FC = () => {
     onClose: onDeleteClose,
     onOpen: onDeleteOpen,
   } = useDisclosure();
-  const { data, error, loading, networkStatus, refetch } = useQuery(GET_SONGS, {
-    notifyOnNetworkStatusChange: true,
-  });
-  const isLoading = loading || networkStatus === NetworkStatus.refetch;
 
-  const refresh = () => {
-    refetch();
-  };
-
-  const handleDeleteOpen = (song: Song) => {
+  function handleDeleteOpen(song: Song) {
     setCurrentSong(song);
     onDeleteOpen();
-  };
+  }
 
   const modal = {
     onCreateOpen,
@@ -49,13 +41,7 @@ const FeaturedSongsContainer: FC = () => {
   return (
     <ErrorBoundary>
       <ProgressLoader isVisible={isLoading} />
-      <FeaturedSongs
-        data={data}
-        error={error}
-        isLoading={isLoading}
-        modal={modal}
-        refresh={refresh}
-      />
+      <FeaturedSongs data={data} hasError={hasError} modal={modal} />
       <CreateSongModal isOpen={isCreateOpen} onClose={onCreateClose} />
       <DeleteSongModal
         data={currentSong}

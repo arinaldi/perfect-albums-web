@@ -1,9 +1,8 @@
 import { FC, useState } from 'react';
-import { NetworkStatus, useQuery } from '@apollo/client';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { Release } from '../../utils/types';
-import { GET_RELEASES } from '../../queries';
+import useNewReleases from '../../hooks/useNewReleases';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import CreateReleaseModal from '../CreateReleaseModal';
@@ -12,6 +11,7 @@ import DeleteReleaseModal from '../DeleteReleaseModal';
 import NewReleases from './presenter';
 
 const NewReleasesContainer: FC = () => {
+  const { data, hasError, isLoading } = useNewReleases();
   const [currentRelease, setCurrentRelease] = useState<Release>({
     artist: '',
     date: '',
@@ -33,25 +33,16 @@ const NewReleasesContainer: FC = () => {
     onClose: onDeleteClose,
     onOpen: onDeleteOpen,
   } = useDisclosure();
-  const { data, error, loading, networkStatus, refetch } = useQuery(
-    GET_RELEASES,
-    { notifyOnNetworkStatusChange: true },
-  );
-  const isLoading = loading || networkStatus === NetworkStatus.refetch;
 
-  const refresh = () => {
-    refetch();
-  };
-
-  const handleEditOpen = (release: Release) => {
+  function handleEditOpen(release: Release) {
     setCurrentRelease(release);
     onEditOpen();
-  };
+  }
 
-  const handleDeleteOpen = (release: Release) => {
+  function handleDeleteOpen(release: Release) {
     setCurrentRelease(release);
     onDeleteOpen();
-  };
+  }
 
   const modal = {
     onCreateOpen,
@@ -62,13 +53,7 @@ const NewReleasesContainer: FC = () => {
   return (
     <ErrorBoundary>
       <ProgressLoader isVisible={isLoading} />
-      <NewReleases
-        data={data}
-        error={error}
-        isLoading={isLoading}
-        modal={modal}
-        refresh={refresh}
-      />
+      <NewReleases data={data} hasError={hasError} modal={modal} />
       <CreateReleaseModal isOpen={isCreateOpen} onClose={onCreateClose} />
       <EditReleaseModal
         data={currentRelease}

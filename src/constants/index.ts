@@ -1,5 +1,7 @@
 export const BASE_URL = import.meta.env.VITE_API_URL;
 
+export const GQL_URL = `${BASE_URL}/graphql`;
+
 export enum PER_PAGE {
   SMALL = 25,
   MEDIUM = 50,

@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import {
-  Box,
   Button,
   Container,
   Flex,
@@ -8,7 +7,6 @@ import {
   Spacer,
   SimpleGrid,
 } from '@chakra-ui/react';
-import { ApolloError } from '@apollo/client';
 
 import { formatReleases, sortByDate } from '../../utils';
 import { Release } from '../../utils/types';
@@ -26,19 +24,15 @@ interface Props {
   data: {
     releases: Release[];
   };
-  error?: ApolloError;
-  isLoading?: boolean;
+  hasError: boolean;
   modal: Modal;
-  refresh: () => void;
 }
 
 const NewReleases: FC<Props> = (props) => {
   const {
     data,
-    error,
-    isLoading = false,
+    hasError,
     modal: { onCreateOpen, onDeleteOpen, onEditOpen },
-    refresh,
   } = props;
   const hasAuth = useStore((state) => state.hasAuth);
 
@@ -50,23 +44,13 @@ const NewReleases: FC<Props> = (props) => {
         </Heading>
         <Spacer />
         {hasAuth ? (
-          <Box>
-            <Button
-              variant="outline"
-              isDisabled={isLoading}
-              onClick={refresh}
-              marginRight={1}
-            >
-              Refresh
-            </Button>
-            <Button variant="outline" onClick={onCreateOpen}>
-              New
-            </Button>
-          </Box>
+          <Button variant="outline" onClick={onCreateOpen}>
+            New
+          </Button>
         ) : null}
       </Flex>
-      {error ? <AppMessage /> : null}
-      {data && data.releases ? (
+      {hasError ? <AppMessage /> : null}
+      {data?.releases ? (
         <SimpleGrid minChildWidth="248px" spacing="24px">
           {Object.entries(formatReleases(data.releases))
             .sort(sortByDate)

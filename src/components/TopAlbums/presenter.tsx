@@ -1,18 +1,8 @@
 import { FC } from 'react';
-import {
-  Badge,
-  Button,
-  Container,
-  Flex,
-  Heading,
-  Spacer,
-  SimpleGrid,
-} from '@chakra-ui/react';
-import { ApolloError } from '@apollo/client';
+import { Badge, Container, Flex, Heading, SimpleGrid } from '@chakra-ui/react';
 
 import { formatFavorites, sortDesc } from '../../utils';
 import { Favorite } from '../../utils/types';
-import useStore from '../../hooks/useStore';
 import AppMessage from '../AppMessage/presenter';
 import AlbumCol from './AlbumCol';
 import TopLink from './TopLink';
@@ -21,14 +11,10 @@ interface Props {
   data: {
     favorites: Favorite[];
   };
-  error?: ApolloError;
-  isLoading?: boolean;
-  refresh: () => void;
+  hasError: boolean;
 }
 
-const TopAlbums: FC<Props> = ({ data, error, isLoading, refresh }) => {
-  const hasAuth = useStore((state) => state.hasAuth);
-
+const TopAlbums: FC<Props> = ({ data, hasError }) => {
   return (
     <>
       <Container maxWidth="container.lg" marginBottom={6}>
@@ -46,20 +32,9 @@ const TopAlbums: FC<Props> = ({ data, error, isLoading, refresh }) => {
               </Badge>
             ) : null}
           </Heading>
-          <Spacer />
-          {hasAuth ? (
-            <Button
-              isDisabled={isLoading}
-              marginRight={1}
-              onClick={refresh}
-              variant="outline"
-            >
-              Refresh
-            </Button>
-          ) : null}
         </Flex>
-        {error ? <AppMessage /> : null}
-        {data && data.favorites ? (
+        {hasError ? <AppMessage /> : null}
+        {data?.favorites ? (
           <SimpleGrid minChildWidth="240px" spacing="24px">
             {Object.entries(formatFavorites(data.favorites))
               .sort(sortDesc)

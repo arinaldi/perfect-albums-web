@@ -3,9 +3,7 @@ import { useToast } from '@chakra-ui/react';
 
 import { MESSAGES } from '../constants';
 import api from '../utils/api';
-import { AlbumBase } from '../utils/types';
-
-type Callback = () => void;
+import { AlbumBase, Callback } from '../utils/types';
 
 interface Options {
   body?: AlbumBase;
@@ -25,7 +23,7 @@ function useSubmit(options: Options): Payload {
   const [isSaving, setIsSaving] = useState(false);
   const toast = useToast();
 
-  const handleSubmit = async (event: FormEvent) => {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     setIsSaving(true);
 
@@ -56,7 +54,7 @@ function useSubmit(options: Options): Payload {
         });
       }
     }
-  };
+  }
 
   return {
     handleSubmit,

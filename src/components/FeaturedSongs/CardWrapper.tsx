@@ -13,9 +13,9 @@ interface Props {
 const CardWrapper: FC<Props> = ({ onDeleteOpen, song }) => {
   const hasAuth = useStore((state) => state.hasAuth);
 
-  const handleClick = () => {
+  function handleClick() {
     onDeleteOpen(song);
-  };
+  }
 
   return (
     <Box borderWidth="1px" maxWidth="sm" p={5} rounded="md">

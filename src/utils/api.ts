@@ -3,7 +3,7 @@ import { createStandaloneToast } from '@chakra-ui/react';
 import { BASE_URL, MESSAGES, METHODS } from '../constants';
 import useStore from '../hooks/useStore';
 
-const logout = () => {
+function logout() {
   const toast = createStandaloneToast();
 
   useStore.getState().signOut();
@@ -14,9 +14,9 @@ const logout = () => {
     status: 'error',
     title: 'Error',
   });
-};
+}
 
-const handleResponse = async (response: Response) => {
+async function handleResponse(response: Response) {
   const { status, url } = response;
 
   if (status === 401) {
@@ -35,7 +35,7 @@ const handleResponse = async (response: Response) => {
   } else {
     return Promise.reject(data);
   }
-};
+}
 
 interface Options {
   body?: any;

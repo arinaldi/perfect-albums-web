@@ -1,9 +1,10 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-import { useMutation } from '@apollo/client';
 
+import useNewReleases from '../../hooks/useNewReleases';
 import { formatDate } from '../../utils';
 import { Release } from '../../utils/types';
 import useGqlSubmit from '../../hooks/useGqlSubmit';
+import { graphQLClient } from '../../utils/fetcher';
 import { EDIT_RELEASE } from '../../mutations';
 import { MESSAGES } from '../../constants';
 import EditReleaseModal from '../CreateReleaseModal/presenter';
@@ -15,7 +16,7 @@ interface Props {
 }
 
 const EditReleaseContainer: FC<Props> = ({ data, isOpen, onClose }) => {
-  const [editRelease] = useMutation(EDIT_RELEASE);
+  const { mutate } = useNewReleases();
   const [release, setRelease] = useState({
     artist: '',
     title: '',
@@ -30,7 +31,7 @@ const EditReleaseContainer: FC<Props> = ({ data, isOpen, onClose }) => {
     });
   }, [data]);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const {
       target: { name, value },
     } = event;
@@ -39,25 +40,26 @@ const EditReleaseContainer: FC<Props> = ({ data, isOpen, onClose }) => {
       ...release,
       [name]: value,
     });
-  };
+  }
 
-  const handleClose = () => {
+  function handleClose() {
     onClose();
     setRelease({
       artist: '',
       title: '',
       date: '',
     });
-  };
+  }
 
   const submitFunc = async () => {
-    await editRelease({
-      variables: { ...release, id: data?.id },
+    await graphQLClient.request(EDIT_RELEASE, {
+      ...release,
+      id: data.id,
     });
   };
 
   const options = {
-    callback: handleClose,
+    callbacks: [handleClose, mutate],
     submitFunc,
     successMessage: `${MESSAGES.RELEASE_PREFIX} edited`,
   };
