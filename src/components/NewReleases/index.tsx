@@ -3,6 +3,7 @@ import { useDisclosure } from '@chakra-ui/react';
 
 import { Release } from '../../utils/types';
 import useNewReleases from '../../hooks/useNewReleases';
+import useTitle from '../../hooks/useTitle';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import CreateReleaseModal from '../CreateReleaseModal';
@@ -12,6 +13,7 @@ import NewReleases from './presenter';
 
 const NewReleasesContainer: FC = () => {
   const { data, hasError, isLoading } = useNewReleases();
+  useTitle('New Releases');
   const [currentRelease, setCurrentRelease] = useState<Release>({
     artist: '',
     date: '',

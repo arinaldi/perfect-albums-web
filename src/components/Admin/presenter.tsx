@@ -142,7 +142,7 @@ const Admin: FC = () => {
                 fontSize="0.9em"
                 verticalAlign="baseline"
               >
-                {isLoading ? '—' : total.toLocaleString()}
+                {isLoading ? '—' : total?.toLocaleString()}
               </Badge>
             </Heading>
           </Flex>
@@ -155,7 +155,7 @@ const Admin: FC = () => {
                 fontSize="0.9em"
                 verticalAlign="baseline"
               >
-                {cdTotal.toLocaleString()}
+                {cdTotal ? cdTotal.toLocaleString() : 0}
               </Badge>
             </Heading>
             CDs

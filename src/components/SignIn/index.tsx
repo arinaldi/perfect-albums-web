@@ -2,6 +2,7 @@ import { FC, FormEvent, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import useStore from '../../hooks/useStore';
+import useTitle from '../../hooks/useTitle';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import SignIn from './presenter';
@@ -11,6 +12,7 @@ const SignInContainer: FC = () => {
   const signIn = useStore((state) => state.signIn);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  useTitle('Sign In');
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();

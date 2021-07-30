@@ -41,10 +41,6 @@ const useStore = create<AuthState>(
 auth.onAuthStateChange((_, session) => {
   const hasAuth = Boolean(session?.user);
 
-  if (!hasAuth) {
-    useStore.getState().signOut();
-  }
-
   useStore.setState({ hasAuth });
 });
 

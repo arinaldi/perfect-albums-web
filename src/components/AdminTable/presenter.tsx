@@ -56,7 +56,7 @@ const AdminTable: FC<Props> = (props) => {
           <AdminTableSkeleton />
         ) : (
           <Tbody>
-            {data.map((item) => (
+            {data?.map((item) => (
               <AdminTableRow key={item.id} item={item} />
             ))}
           </Tbody>
