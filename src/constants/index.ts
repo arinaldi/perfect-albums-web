@@ -29,12 +29,14 @@ export enum ALERT_TYPES {
 
 export enum MESSAGES {
   ALBUM_PREFIX = 'Album successfully',
-  SONG_PREFIX = 'Song successfully',
-  RELEASE_PREFIX = 'Release successfully',
-  UNAUTHORIZED = 'You are unauthorized to perform this operation',
-  SIGNIN = 'Invalid username or password',
-  ERROR = 'Something went wrong',
+  ERROR = 'Error',
+  ERROR_GENERIC = 'Something went wrong',
   NO_DATA = 'No Data',
+  RELEASE_PREFIX = 'Release successfully',
+  SIGNIN = 'Invalid username or password',
+  SONG_PREFIX = 'Song successfully',
+  SUCCESS = 'Success',
+  UNAUTHORIZED = 'You are unauthorized to perform this operation',
 }
 
 export enum ERRORS {

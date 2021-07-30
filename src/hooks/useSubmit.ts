@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { useToast } from '@chakra-ui/react';
 
-import { MESSAGES } from '../constants';
+import { ALERT_TYPES, MESSAGES } from '../constants';
 import api from '../utils/api';
 import { AlbumBase, Callback } from '../utils/types';
 
@@ -39,18 +39,18 @@ function useSubmit(options: Options): Payload {
         description: successMessage,
         duration: 4000,
         isClosable: true,
-        status: 'success',
-        title: 'Success',
+        status: ALERT_TYPES.SUCCESS,
+        title: MESSAGES.SUCCESS,
       });
     } catch (err) {
       setIsSaving(false);
       if (err.message !== MESSAGES.UNAUTHORIZED) {
         toast({
-          description: err.message || MESSAGES.ERROR,
+          description: err.message || MESSAGES.ERROR_GENERIC,
           duration: 4000,
           isClosable: true,
-          status: 'error',
-          title: 'Error',
+          status: ALERT_TYPES.ERROR,
+          title: MESSAGES.ERROR,
         });
       }
     }

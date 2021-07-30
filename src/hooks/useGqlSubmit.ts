@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { useToast } from '@chakra-ui/react';
 
-import { MESSAGES } from '../constants';
+import { ALERT_TYPES, MESSAGES } from '../constants';
 import { Callback } from '../utils/types';
 
 interface Options {
@@ -36,17 +36,17 @@ function useGqlSubmit(options: Options): Payload {
         description: successMessage,
         duration: 4000,
         isClosable: true,
-        status: 'success',
-        title: 'Success',
+        status: ALERT_TYPES.SUCCESS,
+        title: MESSAGES.SUCCESS,
       });
     } catch (err) {
       setIsSaving(false);
       toast({
-        description: err.message || MESSAGES.ERROR,
+        description: err.message || MESSAGES.ERROR_GENERIC,
         duration: 4000,
         isClosable: true,
-        status: 'error',
-        title: 'Error',
+        status: ALERT_TYPES.ERROR,
+        title: MESSAGES.ERROR,
       });
     }
   }

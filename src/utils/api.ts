@@ -1,6 +1,6 @@
 import { createStandaloneToast } from '@chakra-ui/react';
 
-import { BASE_URL, MESSAGES, METHODS } from '../constants';
+import { ALERT_TYPES, BASE_URL, MESSAGES, METHODS } from '../constants';
 import useStore from '../hooks/useStore';
 
 function logout() {
@@ -11,8 +11,8 @@ function logout() {
     description: MESSAGES.UNAUTHORIZED,
     duration: 4000,
     isClosable: true,
-    status: 'error',
-    title: 'Error',
+    status: ALERT_TYPES.ERROR,
+    title: MESSAGES.ERROR,
   });
 }
 

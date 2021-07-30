@@ -9,7 +9,7 @@ interface Props {
 }
 
 const AppMessage: FC<Props> = ({
-  message = MESSAGES.ERROR,
+  message = MESSAGES.ERROR_GENERIC,
   type = ALERT_TYPES.ERROR,
 }) => (
   <Alert status={type}>
