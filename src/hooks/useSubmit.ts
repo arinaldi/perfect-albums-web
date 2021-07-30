@@ -36,8 +36,10 @@ function useSubmit(options: Options): Payload {
         description: successMessage,
         duration: 4000,
         isClosable: true,
+        position: 'top-right',
         status: ALERT_TYPES.SUCCESS,
         title: MESSAGES.SUCCESS,
+        variant: 'subtle',
       });
     } catch (err) {
       setIsSaving(false);
@@ -46,8 +48,10 @@ function useSubmit(options: Options): Payload {
           description: err.message || MESSAGES.ERROR_GENERIC,
           duration: 4000,
           isClosable: true,
+          position: 'top-right',
           status: ALERT_TYPES.ERROR,
           title: MESSAGES.ERROR,
+          variant: 'subtle',
         });
       }
     }

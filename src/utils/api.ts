@@ -11,8 +11,10 @@ function logout() {
     description: MESSAGES.UNAUTHORIZED,
     duration: 4000,
     isClosable: true,
+    position: 'top-right',
     status: ALERT_TYPES.ERROR,
     title: MESSAGES.ERROR,
+    variant: 'subtle',
   });
 }
 
