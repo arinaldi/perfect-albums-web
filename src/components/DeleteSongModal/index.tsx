@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { MESSAGES, MODAL_DATA_TYPES } from '../../constants';
 import useSubmit from '../../hooks/useSubmit';
 import useFeaturedSongs from '../../hooks/useFeaturedSongs';
-import { graphQLClient } from '../../utils/fetcher';
+import { graphQLClient } from '../../utils/graphql';
 import { Song } from '../../utils/types';
 import { DELETE_SONG } from '../../mutations';
 import DeleteDataModal from '../DeleteDataModal/presenter';

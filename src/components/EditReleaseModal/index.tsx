@@ -4,7 +4,7 @@ import useNewReleases from '../../hooks/useNewReleases';
 import { formatDate } from '../../utils';
 import { Release } from '../../utils/types';
 import useSubmit from '../../hooks/useSubmit';
-import { graphQLClient } from '../../utils/fetcher';
+import { graphQLClient } from '../../utils/graphql';
 import { EDIT_RELEASE } from '../../mutations';
 import { MESSAGES } from '../../constants';
 import EditReleaseModal from '../CreateReleaseModal/presenter';

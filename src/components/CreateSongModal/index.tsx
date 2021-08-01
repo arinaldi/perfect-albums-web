@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useState } from 'react';
 
 import useFeaturedSongs from '../../hooks/useFeaturedSongs';
 import useSubmit from '../../hooks/useSubmit';
-import { graphQLClient } from '../../utils/fetcher';
+import { graphQLClient } from '../../utils/graphql';
 import { CREATE_SONG } from '../../mutations';
 import { MESSAGES } from '../../constants';
 import CreateSongModal from './presenter';

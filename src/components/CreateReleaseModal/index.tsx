@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useState } from 'react';
 
 import useNewReleases from '../../hooks/useNewReleases';
 import useSubmit from '../../hooks/useSubmit';
-import { graphQLClient } from '../../utils/fetcher';
+import { graphQLClient } from '../../utils/graphql';
 import { CREATE_RELEASE } from '../../mutations';
 import { MESSAGES } from '../../constants';
 import CreateReleaseModal from './presenter';

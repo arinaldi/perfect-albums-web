@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 
-import { gqlFetcher } from '../utils/fetcher';
+import { gqlFetcher } from '../utils/graphql';
 import { Releases, SwrPayload } from '../utils/types';
 import { GET_RELEASES } from '../queries';
 

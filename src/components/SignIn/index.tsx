@@ -32,7 +32,7 @@ const SignInContainer: FC = () => {
   }
 
   if (hasAuth) {
-    return <Navigate to="/new-releases" />;
+    return <Navigate to="/admin" />;
   }
 
   return (

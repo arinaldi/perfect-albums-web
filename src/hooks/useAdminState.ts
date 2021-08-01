@@ -9,11 +9,11 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { PER_PAGE, SORT_DIRECTION, SORT_VALUE } from '../constants';
-import { fetchAndCache } from '../utils/fetcher';
 import { Album, GenericObject } from '../utils/types';
 import useDebounce from '../hooks/useDebounce';
 import useAdminAlbums from '../hooks/useAdminAlbums';
 import useQueryParams from '../hooks/useQueryParams';
+import { fetchAndCache } from '../hooks/useStore';
 
 interface Handlers {
   onClear: () => void;

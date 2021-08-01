@@ -2,7 +2,6 @@ import { FC } from 'react';
 import useSWR from 'swr';
 import { ListItem, Text, UnorderedList } from '@chakra-ui/react';
 
-import { fetcher } from '../../utils/fetcher';
 import { Album } from '../../utils/types';
 
 interface Props {
@@ -16,7 +15,6 @@ const Page: FC<Props> = (props) => {
   const { direction = '', page, perPage, sort = '' } = props;
   const { data, error } = useSWR(
     `/api/albums?page=${page}&per_page=${perPage}&sort=${sort}&direction=${direction}`,
-    fetcher,
     { dedupingInterval: 5000 },
   );
 
