@@ -2,6 +2,7 @@ import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { MESSAGES, METHODS, STATE_STATUSES } from '../../constants';
+import useAdminState from '../../hooks/useAdminState';
 import useStateMachine from '../../hooks/useStateMachine';
 import useSubmit from '../../hooks/useSubmit';
 import useTitle from '../../hooks/useTitle';
@@ -25,6 +26,7 @@ const EditAlbumContainer: FC = () => {
   const [state] = useStateMachine(`/api/albums/${id}`);
   const { data, status } = state;
   const isLoading = status === STATE_STATUSES.LOADING;
+  const { mutate } = useAdminState();
   useTitle('Edit Album');
 
   useEffect(() => {
@@ -70,7 +72,7 @@ const EditAlbumContainer: FC = () => {
   }
 
   const options = {
-    callbacks: [handleNavigate],
+    callbacks: [handleNavigate, mutate],
     submitFn,
     successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,
   };

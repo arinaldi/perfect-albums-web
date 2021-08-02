@@ -35,6 +35,7 @@ interface Payload {
   isFirstPage: boolean;
   isLastPage: boolean;
   isLoading: boolean;
+  mutate: () => void;
   page: number;
   perPage: PER_PAGE;
   searchInput: RefObject<HTMLInputElement>;
@@ -53,10 +54,8 @@ export default function useAdminState(): Payload {
   const debouncedSearch = useDebounce(searchText, 500);
   const url = `/api/albums?page=${page}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
   const preventFetch = !debouncedSearch && Boolean(searchText);
-  const { albums, cdTotal, hasError, isLoading, total } = useAdminAlbums(
-    url,
-    preventFetch,
-  );
+  const { albums, cdTotal, hasError, isLoading, mutate, total } =
+    useAdminAlbums(url, preventFetch);
   const isFirstPage = page === 1;
   const isLastPage = page === Math.ceil(total / perPage);
 
@@ -163,6 +162,7 @@ export default function useAdminState(): Payload {
     isFirstPage,
     isLastPage,
     isLoading,
+    mutate,
     page,
     perPage,
     searchInput,

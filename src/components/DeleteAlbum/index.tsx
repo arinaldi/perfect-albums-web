@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { MESSAGES, METHODS, STATE_STATUSES } from '../../constants';
+import useAdminState from '../../hooks/useAdminState';
 import useStateMachine from '../../hooks/useStateMachine';
 import useSubmit from '../../hooks/useSubmit';
 import useTitle from '../../hooks/useTitle';
@@ -16,6 +17,7 @@ const DeleteAlbumContainer: FC = () => {
   const { id } = useParams();
   const [state] = useStateMachine(`/api/albums/${id}`);
   const { data, status } = state;
+  const { mutate } = useAdminState();
   useTitle('Delete Album');
 
   function handleNavigate() {
@@ -27,7 +29,7 @@ const DeleteAlbumContainer: FC = () => {
   }
 
   const options = {
-    callbacks: [handleNavigate],
+    callbacks: [handleNavigate, mutate],
     submitFn,
     successMessage: `${MESSAGES.ALBUM_PREFIX} deleted`,
   };

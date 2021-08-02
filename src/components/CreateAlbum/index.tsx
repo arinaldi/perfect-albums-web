@@ -2,6 +2,7 @@ import { ChangeEvent, FC, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { MESSAGES, METHODS } from '../../constants';
+import useAdminState from '../../hooks/useAdminState';
 import useSubmit from '../../hooks/useSubmit';
 import useTitle from '../../hooks/useTitle';
 import api from '../../utils/api';
@@ -20,6 +21,7 @@ const CreateAlbumContainer: FC = () => {
     aotd: false,
     favorite: false,
   });
+  const { mutate } = useAdminState();
   useTitle('Create Album');
 
   function handleNavigate() {
@@ -31,7 +33,7 @@ const CreateAlbumContainer: FC = () => {
   }
 
   const options = {
-    callbacks: [handleNavigate],
+    callbacks: [handleNavigate, mutate],
     submitFn,
     successMessage: `${MESSAGES.ALBUM_PREFIX} created`,
   };
