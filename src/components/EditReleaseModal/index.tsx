@@ -1,10 +1,10 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 
 import useNewReleases from '../../hooks/useNewReleases';
+import { graphQLClient } from '../../hooks/useStore';
+import useSubmit from '../../hooks/useSubmit';
 import { formatDate } from '../../utils';
 import { Release } from '../../utils/types';
-import useSubmit from '../../hooks/useSubmit';
-import { graphQLClient } from '../../utils/graphql';
 import { EDIT_RELEASE } from '../../mutations';
 import { MESSAGES } from '../../constants';
 import EditReleaseModal from '../CreateReleaseModal/presenter';

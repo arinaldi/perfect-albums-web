@@ -3,8 +3,9 @@ import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { mutate, SWRConfig } from 'swr';
 import { Provider, Session, User } from '@supabase/supabase-js';
+import { GraphQLClient, request } from 'graphql-request';
 
-import { BASE_URL } from '../constants';
+import { BASE_URL, GQL_URL } from '../constants';
 import supabase from '../utils/supabase';
 
 interface Response {
@@ -31,6 +32,8 @@ interface Children {
   children: ReactNode;
 }
 
+export const graphQLClient = new GraphQLClient(GQL_URL, { headers: {} });
+
 const { auth } = supabase;
 let supabaseSession: Session | null;
 
@@ -51,6 +54,10 @@ auth.onAuthStateChange((_, session) => {
   const hasAuth = Boolean(user);
   supabaseSession = session;
 
+  if (session) {
+    graphQLClient.setHeader('authorization', `Bearer ${session.access_token}`);
+  }
+
   useStore.setState({ hasAuth });
 });
 
@@ -62,12 +69,16 @@ async function fetcher(url: string): Promise<any> {
 
   if (supabaseSession) {
     const token = supabaseSession.access_token;
-    headers.Authorization = `Bearer ${token}`;
+    headers.authorization = `Bearer ${token}`;
   }
 
   return window
     .fetch(`${BASE_URL}${url}`, { headers })
     .then((res) => res.json());
+}
+
+export function gqlFetcher(query: string): Promise<any> {
+  return request(GQL_URL, query);
 }
 
 export function fetchAndCache(key: string): Promise<any> {

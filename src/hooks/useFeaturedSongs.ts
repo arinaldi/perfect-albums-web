@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 
-import { gqlFetcher } from '../utils/graphql';
+import { gqlFetcher } from '../hooks/useStore';
 import { Songs, SwrPayload } from '../utils/types';
 import { GET_SONGS } from '../queries';
 

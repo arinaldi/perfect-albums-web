@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 
-import { gqlFetcher } from '../utils/graphql';
+import { gqlFetcher } from '../hooks/useStore';
 import { Favorites, SwrPayload } from '../utils/types';
 import { GET_FAVORITES } from '../queries';
 

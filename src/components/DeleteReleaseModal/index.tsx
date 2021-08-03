@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
 import { MESSAGES, MODAL_DATA_TYPES } from '../../constants';
-import useSubmit from '../../hooks/useSubmit';
 import useNewReleases from '../../hooks/useNewReleases';
-import { graphQLClient } from '../../utils/graphql';
+import { graphQLClient } from '../../hooks/useStore';
+import useSubmit from '../../hooks/useSubmit';
 import { Release } from '../../utils/types';
 import { DELETE_RELEASE } from '../../mutations';
 import DeleteDataModal from '../DeleteDataModal/presenter';
