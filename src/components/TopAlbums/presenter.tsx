@@ -15,7 +15,7 @@ interface Props {
 const TopAlbums: FC<Props> = ({ data, hasError }) => {
   return (
     <>
-      <Container maxWidth="container.lg" marginBottom={6}>
+      <Container maxWidth="container.xl" marginBottom={6}>
         <Flex align="center" marginBottom={3}>
           <Heading as="h3" size="lg">
             Top Albums

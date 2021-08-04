@@ -83,7 +83,7 @@ const NavBar: FC = () => {
             icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
             onClick={toggleColorMode}
             size="sm"
-            variant="outline"
+            variant="ghost"
             _active={{ background: 'gray.700' }}
             _hover={{ background: 'gray.700' }}
           />

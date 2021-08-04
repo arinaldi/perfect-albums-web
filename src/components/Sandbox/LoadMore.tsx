@@ -12,7 +12,7 @@ const LoadMore: FC = () => {
   return (
     <Box>
       {isStale && (
-        <Button marginBottom={2} onClick={update} variant="outline">
+        <Button marginBottom={3} onClick={update} variant="outline">
           Load More
         </Button>
       )}

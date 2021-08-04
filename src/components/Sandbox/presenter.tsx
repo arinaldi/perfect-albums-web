@@ -27,7 +27,7 @@ const Sandbox: FC<Props> = ({ handleNext, page }) => {
   }
 
   return (
-    <Container maxWidth="container.lg" marginBottom={6}>
+    <Container maxWidth="container.xl" marginBottom={6}>
       <Flex>
         <Box flex={1}>
           <Heading as="h3" marginBottom={3} size="lg">
@@ -37,14 +37,15 @@ const Sandbox: FC<Props> = ({ handleNext, page }) => {
           <Box style={{ display: 'none' }}>
             <Page page={page + 1} perPage={10} />
           </Box>
-          <Button variant="outline" onClick={handleNext}>
+          <Button marginTop={3} onClick={handleNext} variant="outline">
             Next
           </Button>
           <Divider my={4} />
           {data}
           <Button
-            variant="outline"
+            marginTop={3}
             onClick={() => setDataPage((page) => page + 1)}
+            variant="outline"
           >
             Load More
           </Button>

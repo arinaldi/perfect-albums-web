@@ -35,7 +35,7 @@ const NewReleases: FC<Props> = (props) => {
   const hasAuth = useStore((state) => state.hasAuth);
 
   return (
-    <Container maxWidth="container.lg" marginBottom={6}>
+    <Container maxWidth="container.xl" marginBottom={6}>
       <Flex align="center" marginBottom={3}>
         <Heading as="h3" size="lg">
           New Releases
