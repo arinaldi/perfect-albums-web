@@ -41,11 +41,11 @@ function useSubmit(options: Options): Payload {
         title: MESSAGES.SUCCESS,
         variant: 'subtle',
       });
-    } catch (err) {
+    } catch (error) {
       setIsSaving(false);
-      if (err.message !== MESSAGES.UNAUTHORIZED) {
+      if (error?.message !== MESSAGES.UNAUTHORIZED) {
         toast({
-          description: err.message || MESSAGES.ERROR_GENERIC,
+          description: error?.message || MESSAGES.ERROR_GENERIC,
           duration: 4000,
           isClosable: true,
           position: 'top-right',

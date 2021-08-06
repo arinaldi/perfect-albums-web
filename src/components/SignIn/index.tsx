@@ -1,6 +1,7 @@
 import { FC, FormEvent, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
+import { MESSAGES } from '../../constants/index';
 import useStore from '../../hooks/useStore';
 import useTitle from '../../hooks/useTitle';
 import ErrorBoundary from '../ErrorBoundary';
@@ -24,8 +25,10 @@ const SignInContainer: FC = () => {
       const { error } = await signIn(email.value, password.value);
 
       if (error) throw error;
-    } catch (err) {
-      setError(err.error_description || err.message);
+    } catch (error) {
+      setError(
+        error?.error_description || error?.message || MESSAGES.ERROR_GENERIC,
+      );
     } finally {
       setIsSubmitting(false);
     }
