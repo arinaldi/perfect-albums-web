@@ -26,7 +26,6 @@ interface Props {
   isLoading?: boolean;
   isSaving?: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  onRadioChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (event: FormEvent) => void;
   status: string;
 }
@@ -38,7 +37,6 @@ const CreateEditAlbum: FC<Props> = (props) => {
     isLoading = false,
     isSaving = false,
     onChange,
-    onRadioChange,
     onSubmit,
     status,
   } = props;
@@ -96,14 +94,10 @@ const CreateEditAlbum: FC<Props> = (props) => {
               <RadioGroup name="cd" value={data.cd.toString()}>
                 <Text>CD</Text>
                 <Stack direction="row" spacing={4}>
-                  <Radio
-                    marginBottom={0}
-                    onChange={onRadioChange}
-                    value="false"
-                  >
+                  <Radio marginBottom={0} onChange={onChange} value="false">
                     false
                   </Radio>
-                  <Radio onChange={onRadioChange} value="true">
+                  <Radio onChange={onChange} value="true">
                     true
                   </Radio>
                 </Stack>
@@ -115,14 +109,10 @@ const CreateEditAlbum: FC<Props> = (props) => {
               >
                 <Text>AotD</Text>
                 <Stack direction="row" spacing={4}>
-                  <Radio
-                    marginBottom={0}
-                    onChange={onRadioChange}
-                    value="false"
-                  >
+                  <Radio marginBottom={0} onChange={onChange} value="false">
                     false
                   </Radio>
-                  <Radio onChange={onRadioChange} value="true">
+                  <Radio onChange={onChange} value="true">
                     true
                   </Radio>
                 </Stack>
@@ -130,14 +120,10 @@ const CreateEditAlbum: FC<Props> = (props) => {
               <RadioGroup name="favorite" value={data.favorite.toString()}>
                 <Text>Favorite</Text>
                 <Stack direction="row" spacing={4}>
-                  <Radio
-                    marginBottom={0}
-                    onChange={onRadioChange}
-                    value="false"
-                  >
+                  <Radio marginBottom={0} onChange={onChange} value="false">
                     false
                   </Radio>
-                  <Radio onChange={onRadioChange} value="true">
+                  <Radio onChange={onChange} value="true">
                     true
                   </Radio>
                 </Stack>

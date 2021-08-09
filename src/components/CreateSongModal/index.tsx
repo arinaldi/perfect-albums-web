@@ -1,10 +1,12 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { FC } from 'react';
 
+import { MESSAGES } from '../../constants';
 import useFeaturedSongs from '../../hooks/useFeaturedSongs';
+import useForm from '../../hooks/useForm';
 import { graphQLClient } from '../../hooks/useStore';
 import useSubmit from '../../hooks/useSubmit';
 import { CREATE_SONG } from '../../mutations';
-import { MESSAGES } from '../../constants';
+import { SongInput } from '../../utils/types';
 import CreateSongModal from './presenter';
 
 interface Props {
@@ -14,34 +16,19 @@ interface Props {
 
 const CreateSongContainer: FC<Props> = ({ isOpen, onClose }) => {
   const { mutate } = useFeaturedSongs();
-  const [song, setSong] = useState({
+  const { handleChange, resetForm, values } = useForm<SongInput>({
     artist: '',
     title: '',
     link: '',
   });
 
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    const {
-      target: { name, value },
-    } = event;
-
-    setSong({
-      ...song,
-      [name]: value,
-    });
-  }
-
   function handleClose() {
     onClose();
-    setSong({
-      artist: '',
-      title: '',
-      link: '',
-    });
+    resetForm();
   }
 
   async function submitFn() {
-    await graphQLClient.request(CREATE_SONG, song);
+    await graphQLClient.request(CREATE_SONG, values);
   }
 
   const options = {
@@ -58,7 +45,7 @@ const CreateSongContainer: FC<Props> = ({ isOpen, onClose }) => {
       onChange={handleChange}
       onClose={handleClose}
       onSubmit={handleSubmit}
-      song={song}
+      song={values}
     />
   );
 };

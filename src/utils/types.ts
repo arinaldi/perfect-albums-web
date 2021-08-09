@@ -88,3 +88,24 @@ export interface SwrPayload<T = unknown> {
   isLoading: boolean;
   mutate: () => void;
 }
+
+export interface AlbumInput {
+  artist: string;
+  title: string;
+  year: string;
+  cd: boolean;
+  aotd: boolean;
+  favorite: boolean;
+}
+
+export interface ReleaseInput {
+  artist: string;
+  title: string;
+  date: string;
+}
+
+export interface SongInput {
+  artist: string;
+  title: string;
+  link: string;
+}

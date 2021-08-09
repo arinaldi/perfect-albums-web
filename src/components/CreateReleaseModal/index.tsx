@@ -1,10 +1,12 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { FC } from 'react';
 
+import { MESSAGES } from '../../constants';
+import useForm from '../../hooks/useForm';
 import useNewReleases from '../../hooks/useNewReleases';
 import { graphQLClient } from '../../hooks/useStore';
 import useSubmit from '../../hooks/useSubmit';
 import { CREATE_RELEASE } from '../../mutations';
-import { MESSAGES } from '../../constants';
+import { ReleaseInput } from '../../utils/types';
 import CreateReleaseModal from './presenter';
 
 interface Props {
@@ -14,34 +16,19 @@ interface Props {
 
 const CreateReleaseContainer: FC<Props> = ({ isOpen, onClose }) => {
   const { mutate } = useNewReleases();
-  const [release, setRelease] = useState({
+  const { handleChange, resetForm, values } = useForm<ReleaseInput>({
     artist: '',
     title: '',
     date: '',
   });
 
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    const {
-      target: { name, value },
-    } = event;
-
-    setRelease({
-      ...release,
-      [name]: value,
-    });
-  }
-
   function handleClose() {
     onClose();
-    setRelease({
-      artist: '',
-      title: '',
-      date: '',
-    });
+    resetForm();
   }
 
   async function submitFn() {
-    await graphQLClient.request(CREATE_RELEASE, release);
+    await graphQLClient.request(CREATE_RELEASE, values);
   }
 
   const options = {
@@ -59,7 +46,7 @@ const CreateReleaseContainer: FC<Props> = ({ isOpen, onClose }) => {
       onChange={handleChange}
       onClose={handleClose}
       onSubmit={handleSubmit}
-      release={release}
+      release={values}
     />
   );
 };
