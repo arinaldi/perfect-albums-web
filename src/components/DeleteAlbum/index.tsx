@@ -29,7 +29,8 @@ const DeleteAlbumContainer: FC = () => {
   }
 
   const options = {
-    callbacks: [handleNavigate, mutate],
+    callbacks: [handleNavigate],
+    mutate,
     submitFn,
     successMessage: `${MESSAGES.ALBUM_PREFIX} deleted`,
   };

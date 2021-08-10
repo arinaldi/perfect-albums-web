@@ -16,12 +16,16 @@ interface Props {
   onClose: () => void;
 }
 
-const EditReleaseContainer: FC<Props> = ({ data, isOpen, onClose }) => {
-  const { mutate } = useNewReleases();
+const EditReleaseContainer: FC<Props> = ({
+  data: release,
+  isOpen,
+  onClose,
+}) => {
+  const { data, mutate } = useNewReleases();
   const { handleChange, resetForm, values } = useForm<ReleaseInput>({
-    artist: data.artist,
-    title: data.title,
-    date: formatDate(data.date || ''),
+    artist: release.artist,
+    title: release.title,
+    date: formatDate(release.date || ''),
   });
 
   function handleClose() {
@@ -30,14 +34,21 @@ const EditReleaseContainer: FC<Props> = ({ data, isOpen, onClose }) => {
   }
 
   async function submitFn() {
-    await graphQLClient.request(EDIT_RELEASE, {
-      ...values,
-      id: data.id,
-    });
+    const updatedRelease = { ...values, id: release.id };
+
+    if (data?.releases) {
+      const releases = data.releases.map((r) =>
+        r.id === release.id ? updatedRelease : r,
+      );
+      mutate({ releases }, false);
+    }
+
+    await graphQLClient.request(EDIT_RELEASE, updatedRelease);
   }
 
   const options = {
-    callbacks: [handleClose, mutate],
+    callbacks: [handleClose],
+    mutate,
     submitFn,
     successMessage: `${MESSAGES.RELEASE_PREFIX} edited`,
   };

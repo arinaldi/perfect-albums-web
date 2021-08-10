@@ -6,6 +6,7 @@ import { Callback } from '../utils/types';
 
 interface Options {
   callbacks: Callback[];
+  mutate: () => void;
   submitFn: () => Promise<void>;
   successMessage: string;
 }
@@ -16,7 +17,7 @@ interface Payload {
 }
 
 function useSubmit(options: Options): Payload {
-  const { callbacks, submitFn, successMessage } = options;
+  const { callbacks, mutate, submitFn, successMessage } = options;
   const [isSaving, setIsSaving] = useState(false);
   const toast = useToast();
 
@@ -43,24 +44,23 @@ function useSubmit(options: Options): Payload {
       });
     } catch (error) {
       setIsSaving(false);
-      if (error?.message !== MESSAGES.UNAUTHORIZED) {
-        toast({
-          description: error?.message || MESSAGES.ERROR_GENERIC,
-          duration: 4000,
-          isClosable: true,
-          position: 'top-right',
-          status: ALERT_TYPES.ERROR,
-          title: MESSAGES.ERROR,
-          variant: 'subtle',
-        });
-      }
+      if (error?.message === MESSAGES.UNAUTHORIZED) return;
+
+      toast({
+        description: error?.message || MESSAGES.ERROR_GENERIC,
+        duration: 4000,
+        isClosable: true,
+        position: 'top-right',
+        status: ALERT_TYPES.ERROR,
+        title: MESSAGES.ERROR,
+        variant: 'subtle',
+      });
+    } finally {
+      mutate();
     }
   }
 
-  return {
-    handleSubmit,
-    isSaving,
-  };
+  return { handleSubmit, isSaving };
 }
 
 export default useSubmit;

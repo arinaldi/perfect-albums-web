@@ -14,15 +14,25 @@ interface Props {
   onClose: () => void;
 }
 
-const DeleteReleaseContainer: FC<Props> = ({ data, isOpen, onClose }) => {
-  const { mutate } = useNewReleases();
+const DeleteReleaseContainer: FC<Props> = ({
+  data: release,
+  isOpen,
+  onClose,
+}) => {
+  const { data, mutate } = useNewReleases();
 
   async function submitFn() {
-    await graphQLClient.request(DELETE_RELEASE, { id: data.id });
+    if (data?.releases) {
+      const releases = data.releases.filter((r) => r.id !== release.id);
+      mutate({ releases }, false);
+    }
+
+    await graphQLClient.request(DELETE_RELEASE, { id: release.id });
   }
 
   const options = {
-    callbacks: [onClose, mutate],
+    callbacks: [onClose],
+    mutate,
     submitFn,
     successMessage: `${MESSAGES.RELEASE_PREFIX} deleted`,
   };
@@ -30,7 +40,7 @@ const DeleteReleaseContainer: FC<Props> = ({ data, isOpen, onClose }) => {
 
   return (
     <DeleteDataModal
-      data={data}
+      data={release}
       dataType={MODAL_DATA_TYPES.RELEASE}
       isDeleting={isSaving}
       isOpen={isOpen}

@@ -15,7 +15,7 @@ interface Props {
 }
 
 const CreateReleaseContainer: FC<Props> = ({ isOpen, onClose }) => {
-  const { mutate } = useNewReleases();
+  const { data, mutate } = useNewReleases();
   const { handleChange, resetForm, values } = useForm<ReleaseInput>({
     artist: '',
     title: '',
@@ -28,11 +28,17 @@ const CreateReleaseContainer: FC<Props> = ({ isOpen, onClose }) => {
   }
 
   async function submitFn() {
+    if (data?.releases) {
+      const newRelease = { ...values, id: Date.now().toString() };
+      mutate({ releases: [...data.releases, newRelease] }, false);
+    }
+
     await graphQLClient.request(CREATE_RELEASE, values);
   }
 
   const options = {
-    callbacks: [handleClose, mutate],
+    callbacks: [handleClose],
+    mutate,
     submitFn,
     successMessage: `${MESSAGES.RELEASE_PREFIX} created`,
   };

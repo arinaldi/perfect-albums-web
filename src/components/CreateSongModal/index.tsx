@@ -15,7 +15,7 @@ interface Props {
 }
 
 const CreateSongContainer: FC<Props> = ({ isOpen, onClose }) => {
-  const { mutate } = useFeaturedSongs();
+  const { data, mutate } = useFeaturedSongs();
   const { handleChange, resetForm, values } = useForm<SongInput>({
     artist: '',
     title: '',
@@ -28,11 +28,17 @@ const CreateSongContainer: FC<Props> = ({ isOpen, onClose }) => {
   }
 
   async function submitFn() {
+    if (data?.songs) {
+      const newSong = { ...values, id: Date.now().toString() };
+      mutate({ songs: [newSong, ...data.songs] }, false);
+    }
+
     await graphQLClient.request(CREATE_SONG, values);
   }
 
   const options = {
-    callbacks: [handleClose, mutate],
+    callbacks: [handleClose],
+    mutate,
     submitFn,
     successMessage: `${MESSAGES.SONG_PREFIX} created`,
   };

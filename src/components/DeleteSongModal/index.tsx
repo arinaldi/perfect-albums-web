@@ -14,15 +14,21 @@ interface Props {
   onClose: () => void;
 }
 
-const DeleteSongContainer: FC<Props> = ({ data, isOpen, onClose }) => {
-  const { mutate } = useFeaturedSongs();
+const DeleteSongContainer: FC<Props> = ({ data: song, isOpen, onClose }) => {
+  const { data, mutate } = useFeaturedSongs();
 
   async function submitFn() {
-    await graphQLClient.request(DELETE_SONG, { id: data.id });
+    if (data?.songs) {
+      const songs = data.songs.filter((s) => s.id !== song.id);
+      mutate({ songs }, false);
+    }
+
+    await graphQLClient.request(DELETE_SONG, { id: song.id });
   }
 
   const options = {
-    callbacks: [onClose, mutate],
+    callbacks: [onClose],
+    mutate,
     submitFn,
     successMessage: `${MESSAGES.SONG_PREFIX} deleted`,
   };
@@ -30,7 +36,7 @@ const DeleteSongContainer: FC<Props> = ({ data, isOpen, onClose }) => {
 
   return (
     <DeleteDataModal
-      data={data}
+      data={song}
       dataType={MODAL_DATA_TYPES.SONG}
       isDeleting={isSaving}
       isOpen={isOpen}

@@ -86,7 +86,7 @@ export interface SwrPayload<T = unknown> {
   data: T | null;
   hasError: boolean;
   isLoading: boolean;
-  mutate: () => void;
+  mutate: (data?: T, revalidate?: boolean) => void;
 }
 
 export interface AlbumInput {
