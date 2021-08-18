@@ -4,9 +4,9 @@
   "scripts": {
     "build": "tsc && vite build",
     "deploy": "npm run build && mv dist/index.html dist/200.html && surge dist --domain perfectalbums.surge.sh",
+    "dev": "vite",
     "lint": "eslint src/**/*.ts src/**/*.tsx",
     "serve": "vite preview",
-    "start": "vite",
     "tsc": "tsc --noEmit"
   },
   "dependencies": {
