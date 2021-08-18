@@ -1,22 +1,18 @@
 import { FC } from 'react';
-import { Box, Link } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
+import { Box, Link } from '@chakra-ui/react';
 
 interface Props {
   label: string;
   to: string;
 }
 
-const activeStyle = {
-  fontWeight: 600,
-};
-
 const LinkWrapper: FC<Props> = ({ label, to }) => (
   <Box>
     <Link
-      activeStyle={activeStyle}
+      activeStyle={{ borderBottom: '2px solid white' }}
       as={NavLink}
-      p={2}
+      paddingBottom={1}
       to={to}
       _hover={{ color: 'white' }}
     >

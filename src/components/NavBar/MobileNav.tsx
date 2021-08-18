@@ -20,7 +20,7 @@ const MobileNavItem: FC<ItemProps> = ({ label, onClose, to }) => (
   <Stack spacing={4}>
     <Flex align="center" justify="space-between" py={2}>
       <Link
-        activeStyle={{ fontWeight: 600 }}
+        activeStyle={{ borderBottom: '2px solid white' }}
         as={NavLink}
         to={to}
         _hover={{ color: 'white' }}
@@ -55,7 +55,7 @@ const MobileNav: FC<NavProps> = ({ hasAuth, onClose, onSignOut }) => {
   );
 
   return (
-    <Stack bg="gray.700" color="white" display={{ md: 'none' }} p={4}>
+    <Stack bg="gray.700" color="white" display={{ md: 'none' }} padding={4}>
       {NAV_LINKS.map(({ label, needsAuth, to }) => {
         if (needsAuth && !hasAuth) {
           return null;

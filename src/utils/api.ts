@@ -14,7 +14,7 @@ function logout() {
     position: 'top-right',
     status: ALERT_TYPES.ERROR,
     title: MESSAGES.ERROR,
-    variant: 'subtle',
+    variant: 'left-accent',
   });
 }
 

@@ -4,6 +4,7 @@ import {
   Collapse,
   Flex,
   Heading,
+  HStack,
   IconButton,
   Link,
   Stack,
@@ -60,13 +61,15 @@ const NavBar: FC = () => {
             Perfect Albums
           </Heading>
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-            {NAV_LINKS.map(({ label, needsAuth, to }) => {
-              if (needsAuth && !hasAuth) {
-                return null;
-              }
+            <HStack spacing={4}>
+              {NAV_LINKS.map(({ label, needsAuth, to }) => {
+                if (needsAuth && !hasAuth) {
+                  return null;
+                }
 
-              return <LinkWrapper key={to} label={label} to={to} />;
-            })}
+                return <LinkWrapper key={to} label={label} to={to} />;
+              })}
+            </HStack>
           </Flex>
         </Flex>
         <Stack

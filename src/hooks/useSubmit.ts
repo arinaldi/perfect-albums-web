@@ -40,7 +40,7 @@ function useSubmit(options: Options): Payload {
         position: 'top-right',
         status: ALERT_TYPES.SUCCESS,
         title: MESSAGES.SUCCESS,
-        variant: 'subtle',
+        variant: 'left-accent',
       });
     } catch (error) {
       setIsSaving(false);
@@ -53,7 +53,7 @@ function useSubmit(options: Options): Payload {
         position: 'top-right',
         status: ALERT_TYPES.ERROR,
         title: MESSAGES.ERROR,
-        variant: 'subtle',
+        variant: 'left-accent',
       });
     } finally {
       mutate();
