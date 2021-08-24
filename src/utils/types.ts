@@ -67,10 +67,6 @@ export interface Songs {
   songs: Song[];
 }
 
-export interface GenericObject {
-  [key: string]: string;
-}
-
 export interface QueryParams {
   direction: SORT_DIRECTION;
   page: number;

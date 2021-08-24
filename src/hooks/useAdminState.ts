@@ -9,7 +9,7 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { PER_PAGE, SORT_DIRECTION, SORT_VALUE } from '../constants';
-import { Album, GenericObject } from '../utils/types';
+import { Album } from '../utils/types';
 import useDebounce from '../hooks/useDebounce';
 import useAdminAlbums from '../hooks/useAdminAlbums';
 import useQueryParams from '../hooks/useQueryParams';
@@ -75,7 +75,7 @@ export default function useAdminState(): Payload {
   const handlers = useMemo(() => {
     const searchParams = new URLSearchParams(location.search);
 
-    function updateQueryParams(keyValuePairs: GenericObject): void {
+    function updateQueryParams(keyValuePairs: Record<string, string>): void {
       Object.entries(keyValuePairs).forEach(([key, value]) => {
         searchParams.set(key, value);
       });
