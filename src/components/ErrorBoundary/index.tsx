@@ -2,17 +2,13 @@ import { Component, ReactNode } from 'react';
 
 import AppMessage from '../AppMessage/presenter';
 
-interface Props {
-  children: ReactNode;
-}
-
 interface State {
   hasError: boolean;
   error: string;
 }
 
-class ErrorBoundary extends Component<Props, State> {
-  state = {
+class ErrorBoundary extends Component {
+  state: State = {
     hasError: false,
     error: '',
   };

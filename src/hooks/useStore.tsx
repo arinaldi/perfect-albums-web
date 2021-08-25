@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { mutate, SWRConfig } from 'swr';
@@ -26,10 +26,6 @@ interface AuthState {
   getSessionToken: () => string;
   signIn: (email: string, password: string) => Promise<Response>;
   signOut: () => Promise<ErrorResponse>;
-}
-
-interface Children {
-  children: ReactNode;
 }
 
 export const graphQLClient = new GraphQLClient(GQL_URL, { headers: {} });
@@ -87,7 +83,7 @@ export function fetchAndCache(key: string): Promise<any> {
   return request;
 }
 
-export const SWRProvider: FC<Children> = ({ children }) => {
+export const SWRProvider: FC = ({ children }) => {
   return <SWRConfig value={{ fetcher }}>{children}</SWRConfig>;
 };
 
