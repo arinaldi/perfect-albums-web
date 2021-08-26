@@ -10,6 +10,7 @@ import {
 
 import Page from './Page';
 import LoadMore from './LoadMore';
+import RandomArtist from './RandomArtist';
 
 interface Props {
   handleNext: () => void;
@@ -31,7 +32,7 @@ const Sandbox: FC<Props> = ({ handleNext, page }) => {
       <Flex>
         <Box flex={1}>
           <Heading as="h3" marginBottom={3} size="lg">
-            Sandbox
+            Sandbox 1
           </Heading>
           <Page page={page} perPage={10} />
           <Box style={{ display: 'none' }}>
@@ -54,6 +55,8 @@ const Sandbox: FC<Props> = ({ handleNext, page }) => {
           <Heading as="h3" marginBottom={3} size="lg">
             Sandbox 2
           </Heading>
+          <RandomArtist />
+          <Divider my={4} />
           <LoadMore />
         </Box>
       </Flex>
