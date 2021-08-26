@@ -11,6 +11,7 @@ import {
 import Page from './Page';
 import LoadMore from './LoadMore';
 import RandomArtist from './RandomArtist';
+import RandomAlbum from './RandomAlbum';
 
 interface Props {
   handleNext: () => void;
@@ -56,6 +57,8 @@ const Sandbox: FC<Props> = ({ handleNext, page }) => {
             Sandbox 2
           </Heading>
           <RandomArtist />
+          <Divider my={4} />
+          <RandomAlbum />
           <Divider my={4} />
           <LoadMore />
         </Box>
