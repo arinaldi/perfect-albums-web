@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { mutate, SWRConfig } from 'swr';
+import { SWRConfig } from 'swr';
 import { Provider, Session, User } from '@supabase/supabase-js';
 import { GraphQLClient, request } from 'graphql-request';
 
@@ -57,7 +57,7 @@ auth.onAuthStateChange((_, session) => {
   useStore.setState({ hasAuth });
 });
 
-async function fetcher(url: string): Promise<any> {
+export async function fetcher(url: string): Promise<any> {
   // eslint-disable-next-line no-undef
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
@@ -75,12 +75,6 @@ async function fetcher(url: string): Promise<any> {
 
 export function gqlFetcher(query: string): Promise<any> {
   return request(GQL_URL, query);
-}
-
-export function fetchAndCache(key: string): Promise<any> {
-  const request = fetcher(key);
-  mutate(key, request, false);
-  return request;
 }
 
 export const SWRProvider: FC = ({ children }) => {

@@ -12,8 +12,8 @@ import { PER_PAGE, SORT_DIRECTION, SORT_VALUE } from '../constants';
 import { Album } from '../utils/types';
 import useDebounce from '../hooks/useDebounce';
 import useAdminAlbums from '../hooks/useAdminAlbums';
+import usePrefetch from '../hooks/usePrefetch';
 import useQueryParams from '../hooks/useQueryParams';
-import { fetchAndCache } from '../hooks/useStore';
 
 interface Handlers {
   onClear: () => void;
@@ -47,6 +47,7 @@ interface Payload {
 export default function useAdminState(): Payload {
   const navigate = useNavigate();
   const location = useLocation();
+  const prefetch = usePrefetch();
   const queryParams = useQueryParams();
   const { direction, page, perPage, search, sort } = queryParams;
   const [searchText, setSearchText] = useState(search);
@@ -62,9 +63,9 @@ export default function useAdminState(): Payload {
   useEffect(() => {
     if (!search) {
       const nextUrl = `/api/albums?page=2&per_page=${PER_PAGE.SMALL}&search=&sort=&direction=`;
-      fetchAndCache(nextUrl);
+      prefetch(nextUrl);
     }
-  }, [search]);
+  }, [prefetch, search]);
 
   useEffect(() => {
     if (searchInput && searchInput.current) {
@@ -88,7 +89,7 @@ export default function useAdminState(): Payload {
         const newPage = page - 2;
         const previousUrl = `/api/albums?page=${newPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
 
-        if (newPage !== 0) fetchAndCache(previousUrl);
+        if (newPage !== 0) prefetch(previousUrl);
 
         const prevPage = page - 1;
         updateQueryParams({ page: prevPage.toString() });
@@ -97,7 +98,7 @@ export default function useAdminState(): Payload {
         const nextUrl = `/api/albums?page=${
           page + 2
         }&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
-        fetchAndCache(nextUrl);
+        prefetch(nextUrl);
 
         const nextPage = page + 1;
         updateQueryParams({ page: nextPage.toString() });
@@ -110,7 +111,7 @@ export default function useAdminState(): Payload {
         const prevUrl = `/api/albums?page=${
           lastPage - 1
         }&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
-        fetchAndCache(prevUrl);
+        prefetch(prevUrl);
 
         updateQueryParams({ page: lastPage.toString() });
       },
@@ -149,6 +150,7 @@ export default function useAdminState(): Payload {
     navigate,
     page,
     perPage,
+    prefetch,
     sort,
     total,
   ]);
