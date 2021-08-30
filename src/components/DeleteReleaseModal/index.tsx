@@ -1,11 +1,12 @@
 import { FC } from 'react';
 
 import { MESSAGES, MODAL_DATA_TYPES } from '../../constants';
-import useNewReleases from '../../hooks/useNewReleases';
+import useQuery from '../../hooks/useQuery';
 import { graphQLClient } from '../../hooks/useStore';
 import useSubmit from '../../hooks/useSubmit';
-import { Release } from '../../utils/types';
 import { DELETE_RELEASE } from '../../mutations';
+import { GET_RELEASES } from '../../queries';
+import { Release, Releases } from '../../utils/types';
 import DeleteDataModal from '../DeleteDataModal/presenter';
 
 interface Props {
@@ -19,7 +20,7 @@ const DeleteReleaseContainer: FC<Props> = ({
   isOpen,
   onClose,
 }) => {
-  const { data, mutate } = useNewReleases();
+  const { data, mutate } = useQuery<Releases>(GET_RELEASES);
 
   async function submitFn() {
     if (data?.releases) {

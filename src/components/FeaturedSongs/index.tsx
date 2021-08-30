@@ -1,9 +1,10 @@
 import { FC, useState } from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 
-import { Song } from '../../utils/types';
-import useFeaturedSongs from '../../hooks/useFeaturedSongs';
+import useQuery from '../../hooks/useQuery';
 import useTitle from '../../hooks/useTitle';
+import { GET_SONGS } from '../../queries';
+import { Song, Songs } from '../../utils/types';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import CreateSongModal from '../CreateSongModal';
@@ -11,7 +12,7 @@ import DeleteSongModal from '../DeleteSongModal';
 import FeaturedSongs from './presenter';
 
 const FeaturedSongsContainer: FC = () => {
-  const { data, hasError, isLoading } = useFeaturedSongs();
+  const { data, hasError, isLoading } = useQuery<Songs>(GET_SONGS);
   useTitle('Featured Songs');
   const [currentSong, setCurrentSong] = useState<Song>({
     artist: '',

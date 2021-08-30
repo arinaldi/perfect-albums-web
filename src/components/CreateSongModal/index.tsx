@@ -1,12 +1,13 @@
 import { FC } from 'react';
 
 import { MESSAGES } from '../../constants';
-import useFeaturedSongs from '../../hooks/useFeaturedSongs';
 import useForm from '../../hooks/useForm';
+import useQuery from '../../hooks/useQuery';
 import { graphQLClient } from '../../hooks/useStore';
 import useSubmit from '../../hooks/useSubmit';
 import { CREATE_SONG } from '../../mutations';
-import { SongInput } from '../../utils/types';
+import { GET_SONGS } from '../../queries';
+import { SongInput, Songs } from '../../utils/types';
 import CreateSongModal from './presenter';
 
 interface Props {
@@ -15,7 +16,7 @@ interface Props {
 }
 
 const CreateSongContainer: FC<Props> = ({ isOpen, onClose }) => {
-  const { data, mutate } = useFeaturedSongs();
+  const { data, mutate } = useQuery<Songs>(GET_SONGS);
   const { handleChange, resetForm, values } = useForm<SongInput>({
     artist: '',
     title: '',

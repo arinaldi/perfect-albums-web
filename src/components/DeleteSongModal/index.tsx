@@ -1,11 +1,12 @@
 import { FC } from 'react';
 
 import { MESSAGES, MODAL_DATA_TYPES } from '../../constants';
-import useFeaturedSongs from '../../hooks/useFeaturedSongs';
+import useQuery from '../../hooks/useQuery';
 import { graphQLClient } from '../../hooks/useStore';
 import useSubmit from '../../hooks/useSubmit';
-import { Song } from '../../utils/types';
+import { Song, Songs } from '../../utils/types';
 import { DELETE_SONG } from '../../mutations';
+import { GET_SONGS } from '../../queries';
 import DeleteDataModal from '../DeleteDataModal/presenter';
 
 interface Props {
@@ -15,7 +16,7 @@ interface Props {
 }
 
 const DeleteSongContainer: FC<Props> = ({ data: song, isOpen, onClose }) => {
-  const { data, mutate } = useFeaturedSongs();
+  const { data, mutate } = useQuery<Songs>(GET_SONGS);
 
   async function submitFn() {
     if (data?.songs) {

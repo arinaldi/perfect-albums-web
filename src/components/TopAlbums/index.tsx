@@ -1,13 +1,15 @@
 import { FC } from 'react';
 
-import useTopAlbums from '../../hooks/useTopAlbums';
+import useQuery from '../../hooks/useQuery';
 import useTitle from '../../hooks/useTitle';
+import { GET_FAVORITES } from '../../queries';
+import { Favorites } from '../../utils/types';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import TopAlbums from './presenter';
 
 const TopAlbumsContainer: FC = () => {
-  const { data, hasError, isLoading } = useTopAlbums();
+  const { data, hasError, isLoading } = useQuery<Favorites>(GET_FAVORITES);
   useTitle('Top Albums');
 
   return (

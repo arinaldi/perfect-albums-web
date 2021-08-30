@@ -2,12 +2,13 @@ import { FC } from 'react';
 
 import { MESSAGES } from '../../constants';
 import useForm from '../../hooks/useForm';
-import useNewReleases from '../../hooks/useNewReleases';
+import useQuery from '../../hooks/useQuery';
 import { graphQLClient } from '../../hooks/useStore';
 import useSubmit from '../../hooks/useSubmit';
 import { EDIT_RELEASE } from '../../mutations';
+import { GET_RELEASES } from '../../queries';
 import { formatDate } from '../../utils';
-import { Release, ReleaseInput } from '../../utils/types';
+import { Release, ReleaseInput, Releases } from '../../utils/types';
 import EditReleaseModal from '../CreateReleaseModal/presenter';
 
 interface Props {
@@ -21,7 +22,7 @@ const EditReleaseContainer: FC<Props> = ({
   isOpen,
   onClose,
 }) => {
-  const { data, mutate } = useNewReleases();
+  const { data, mutate } = useQuery<Releases>(GET_RELEASES);
   const { handleChange, resetForm, values } = useForm<ReleaseInput>({
     artist: release.artist,
     title: release.title,
