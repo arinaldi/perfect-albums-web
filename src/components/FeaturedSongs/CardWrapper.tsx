@@ -11,7 +11,7 @@ interface Props {
 }
 
 const CardWrapper: FC<Props> = ({ onDeleteOpen, song }) => {
-  const hasAuth = useStore((state) => state.hasAuth);
+  const user = useStore((state) => state.user);
 
   function handleClick() {
     onDeleteOpen(song);
@@ -25,7 +25,7 @@ const CardWrapper: FC<Props> = ({ onDeleteOpen, song }) => {
         <Link color="blue.500" href={song.link} isExternal>
           Listen
         </Link>
-        {hasAuth ? (
+        {user ? (
           <IconButton
             aria-label="Delete Song"
             icon={<DeleteIcon />}

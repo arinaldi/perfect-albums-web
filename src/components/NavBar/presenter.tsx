@@ -20,7 +20,7 @@ import LinkWrapper from './LinkWrapper';
 import MobileNav from './MobileNav';
 
 const NavBar: FC = () => {
-  const hasAuth = useStore((state) => state.hasAuth);
+  const user = useStore((state) => state.user);
   const signOut = useStore((state) => state.signOut);
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onClose, onToggle } = useDisclosure();
@@ -63,7 +63,7 @@ const NavBar: FC = () => {
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <HStack spacing={4}>
               {NAV_LINKS.map(({ label, needsAuth, to }) => {
-                if (needsAuth && !hasAuth) {
+                if (needsAuth && !user) {
                   return null;
                 }
 
@@ -91,7 +91,7 @@ const NavBar: FC = () => {
             _hover={{ background: 'gray.700' }}
           />
           <Box display={{ base: 'none', md: 'inline-flex' }}>
-            {hasAuth ? (
+            {user ? (
               <Box>
                 <Link>
                   <span onClick={signOut}>Sign Out</span>
@@ -104,7 +104,7 @@ const NavBar: FC = () => {
         </Stack>
       </Flex>
       <Collapse in={isOpen} animateOpacity>
-        <MobileNav hasAuth={hasAuth} onClose={onClose} onSignOut={signOut} />
+        <MobileNav onClose={onClose} onSignOut={signOut} />
       </Collapse>
     </Box>
   );

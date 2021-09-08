@@ -9,10 +9,10 @@ interface Props {
 }
 
 const AuthRoute: FC<Props> = ({ ...props }) => {
-  const hasAuth = useStore((state) => state.hasAuth);
+  const user = useStore((state) => state.user);
   const location = useLocation();
 
-  return hasAuth ? (
+  return user ? (
     <Route {...props} />
   ) : (
     <Navigate to="/top-albums" state={{ from: location }} />

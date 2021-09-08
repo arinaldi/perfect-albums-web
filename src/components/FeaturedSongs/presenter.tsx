@@ -30,7 +30,7 @@ const FeaturedSongs: FC<Props> = (props) => {
     hasError,
     modal: { onCreateOpen, onDeleteOpen },
   } = props;
-  const hasAuth = useStore((state) => state.hasAuth);
+  const user = useStore((state) => state.user);
 
   return (
     <Container maxWidth="container.xl" marginBottom={6}>
@@ -39,7 +39,7 @@ const FeaturedSongs: FC<Props> = (props) => {
           Featured Songs
         </Heading>
         <Spacer />
-        {hasAuth ? (
+        {user ? (
           <Button variant="outline" onClick={onCreateOpen}>
             New
           </Button>

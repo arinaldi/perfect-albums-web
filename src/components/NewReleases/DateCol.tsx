@@ -20,7 +20,7 @@ interface Props {
 
 const DateCol: FC<Props> = (props) => {
   const { data, date, onEditOpen, onDeleteOpen } = props;
-  const hasAuth = useStore((state) => state.hasAuth);
+  const user = useStore((state) => state.user);
 
   return (
     <Box>
@@ -33,7 +33,7 @@ const DateCol: FC<Props> = (props) => {
             <span>
               {release.artist} &ndash; {release.title}
             </span>
-            {hasAuth ? (
+            {user ? (
               <Box as="span" ml={1}>
                 <IconButton
                   aria-label="Edit Release"

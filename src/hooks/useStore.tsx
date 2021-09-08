@@ -22,10 +22,10 @@ interface ErrorResponse {
 }
 
 interface AuthState {
-  hasAuth: boolean;
   getSessionToken: () => string;
   signIn: (email: string, password: string) => Promise<Response>;
   signOut: () => Promise<ErrorResponse>;
+  user: User | null;
 }
 
 export const graphQLClient = new GraphQLClient(GQL_URL, { headers: {} });
@@ -34,11 +34,11 @@ const { auth } = supabase;
 let supabaseSession: Session | null;
 
 const store = () => ({
-  hasAuth: Boolean(auth.user()),
   getSessionToken: () => auth.session()?.access_token || '',
   signIn: async (email: string, password: string) =>
     await auth.signIn({ email, password }),
   signOut: async () => await auth.signOut(),
+  user: auth.user(),
 });
 
 const useStore = create<AuthState>(
@@ -46,15 +46,14 @@ const useStore = create<AuthState>(
 );
 
 auth.onAuthStateChange((_, session) => {
-  const user = session?.user;
-  const hasAuth = Boolean(user);
+  const user = session?.user || null;
   supabaseSession = session;
 
   if (session) {
     graphQLClient.setHeader('authorization', `Bearer ${session.access_token}`);
   }
 
-  useStore.setState({ hasAuth });
+  useStore.setState({ user });
 });
 
 export async function fetcher(url: string): Promise<any> {

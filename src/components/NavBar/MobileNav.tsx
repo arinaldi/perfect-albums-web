@@ -3,6 +3,7 @@ import { Flex, Link, Stack } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 
 import { NAV_LINKS } from '../../constants';
+import useStore from '../../hooks/useStore';
 
 interface ItemProps {
   label: string;
@@ -11,7 +12,6 @@ interface ItemProps {
 }
 
 interface NavProps {
-  hasAuth: boolean;
   onClose: () => void;
   onSignOut: () => void;
 }
@@ -31,7 +31,9 @@ const MobileNavItem: FC<ItemProps> = ({ label, onClose, to }) => (
   </Stack>
 );
 
-const MobileNav: FC<NavProps> = ({ hasAuth, onClose, onSignOut }) => {
+const MobileNav: FC<NavProps> = ({ onClose, onSignOut }) => {
+  const user = useStore((state) => state.user);
+
   function handleClick() {
     onClose();
     onSignOut();
@@ -57,7 +59,7 @@ const MobileNav: FC<NavProps> = ({ hasAuth, onClose, onSignOut }) => {
   return (
     <Stack bg="gray.700" color="white" display={{ md: 'none' }} padding={4}>
       {NAV_LINKS.map(({ label, needsAuth, to }) => {
-        if (needsAuth && !hasAuth) {
+        if (needsAuth && !user) {
           return null;
         }
 
@@ -65,7 +67,7 @@ const MobileNav: FC<NavProps> = ({ hasAuth, onClose, onSignOut }) => {
           <MobileNavItem key={to} label={label} onClose={onClose} to={to} />
         );
       })}
-      {hasAuth ? (
+      {user ? (
         MobileSignOut
       ) : (
         <MobileNavItem label="Sign In" onClose={onClose} to="/signin" />

@@ -8,6 +8,7 @@ import {
   Heading,
 } from '@chakra-ui/react';
 
+import useStore from '../../hooks/useStore';
 import Page from './Page';
 import LoadMore from './LoadMore';
 import RandomArtist from './RandomArtist';
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const Sandbox: FC<Props> = ({ handleNext, page }) => {
+  const user = useStore((state) => state.user);
   const [dataPage, setDataPage] = useState(1);
   const data = [];
 

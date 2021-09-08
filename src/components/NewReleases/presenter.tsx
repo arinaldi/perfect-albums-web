@@ -32,7 +32,7 @@ const NewReleases: FC<Props> = (props) => {
     hasError,
     modal: { onCreateOpen, onDeleteOpen, onEditOpen },
   } = props;
-  const hasAuth = useStore((state) => state.hasAuth);
+  const user = useStore((state) => state.user);
 
   return (
     <Container maxWidth="container.xl" marginBottom={6}>
@@ -41,7 +41,7 @@ const NewReleases: FC<Props> = (props) => {
           New Releases
         </Heading>
         <Spacer />
-        {hasAuth ? (
+        {user ? (
           <Button variant="outline" onClick={onCreateOpen}>
             New
           </Button>

@@ -9,7 +9,7 @@ import ProgressLoader from '../ProgressLoader/presenter';
 import SignIn from './presenter';
 
 const SignInContainer: FC = () => {
-  const hasAuth = useStore((state) => state.hasAuth);
+  const user = useStore((state) => state.user);
   const signIn = useStore((state) => state.signIn);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -34,7 +34,7 @@ const SignInContainer: FC = () => {
     }
   }
 
-  if (hasAuth) {
+  if (user) {
     return <Navigate to="/admin" />;
   }
 
