@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import create from 'zustand';
+import { FC, useEffect } from 'react';
+import create, { SetState } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { SWRConfig } from 'swr';
 import { Provider, Session, User } from '@supabase/supabase-js';
@@ -23,9 +23,10 @@ interface ErrorResponse {
 
 interface AuthState {
   getSessionToken: () => string;
+  setUser: (user: User | null) => void;
   signIn: (email: string, password: string) => Promise<Response>;
   signOut: () => Promise<ErrorResponse>;
-  user: User | null;
+  user: User | null | undefined;
 }
 
 export const graphQLClient = new GraphQLClient(GQL_URL, { headers: {} });
@@ -33,12 +34,15 @@ export const graphQLClient = new GraphQLClient(GQL_URL, { headers: {} });
 const { auth } = supabase;
 let supabaseSession: Session | null;
 
-const store = () => ({
+const store = (set: SetState<AuthState>) => ({
   getSessionToken: () => auth.session()?.access_token || '',
+  setUser: (user: User | null) => {
+    set({ user });
+  },
   signIn: async (email: string, password: string) =>
     await auth.signIn({ email, password }),
   signOut: async () => await auth.signOut(),
-  user: auth.user(),
+  user: undefined,
 });
 
 const useStore = create<AuthState>(
@@ -77,6 +81,17 @@ export function gqlFetcher(query: string): Promise<any> {
 }
 
 export const SWRProvider: FC = ({ children }) => {
+  const user = useStore((state) => state.user);
+  const setUser = useStore((state) => state.setUser);
+
+  useEffect(() => {
+    if (user === undefined && auth.session() === null) {
+      setUser(null);
+    }
+  }, [setUser, user]);
+
+  if (user === undefined) return null;
+
   return <SWRConfig value={{ fetcher }}>{children}</SWRConfig>;
 };
 
