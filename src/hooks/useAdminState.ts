@@ -53,8 +53,8 @@ export default function useAdminState(): Payload {
   const prefetch = usePrefetch();
   const queryParams = useQueryParams();
   const { artist, direction, page, perPage, sort, title } = queryParams;
-  const [artistSearch, setArtistSearch] = useState(artist.toString());
-  const [titleSearch, setTitleSearch] = useState(title.toString());
+  const [artistSearch, setArtistSearch] = useState(artist?.toString() || '');
+  const [titleSearch, setTitleSearch] = useState(title?.toString() || '');
   const debouncedArtist = useDebounce(artistSearch);
   const debouncedTitle = useDebounce(titleSearch);
   const artistSearchRef = useRef<HTMLInputElement | null>(null);
