@@ -14,7 +14,7 @@ const AdminContainer: FC = () => {
   useEffect(() => {
     if (!search) {
       navigate(
-        `/admin?direction=&page=1&perPage=${PER_PAGE.SMALL}&search=&sort=`,
+        `/admin?page=1&perPage=${PER_PAGE.SMALL}&artist=&title=&sort=&direction=`,
         { replace: true },
       );
     }

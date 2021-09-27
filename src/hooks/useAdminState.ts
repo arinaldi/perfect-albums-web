@@ -16,18 +16,21 @@ import usePrefetch from '../hooks/usePrefetch';
 import useQueryParams from '../hooks/useQueryParams';
 
 interface Handlers {
+  onArtistChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onClear: () => void;
   onFirst: () => void;
   onLast: () => void;
   onNext: () => void;
   onPerPageChange: (value: number) => void;
   onPrevious: () => void;
-  onSearchChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSort: (value: SORT_VALUE) => void;
+  onTitleChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface Payload {
   albums: Album[];
+  artistSearch: string;
+  artistSearchRef: RefObject<HTMLInputElement>;
   cdTotal: number;
   direction: SORT_DIRECTION;
   handlers: Handlers;
@@ -38,9 +41,9 @@ interface Payload {
   mutate: () => void;
   page: number;
   perPage: PER_PAGE;
-  searchInput: RefObject<HTMLInputElement>;
-  searchText: string;
   sort: SORT_VALUE;
+  titleSearch: string;
+  titleSearchRef: RefObject<HTMLInputElement>;
   total: number;
 }
 
@@ -49,29 +52,32 @@ export default function useAdminState(): Payload {
   const location = useLocation();
   const prefetch = usePrefetch();
   const queryParams = useQueryParams();
-  const { direction, page, perPage, search, sort } = queryParams;
-  const [searchText, setSearchText] = useState(search);
-  const searchInput = useRef<HTMLInputElement | null>(null);
-  const debouncedSearch = useDebounce(searchText, 500);
-  const url = `/api/albums?page=${page}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
-  const preventFetch = !debouncedSearch && Boolean(searchText);
+  const { artist, direction, page, perPage, sort, title } = queryParams;
+  const [artistSearch, setArtistSearch] = useState(artist.toString());
+  const [titleSearch, setTitleSearch] = useState(title.toString());
+  const debouncedArtist = useDebounce(artistSearch);
+  const debouncedTitle = useDebounce(titleSearch);
+  const artistSearchRef = useRef<HTMLInputElement | null>(null);
+  const titleSearchRef = useRef<HTMLInputElement | null>(null);
+  const url = `/api/albums?page=${page}&per_page=${perPage}&artist=${debouncedArtist}&title=${debouncedTitle}&sort=${sort}&direction=${direction}`;
+  const preventFetch =
+    (!debouncedArtist && Boolean(artistSearch)) ||
+    (!debouncedTitle && Boolean(titleSearch));
   const { albums, cdTotal, hasError, isLoading, mutate, total } =
     useAdminAlbums(url, preventFetch);
   const isFirstPage = page === 1;
   const isLastPage = page === Math.ceil(total / perPage);
 
   useEffect(() => {
-    if (!search) {
-      const nextUrl = `/api/albums?page=2&per_page=${PER_PAGE.SMALL}&search=&sort=&direction=`;
+    if (!artist || !title) {
+      const nextUrl = `/api/albums?page=2&per_page=${PER_PAGE.SMALL}&artist=&title=&sort=&direction=`;
       prefetch(nextUrl);
     }
-  }, [prefetch, search]);
+  }, [artist, prefetch, title]);
 
   useEffect(() => {
-    if (searchInput && searchInput.current) {
-      searchInput.current.focus();
-    }
-  }, [searchInput]);
+    artistSearchRef?.current?.focus();
+  }, []);
 
   const handlers = useMemo(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -87,7 +93,7 @@ export default function useAdminState(): Payload {
     return {
       onPrevious: () => {
         const newPage = page - 2;
-        const previousUrl = `/api/albums?page=${newPage}&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
+        const previousUrl = `/api/albums?page=${newPage}&per_page=${perPage}&artist=${debouncedArtist}&title=${debouncedTitle}&sort=${sort}&direction=${direction}`;
 
         if (newPage !== 0) prefetch(previousUrl);
 
@@ -97,7 +103,7 @@ export default function useAdminState(): Payload {
       onNext: () => {
         const nextUrl = `/api/albums?page=${
           page + 2
-        }&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
+        }&per_page=${perPage}&artist=${debouncedArtist}&title=${debouncedTitle}&sort=${sort}&direction=${direction}`;
         prefetch(nextUrl);
 
         const nextPage = page + 1;
@@ -110,7 +116,7 @@ export default function useAdminState(): Payload {
         const lastPage = Math.ceil(total / perPage);
         const prevUrl = `/api/albums?page=${
           lastPage - 1
-        }&per_page=${perPage}&search=${debouncedSearch}&sort=${sort}&direction=${direction}`;
+        }&per_page=${perPage}&artist=${debouncedArtist}&title=${debouncedTitle}&sort=${sort}&direction=${direction}`;
         prefetch(prevUrl);
 
         updateQueryParams({ page: lastPage.toString() });
@@ -118,19 +124,24 @@ export default function useAdminState(): Payload {
       onPerPageChange: (value: PER_PAGE) => {
         updateQueryParams({ page: '1', perPage: value.toString() });
       },
-      onSearchChange: (event: ChangeEvent<HTMLInputElement>) => {
+      onArtistChange: (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
 
-        setSearchText(value);
-        updateQueryParams({ page: '1', search: value });
+        setArtistSearch(value);
+        updateQueryParams({ artist: value, page: '1' });
+      },
+      onTitleChange: (event: ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+
+        setTitleSearch(value);
+        updateQueryParams({ page: '1', title: value });
       },
       onClear: () => {
-        if (searchInput?.current) {
-          searchInput.current.focus();
-        }
+        artistSearchRef?.current?.focus();
 
-        setSearchText('');
-        updateQueryParams({ page: '1', search: '' });
+        setArtistSearch('');
+        setTitleSearch('');
+        updateQueryParams({ artist: '', page: '1', title: '' });
       },
       onSort: (value: SORT_VALUE) => {
         const { ASC, DESC } = SORT_DIRECTION;
@@ -144,7 +155,8 @@ export default function useAdminState(): Payload {
       },
     };
   }, [
-    debouncedSearch,
+    debouncedArtist,
+    debouncedTitle,
     direction,
     location.search,
     navigate,
@@ -157,6 +169,8 @@ export default function useAdminState(): Payload {
 
   return {
     albums,
+    artistSearch,
+    artistSearchRef,
     cdTotal,
     direction,
     handlers,
@@ -167,9 +181,9 @@ export default function useAdminState(): Payload {
     mutate,
     page,
     perPage,
-    searchInput,
-    searchText,
     sort,
+    titleSearch,
+    titleSearchRef,
     total,
   };
 }

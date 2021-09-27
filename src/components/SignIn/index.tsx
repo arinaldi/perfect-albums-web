@@ -26,9 +26,9 @@ const SignInContainer: FC = () => {
 
       if (error) throw error;
     } catch (error) {
-      setError(
-        error?.error_description || error?.message || MESSAGES.ERROR_GENERIC,
-      );
+      const message =
+        error instanceof Error ? error.message : MESSAGES.ERROR_GENERIC;
+      setError(message);
     } finally {
       setIsSubmitting(false);
     }

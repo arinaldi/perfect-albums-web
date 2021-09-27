@@ -29,6 +29,8 @@ const { SMALL, MEDIUM, LARGE } = PER_PAGE;
 const Admin: FC = () => {
   const {
     albums,
+    artistSearch,
+    artistSearchRef,
     cdTotal,
     direction,
     handlers,
@@ -37,20 +39,21 @@ const Admin: FC = () => {
     isLoading,
     page,
     perPage,
-    searchInput,
-    searchText,
     sort,
+    titleSearch,
+    titleSearchRef,
     total,
   } = useAdminState();
   const {
+    onArtistChange,
     onClear,
     onFirst,
     onLast,
     onNext,
     onPerPageChange,
     onPrevious,
-    onSearchChange,
     onSort,
+    onTitleChange,
   } = handlers;
   const navigate = useNavigate();
   const { search } = useLocation();
@@ -161,15 +164,31 @@ const Admin: FC = () => {
             CDs
           </Flex>
         </Flex>
-        <Flex align="center" justify="space-between" marginBottom={4}>
+        <Box
+          align="center"
+          display={{ base: 'block', sm: 'flex' }}
+          justify="space-between"
+          marginBottom={4}
+        >
           <Input
-            marginRight={3}
-            name="username"
-            onChange={onSearchChange}
-            placeholder="Search"
-            ref={searchInput}
+            marginBottom={{ base: 2, sm: 0 }}
+            marginRight={{ base: 0, sm: 3 }}
+            name="artist"
+            onChange={onArtistChange}
+            placeholder="Search artist"
+            ref={artistSearchRef}
             type="text"
-            value={searchText}
+            value={artistSearch}
+          />
+          <Input
+            marginBottom={{ base: 2, sm: 0 }}
+            marginRight={{ base: 0, sm: 3 }}
+            name="title"
+            onChange={onTitleChange}
+            placeholder="Search title"
+            ref={titleSearchRef}
+            type="text"
+            value={titleSearch}
           />
           <Flex>
             <Button marginRight={1} onClick={onClear} variant="outline">
@@ -179,7 +198,7 @@ const Admin: FC = () => {
               New
             </Button>
           </Flex>
-        </Flex>
+        </Box>
         <Flex align="center" justify="center" marginBottom={4}>
           {Pagination}
           <Box marginX={2} />
