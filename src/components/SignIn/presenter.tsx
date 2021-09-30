@@ -69,6 +69,7 @@ const SignIn: FC<Props> = (props) => {
             <FormLabel>Password</FormLabel>
             <InputGroup>
               <Input
+                autoCapitalize="off"
                 autoComplete="current-password"
                 isRequired
                 name="password"
