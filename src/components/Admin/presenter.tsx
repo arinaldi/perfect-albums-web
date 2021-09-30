@@ -4,27 +4,21 @@ import {
   Badge,
   Box,
   Button,
-  ButtonGroup,
   Code,
   Container,
   Flex,
   Heading,
   Input,
 } from '@chakra-ui/react';
-import {
-  ArrowBackIcon,
-  ArrowForwardIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from '@chakra-ui/icons';
 
-import { ALERT_TYPES, MESSAGES, PER_PAGE } from '../../constants';
+import { ALERT_TYPES, MESSAGES } from '../../constants';
 import useAdminState from '../../hooks/useAdminState';
 import AdminTable from '../AdminTable/presenter';
 import AppMessage from '../AppMessage/presenter';
 import ProgressLoader from '../ProgressLoader/presenter';
-
-const { SMALL, MEDIUM, LARGE } = PER_PAGE;
+import Pagination from './Pagination';
+import PerPageSelector from './PerPageSelector';
+import StudioFilter from './StudioFilter';
 
 const Admin: FC = () => {
   const {
@@ -34,87 +28,19 @@ const Admin: FC = () => {
     cdTotal,
     direction,
     handlers,
-    isFirstPage,
-    isLastPage,
     isLoading,
-    page,
-    perPage,
     sort,
     titleSearch,
     titleSearchRef,
     total,
   } = useAdminState();
-  const {
-    onArtistChange,
-    onClear,
-    onFirst,
-    onLast,
-    onNext,
-    onPerPageChange,
-    onPrevious,
-    onSort,
-    onTitleChange,
-  } = handlers;
+  const { onArtistChange, onClear, onSort, onTitleChange } = handlers;
   const navigate = useNavigate();
   const { search } = useLocation();
 
   function handleNavigate() {
     navigate(`/admin/new${search}`);
   }
-
-  const PerPageSelector = (
-    <ButtonGroup
-      aria-label="Change per page"
-      isAttached
-      size="sm"
-      variant="outline"
-    >
-      <Button
-        isDisabled={perPage === SMALL}
-        onClick={() => onPerPageChange(SMALL)}
-        variant="outline"
-      >
-        {SMALL}
-      </Button>
-      <Button
-        isDisabled={perPage === MEDIUM}
-        onClick={() => onPerPageChange(MEDIUM)}
-        variant="outline"
-      >
-        {MEDIUM}
-      </Button>
-      <Button
-        isDisabled={perPage === LARGE}
-        onClick={() => onPerPageChange(LARGE)}
-        variant="outline"
-      >
-        {LARGE}
-      </Button>
-    </ButtonGroup>
-  );
-
-  const Pagination = (
-    <ButtonGroup
-      aria-label="Change page"
-      isAttached
-      size="sm"
-      variant="outline"
-    >
-      <Button isDisabled={isFirstPage} onClick={onFirst}>
-        <ArrowBackIcon />
-      </Button>
-      <Button isDisabled={isFirstPage} onClick={onPrevious}>
-        <ChevronLeftIcon />
-      </Button>
-      <Button isDisabled>{page}</Button>
-      <Button isDisabled={isLastPage} onClick={onNext}>
-        <ChevronRightIcon />
-      </Button>
-      <Button isDisabled={isLastPage} onClick={onLast}>
-        <ArrowForwardIcon />
-      </Button>
-    </ButtonGroup>
-  );
 
   const Content =
     albums?.length === 0 && !isLoading ? (
@@ -190,19 +116,28 @@ const Admin: FC = () => {
             type="text"
             value={titleSearch}
           />
-          <Flex>
-            <Button marginRight={1} onClick={onClear} variant="outline">
-              Clear
-            </Button>
-            <Button onClick={handleNavigate} variant="outline">
-              New
-            </Button>
+          <Flex alignItems="center" justifyContent="space-between">
+            <Flex>
+              <Button marginRight={1} onClick={onClear} variant="outline">
+                Clear
+              </Button>
+              <Button onClick={handleNavigate} variant="outline">
+                New
+              </Button>
+            </Flex>
+            <Box display={{ base: 'block', sm: 'none' }}>
+              <StudioFilter />
+            </Box>
           </Flex>
         </Box>
         <Flex align="center" justify="center" marginBottom={4}>
-          {Pagination}
+          <Pagination />
           <Box marginX={2} />
-          {PerPageSelector}
+          <PerPageSelector />
+          <Box display={{ base: 'none', sm: 'block' }} marginX={2} />
+          <Box display={{ base: 'none', sm: 'block' }}>
+            <StudioFilter />
+          </Box>
         </Flex>
         {Content}
       </Container>
