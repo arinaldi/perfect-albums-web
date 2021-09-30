@@ -22,6 +22,7 @@ const CreateAlbumContainer: FC = () => {
     cd: false,
     aotd: false,
     favorite: false,
+    studio: false,
   });
   const { mutate } = useAdminState();
   useTitle('Create Album');
@@ -51,7 +52,6 @@ const CreateAlbumContainer: FC = () => {
         header="Create"
         onChange={handleChange}
         onSubmit={handleSubmit}
-        status={status}
       />
     </ErrorBoundary>
   );

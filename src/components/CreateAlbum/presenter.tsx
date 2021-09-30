@@ -27,7 +27,7 @@ interface Props {
   isSaving?: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (event: FormEvent) => void;
-  status: string;
+  status?: STATE_STATUSES;
 }
 
 const CreateEditAlbum: FC<Props> = (props) => {
@@ -117,8 +117,23 @@ const CreateEditAlbum: FC<Props> = (props) => {
                   </Radio>
                 </Stack>
               </RadioGroup>
-              <RadioGroup name="favorite" value={data.favorite.toString()}>
+              <RadioGroup
+                marginY={{ base: 7, md: 14 }}
+                name="favorite"
+                value={data.favorite.toString()}
+              >
                 <Text>Favorite</Text>
+                <Stack direction="row" spacing={4}>
+                  <Radio marginBottom={0} onChange={onChange} value="false">
+                    false
+                  </Radio>
+                  <Radio onChange={onChange} value="true">
+                    true
+                  </Radio>
+                </Stack>
+              </RadioGroup>
+              <RadioGroup name="studio" value={data.studio.toString()}>
+                <Text>Studio Album</Text>
                 <Stack direction="row" spacing={4}>
                   <Radio marginBottom={0} onChange={onChange} value="false">
                     false

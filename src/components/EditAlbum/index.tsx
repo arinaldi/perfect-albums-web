@@ -23,6 +23,7 @@ const EditAlbumContainer: FC = () => {
     artist: data?.artist || '',
     cd: data?.cd || false,
     favorite: data?.favorite || false,
+    studio: data?.studio || false,
     title: data?.title || '',
     year: data?.year || '',
   });

@@ -5,6 +5,7 @@ export interface AlbumBase {
   artist: string;
   cd: boolean;
   favorite: boolean;
+  studio: boolean;
   title: string;
   year: string;
 }
@@ -92,6 +93,7 @@ export interface AlbumInput {
   cd: boolean;
   aotd: boolean;
   favorite: boolean;
+  studio: boolean;
 }
 
 export interface ReleaseInput {
