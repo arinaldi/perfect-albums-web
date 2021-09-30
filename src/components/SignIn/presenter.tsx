@@ -6,8 +6,12 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  IconButton,
   Input,
+  InputGroup,
+  InputRightElement,
 } from '@chakra-ui/react';
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 import SubmitButton from '../SubmitButton/presenter';
 import AppMessage from '../AppMessage/presenter';
@@ -25,6 +29,7 @@ const SignIn: FC<Props> = (props) => {
     email: '',
     password: '',
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     const {
@@ -62,14 +67,24 @@ const SignIn: FC<Props> = (props) => {
           </FormControl>
           <FormControl id="password" isRequired my={4}>
             <FormLabel>Password</FormLabel>
-            <Input
-              autoComplete="current-password"
-              isRequired
-              name="password"
-              onChange={handleChange}
-              type="password"
-              value={credentials.password}
-            />
+            <InputGroup>
+              <Input
+                autoComplete="current-password"
+                isRequired
+                name="password"
+                onChange={handleChange}
+                type={showPassword ? 'text' : 'password'}
+                value={credentials.password}
+              />
+              <InputRightElement>
+                <IconButton
+                  aria-label="Show or hide password"
+                  icon={showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                  onClick={() => setShowPassword((show) => !show)}
+                  variant="ghost"
+                />
+              </InputRightElement>
+            </InputGroup>
           </FormControl>
           <SubmitButton
             isDisabled={isSubmitting}
