@@ -101,7 +101,7 @@ const CreateEditAlbum: FC<Props> = (props) => {
                 control={control}
                 name="cd"
                 render={({ field: { onChange, ref, value } }) => (
-                  <Checkbox onChange={onChange} isChecked={value} ref={ref}>
+                  <Checkbox isChecked={value} onChange={onChange} ref={ref}>
                     CD
                   </Checkbox>
                 )}
@@ -110,7 +110,7 @@ const CreateEditAlbum: FC<Props> = (props) => {
                 control={control}
                 name="aotd"
                 render={({ field: { onChange, ref, value } }) => (
-                  <Checkbox onChange={onChange} isChecked={value} ref={ref}>
+                  <Checkbox isChecked={value} onChange={onChange} ref={ref}>
                     Album of the Day
                   </Checkbox>
                 )}
@@ -119,7 +119,7 @@ const CreateEditAlbum: FC<Props> = (props) => {
                 control={control}
                 name="favorite"
                 render={({ field: { onChange, ref, value } }) => (
-                  <Checkbox onChange={onChange} isChecked={value} ref={ref}>
+                  <Checkbox isChecked={value} onChange={onChange} ref={ref}>
                     Favorite
                   </Checkbox>
                 )}
@@ -128,7 +128,7 @@ const CreateEditAlbum: FC<Props> = (props) => {
                 control={control}
                 name="studio"
                 render={({ field: { onChange, ref, value } }) => (
-                  <Checkbox onChange={onChange} isChecked={value} ref={ref}>
+                  <Checkbox isChecked={value} onChange={onChange} ref={ref}>
                     Studio Album
                   </Checkbox>
                 )}
