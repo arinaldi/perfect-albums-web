@@ -72,8 +72,7 @@ const SignIn: FC<Props> = ({ isSubmitting, onSubmit, register }) => {
             </InputGroup>
           </FormControl>
           <SubmitButton
-            isDisabled={isSubmitting}
-            isLoading={isSubmitting}
+            isSubmitting={isSubmitting}
             loadingText="Submitting"
             text="Submit"
           />

@@ -140,8 +140,7 @@ const CreateEditAlbum: FC<Props> = (props) => {
               Cancel
             </Button>
             <SubmitButton
-              isDisabled={isSubmitting}
-              isLoading={isSubmitting}
+              isSubmitting={isSubmitting}
               loadingText="Saving"
               text="Save"
             />

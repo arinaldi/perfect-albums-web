@@ -42,8 +42,7 @@ const DeleteAlbum: FC<Props> = ({
               Cancel
             </Button>
             <SubmitButton
-              isDisabled={isDeleting}
-              isLoading={isDeleting}
+              isSubmitting={isDeleting}
               loadingText="Deleting"
               text="Delete"
             />

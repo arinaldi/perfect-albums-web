@@ -42,8 +42,7 @@ const DeleteDataModal: FC<Props> = (props) => {
               Close
             </Button>
             <SubmitButton
-              isDisabled={isDeleting}
-              isLoading={isDeleting}
+              isSubmitting={isDeleting}
               loadingText="Deleting"
               text="Delete"
             />

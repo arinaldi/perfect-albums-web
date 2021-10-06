@@ -62,8 +62,7 @@ const CreateReleaseModal: FC<Props> = (props) => {
               Close
             </Button>
             <SubmitButton
-              isDisabled={isSubmitting}
-              isLoading={isSubmitting}
+              isSubmitting={isSubmitting}
               text="Save"
               loadingText="Saving"
             />
