@@ -1,47 +1,52 @@
-import { ChangeEvent, FC, FormEvent } from 'react';
+import { FC, FormEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Control, Controller, UseFormRegister } from 'react-hook-form';
 import {
   Box,
   Button,
+  Checkbox,
   Container,
   Flex,
   FormControl,
   FormLabel,
   Heading,
   Input,
-  Radio,
-  RadioGroup,
-  Stack,
-  Text,
 } from '@chakra-ui/react';
 
-import { AlbumBase } from '../../utils/types';
+import { AlbumInput } from '../../utils/types';
 import { STATE_STATUSES } from '../../constants';
 import AppMessage from '../AppMessage/presenter';
 import SubmitButton from '../SubmitButton/presenter';
 
 interface Props {
-  data: AlbumBase;
+  control: Control<any>;
   header: string;
   isLoading?: boolean;
-  isSaving?: boolean;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  isSubmitting: boolean;
   onSubmit: (event: FormEvent) => void;
+  register: UseFormRegister<AlbumInput>;
   status?: STATE_STATUSES;
 }
 
 const CreateEditAlbum: FC<Props> = (props) => {
   const {
-    data,
+    control,
     header,
     isLoading = false,
-    isSaving = false,
-    onChange,
+    isSubmitting,
     onSubmit,
+    register,
     status,
   } = props;
   const navigate = useNavigate();
   const { search } = useLocation();
+  const { ref: artistRef, ...artistRest } = register('artist', {
+    required: true,
+  });
+  const { ref: titleRef, ...titleRest } = register('title', {
+    required: true,
+  });
+  const { ref: yearRef, ...yearRest } = register('year', { required: true });
 
   function handleCancel() {
     navigate(`/admin${search}`);
@@ -52,7 +57,7 @@ const CreateEditAlbum: FC<Props> = (props) => {
       <Heading as="h3" size="lg" marginBottom={3}>
         {header} Album
       </Heading>
-      {!isLoading && (
+      {isLoading ? null : (
         <form onSubmit={onSubmit}>
           <Flex
             flexDirection={{ base: 'column', md: 'row' }}
@@ -63,95 +68,80 @@ const CreateEditAlbum: FC<Props> = (props) => {
                 <FormLabel>Artist</FormLabel>
                 <Input
                   isRequired
-                  name="artist"
-                  onChange={onChange}
+                  ref={(e) => artistRef(e)}
                   type="text"
-                  value={data.artist}
+                  {...artistRest}
                 />
               </FormControl>
               <FormControl id="title" isRequired marginY={4}>
                 <FormLabel>Title</FormLabel>
                 <Input
                   isRequired
-                  name="title"
-                  onChange={onChange}
+                  ref={(e) => titleRef(e)}
                   type="text"
-                  value={data.title}
+                  {...titleRest}
                 />
               </FormControl>
               <FormControl id="year" isRequired>
                 <FormLabel>Year</FormLabel>
                 <Input
                   isRequired
-                  name="year"
-                  onChange={onChange}
+                  ref={(e) => yearRef(e)}
                   type="text"
-                  value={data.year}
+                  {...yearRest}
                 />
               </FormControl>
             </Box>
-            <Box marginTop={{ base: 6, md: 0 }}>
-              <RadioGroup name="cd" value={data.cd.toString()}>
-                <Text>CD</Text>
-                <Stack direction="row" spacing={4}>
-                  <Radio marginBottom={0} onChange={onChange} value="false">
-                    false
-                  </Radio>
-                  <Radio onChange={onChange} value="true">
-                    true
-                  </Radio>
-                </Stack>
-              </RadioGroup>
-              <RadioGroup
-                marginY={{ base: 7, md: 14 }}
+            <Flex
+              marginTop={{ base: 6, md: 0 }}
+              direction="column"
+              justifyContent="space-around"
+            >
+              <Controller
+                control={control}
+                name="cd"
+                render={({ field: { onChange, ref, value } }) => (
+                  <Checkbox onChange={onChange} isChecked={value} ref={ref}>
+                    CD
+                  </Checkbox>
+                )}
+              />
+              <Controller
+                control={control}
                 name="aotd"
-                value={data.aotd.toString()}
-              >
-                <Text>AotD</Text>
-                <Stack direction="row" spacing={4}>
-                  <Radio marginBottom={0} onChange={onChange} value="false">
-                    false
-                  </Radio>
-                  <Radio onChange={onChange} value="true">
-                    true
-                  </Radio>
-                </Stack>
-              </RadioGroup>
-              <RadioGroup
-                marginY={{ base: 7, md: 14 }}
+                render={({ field: { onChange, ref, value } }) => (
+                  <Checkbox onChange={onChange} isChecked={value} ref={ref}>
+                    Album of the Day
+                  </Checkbox>
+                )}
+              />
+              <Controller
+                control={control}
                 name="favorite"
-                value={data.favorite.toString()}
-              >
-                <Text>Favorite</Text>
-                <Stack direction="row" spacing={4}>
-                  <Radio marginBottom={0} onChange={onChange} value="false">
-                    false
-                  </Radio>
-                  <Radio onChange={onChange} value="true">
-                    true
-                  </Radio>
-                </Stack>
-              </RadioGroup>
-              <RadioGroup name="studio" value={data.studio.toString()}>
-                <Text>Studio Album</Text>
-                <Stack direction="row" spacing={4}>
-                  <Radio marginBottom={0} onChange={onChange} value="false">
-                    false
-                  </Radio>
-                  <Radio onChange={onChange} value="true">
-                    true
-                  </Radio>
-                </Stack>
-              </RadioGroup>
-            </Box>
+                render={({ field: { onChange, ref, value } }) => (
+                  <Checkbox onChange={onChange} isChecked={value} ref={ref}>
+                    Favorite
+                  </Checkbox>
+                )}
+              />
+              <Controller
+                control={control}
+                name="studio"
+                render={({ field: { onChange, ref, value } }) => (
+                  <Checkbox onChange={onChange} isChecked={value} ref={ref}>
+                    Studio Album
+                  </Checkbox>
+                )}
+              />
+            </Flex>
           </Flex>
           <Box marginTop={{ base: 8, md: 4 }} marginBottom={6}>
             <Button marginRight={2} onClick={handleCancel} variant="outline">
               Cancel
             </Button>
             <SubmitButton
-              isDisabled={isSaving}
-              isLoading={isSaving}
+              isDisabled={isSubmitting}
+              isLoading={isSubmitting}
               loadingText="Saving"
               text="Save"
             />

@@ -1,7 +1,7 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
 import { MESSAGES } from '../../constants';
-import useForm from '../../hooks/useForm';
 import useQuery from '../../hooks/useQuery';
 import { graphQLClient } from '../../hooks/useStore';
 import useSubmit from '../../hooks/useSubmit';
@@ -23,18 +23,17 @@ const EditReleaseContainer: FC<Props> = ({
   onClose,
 }) => {
   const { data, mutate } = useQuery<Releases>(GET_RELEASES);
-  const { handleChange, resetForm, values } = useForm<ReleaseInput>({
-    artist: release.artist,
-    title: release.title,
-    date: formatDate(release.date || ''),
-  });
+  const { handleSubmit, register, setValue } = useForm<ReleaseInput>({});
 
-  function handleClose() {
-    onClose();
-    resetForm();
-  }
+  useEffect(() => {
+    if (release) {
+      setValue('artist', release.artist);
+      setValue('title', release.title);
+      setValue('date', formatDate(release.date || ''));
+    }
+  }, [release, setValue]);
 
-  async function submitFn() {
+  async function submitFn(values: ReleaseInput) {
     const updatedRelease = { ...values, id: release.id };
 
     if (data?.releases) {
@@ -48,22 +47,22 @@ const EditReleaseContainer: FC<Props> = ({
   }
 
   const options = {
-    callbacks: [handleClose],
+    callbacks: [onClose],
+    handleSubmit,
     mutate,
     submitFn,
     successMessage: `${MESSAGES.RELEASE_PREFIX} edited`,
   };
-  const { handleSubmit, isSaving } = useSubmit(options);
+  const { isSubmitting, onSubmit } = useSubmit(options);
 
   return (
     <EditReleaseModal
       header="Edit"
       isOpen={isOpen}
-      isSaving={isSaving}
-      onChange={handleChange}
-      onClose={handleClose}
-      onSubmit={handleSubmit}
-      release={values}
+      isSubmitting={isSubmitting}
+      onClose={onClose}
+      onSubmit={onSubmit}
+      register={register}
     />
   );
 };

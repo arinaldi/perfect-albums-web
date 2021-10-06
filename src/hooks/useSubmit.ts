@@ -1,4 +1,5 @@
 import { FormEvent, useState } from 'react';
+import type { UseFormHandleSubmit } from 'react-hook-form';
 import { useToast } from '@chakra-ui/react';
 
 import { ALERT_TYPES, MESSAGES } from '../constants';
@@ -6,48 +7,51 @@ import { Callback } from '../utils/types';
 
 interface Options {
   callbacks: Callback[];
-  mutate: () => void;
-  submitFn: () => Promise<void>;
-  successMessage: string;
+  handleSubmit?: UseFormHandleSubmit<any>;
+  mutate?: () => void;
+  submitFn: (data?: any) => Promise<void>;
+  successMessage?: string;
 }
 
 interface Payload {
-  handleSubmit: (event: FormEvent) => void;
-  isSaving: boolean;
+  isSubmitting: boolean;
+  onSubmit: (event: FormEvent) => Promise<void>;
 }
 
 function useSubmit(options: Options): Payload {
-  const { callbacks, mutate, submitFn, successMessage } = options;
-  const [isSaving, setIsSaving] = useState(false);
+  const { callbacks, handleSubmit, mutate, submitFn, successMessage } = options;
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const toast = useToast();
 
-  async function handleSubmit(event: FormEvent) {
-    event.preventDefault();
-
+  async function handler(data?: any) {
     try {
-      setIsSaving(true);
-      await submitFn();
-      setIsSaving(false);
+      setIsSubmitting(true);
+      await submitFn(data);
+      setIsSubmitting(false);
 
       callbacks.forEach((cb: Callback) => {
         cb();
       });
 
-      toast({
-        description: successMessage,
-        duration: 4000,
-        isClosable: true,
-        position: 'top-right',
-        status: ALERT_TYPES.SUCCESS,
-        title: MESSAGES.SUCCESS,
-        variant: 'left-accent',
-      });
+      if (successMessage) {
+        toast({
+          description: successMessage,
+          duration: 4000,
+          isClosable: true,
+          position: 'top-right',
+          status: ALERT_TYPES.SUCCESS,
+          title: MESSAGES.SUCCESS,
+          variant: 'left-accent',
+        });
+      }
     } catch (error) {
-      setIsSaving(false);
-      if (error?.message === MESSAGES.UNAUTHORIZED) return;
+      setIsSubmitting(false);
+      if (error instanceof Error && error.message === MESSAGES.UNAUTHORIZED) {
+        return;
+      }
 
       toast({
-        description: error?.message || MESSAGES.ERROR_GENERIC,
+        description: (error as any)?.message || MESSAGES.ERROR_GENERIC,
         duration: 4000,
         isClosable: true,
         position: 'top-right',
@@ -56,11 +60,21 @@ function useSubmit(options: Options): Payload {
         variant: 'left-accent',
       });
     } finally {
-      mutate();
+      if (mutate) {
+        mutate();
+      }
     }
   }
 
-  return { handleSubmit, isSaving };
+  async function formSubmit(event: FormEvent) {
+    event.preventDefault();
+    await handler();
+  }
+
+  return {
+    isSubmitting,
+    onSubmit: handleSubmit ? handleSubmit(handler) : formSubmit,
+  };
 }
 
 export default useSubmit;

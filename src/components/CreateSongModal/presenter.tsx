@@ -1,4 +1,5 @@
-import { ChangeEvent, FC, FormEvent } from 'react';
+import { FC, FormEvent } from 'react';
+import type { UseFormRegister } from 'react-hook-form';
 import {
   Button,
   FormControl,
@@ -13,20 +14,28 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 
-import { SongBase } from '../../utils/types';
+import { SongInput } from '../../utils/types';
 import SubmitButton from '../SubmitButton/presenter';
 
 interface Props {
   isOpen: boolean;
-  isSaving: boolean;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  isSubmitting: boolean;
   onClose: () => void;
   onSubmit: (event: FormEvent) => void;
-  song: SongBase;
+  register: UseFormRegister<SongInput>;
 }
 
 const CreateSongModal: FC<Props> = (props) => {
-  const { isOpen, isSaving, onChange, onClose, onSubmit, song } = props;
+  const { isOpen, isSubmitting, onClose, onSubmit, register } = props;
+  const { ref: artistRef, ...artistRest } = register('artist', {
+    required: true,
+  });
+  const { ref: titleRef, ...titleRest } = register('title', {
+    required: true,
+  });
+  const { ref: linkRef, ...linkRest } = register('link', {
+    required: true,
+  });
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -38,30 +47,15 @@ const CreateSongModal: FC<Props> = (props) => {
           <ModalBody>
             <FormControl id="artist" isRequired>
               <FormLabel>Artist</FormLabel>
-              <Input
-                name="artist"
-                onChange={onChange}
-                type="text"
-                value={song.artist}
-              />
+              <Input ref={(e) => artistRef(e)} type="text" {...artistRest} />
             </FormControl>
             <FormControl id="title" isRequired my={4}>
               <FormLabel>Title</FormLabel>
-              <Input
-                name="title"
-                onChange={onChange}
-                type="text"
-                value={song.title}
-              />
+              <Input ref={(e) => titleRef(e)} type="text" {...titleRest} />
             </FormControl>
             <FormControl id="link" isRequired>
               <FormLabel>Link</FormLabel>
-              <Input
-                name="link"
-                onChange={onChange}
-                type="text"
-                value={song.link}
-              />
+              <Input ref={(e) => linkRef(e)} type="text" {...linkRest} />
             </FormControl>
           </ModalBody>
           <ModalFooter>
@@ -69,8 +63,8 @@ const CreateSongModal: FC<Props> = (props) => {
               Close
             </Button>
             <SubmitButton
-              isDisabled={isSaving}
-              isLoading={isSaving}
+              isDisabled={isSubmitting}
+              isLoading={isSubmitting}
               text="Save"
               loadingText="Saving"
             />

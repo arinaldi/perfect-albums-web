@@ -1,7 +1,7 @@
 import { FC } from 'react';
+import { useForm } from 'react-hook-form';
 
 import { MESSAGES } from '../../constants';
-import useForm from '../../hooks/useForm';
 import useQuery from '../../hooks/useQuery';
 import { graphQLClient } from '../../hooks/useStore';
 import useSubmit from '../../hooks/useSubmit';
@@ -17,43 +17,39 @@ interface Props {
 
 const CreateReleaseContainer: FC<Props> = ({ isOpen, onClose }) => {
   const { data, mutate } = useQuery<Releases>(GET_RELEASES);
-  const { handleChange, resetForm, values } = useForm<ReleaseInput>({
-    artist: '',
-    title: '',
-    date: '',
-  });
+  const { handleSubmit, register, reset } = useForm<ReleaseInput>();
 
   function handleClose() {
     onClose();
-    resetForm();
+    reset();
   }
 
-  async function submitFn() {
+  async function submitFn(release: ReleaseInput) {
     if (data?.releases) {
-      const newRelease = { ...values, id: Date.now().toString() };
+      const newRelease = { ...release, id: Date.now().toString() };
       mutate({ releases: [...data.releases, newRelease] }, false);
     }
 
-    await graphQLClient.request(CREATE_RELEASE, values);
+    await graphQLClient.request(CREATE_RELEASE, release);
   }
 
   const options = {
     callbacks: [handleClose],
+    handleSubmit,
     mutate,
     submitFn,
     successMessage: `${MESSAGES.RELEASE_PREFIX} created`,
   };
-  const { handleSubmit, isSaving } = useSubmit(options);
+  const { isSubmitting, onSubmit } = useSubmit(options);
 
   return (
     <CreateReleaseModal
       header="Create"
       isOpen={isOpen}
-      isSaving={isSaving}
-      onChange={handleChange}
+      isSubmitting={isSubmitting}
       onClose={handleClose}
-      onSubmit={handleSubmit}
-      release={values}
+      onSubmit={onSubmit}
+      register={register}
     />
   );
 };

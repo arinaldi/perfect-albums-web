@@ -99,7 +99,12 @@ export interface AlbumInput {
 export interface ReleaseInput {
   artist: string;
   title: string;
-  date: string;
+  date: string | null;
+}
+
+export interface SignInInput {
+  email: string;
+  password: string;
 }
 
 export interface SongInput {
