@@ -17,7 +17,13 @@ const CreateAlbumContainer: FC = () => {
   const { search } = useLocation();
   const { control, handleSubmit, register } = useForm<AlbumInput>({
     defaultValues: {
+      artist: '',
+      title: '',
       year: new Date().getFullYear().toString(),
+      cd: false,
+      aotd: false,
+      favorite: false,
+      studio: false,
     },
   });
   const { mutate } = useAdminState();
