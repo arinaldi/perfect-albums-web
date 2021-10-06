@@ -11,7 +11,7 @@ interface Payload {
   total: number;
 }
 
-function useAdminAlbums(url: string, preventFetch = false): Payload {
+function useAdminAlbums(url: string, preventFetch: boolean): Payload {
   const key = preventFetch ? null : url;
   const { data, error, mutate } = useSWR(key, { dedupingInterval: 5000 });
   const { data: cdData, error: cdError } = useSWR('/api/cds');
