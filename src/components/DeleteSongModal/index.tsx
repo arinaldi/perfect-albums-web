@@ -33,16 +33,16 @@ const DeleteSongContainer: FC<Props> = ({ data: song, isOpen, onClose }) => {
     submitFn,
     successMessage: `${MESSAGES.SONG_PREFIX} deleted`,
   };
-  const { handleSubmit, isSaving } = useSubmit(options);
+  const { isSubmitting, onSubmit } = useSubmit(options);
 
   return (
     <DeleteDataModal
       data={song}
       dataType={MODAL_DATA_TYPES.SONG}
-      isDeleting={isSaving}
+      isDeleting={isSubmitting}
       isOpen={isOpen}
       onClose={onClose}
-      onDelete={handleSubmit}
+      onDelete={onSubmit}
     />
   );
 };

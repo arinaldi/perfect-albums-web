@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 import { MESSAGES, METHODS } from '../../constants';
 import useAdminState from '../../hooks/useAdminState';
-import useForm from '../../hooks/useForm';
 import useSubmit from '../../hooks/useSubmit';
 import useTitle from '../../hooks/useTitle';
 import api from '../../utils/api';
@@ -15,43 +15,36 @@ import CreateEditAlbum from './presenter';
 const CreateAlbumContainer: FC = () => {
   const navigate = useNavigate();
   const { search } = useLocation();
-  const { handleChange, values } = useForm<AlbumInput>({
-    artist: '',
-    title: '',
-    year: new Date().getFullYear().toString(),
-    cd: false,
-    aotd: false,
-    favorite: false,
-    studio: false,
+  const { control, handleSubmit, register } = useForm<AlbumInput>({
+    defaultValues: {
+      year: new Date().getFullYear().toString(),
+    },
   });
   const { mutate } = useAdminState();
   useTitle('Create Album');
 
-  function handleNavigate() {
-    navigate(`/admin${search}`);
-  }
-
-  async function submitFn() {
-    await api('/api/albums', { body: values, method: METHODS.POST });
+  async function submitFn(album: AlbumInput) {
+    await api('/api/albums', { body: album, method: METHODS.POST });
   }
 
   const options = {
-    callbacks: [handleNavigate],
+    callbacks: [() => navigate(`/admin${search}`)],
+    handleSubmit,
     mutate,
     submitFn,
     successMessage: `${MESSAGES.ALBUM_PREFIX} created`,
   };
-  const { handleSubmit, isSaving } = useSubmit(options);
+  const { isSubmitting, onSubmit } = useSubmit(options);
 
   return (
     <ErrorBoundary>
       <ProgressLoader isVisible={false} />
       <CreateEditAlbum
-        data={values}
-        isSaving={isSaving}
+        control={control}
         header="Create"
-        onChange={handleChange}
-        onSubmit={handleSubmit}
+        isSubmitting={isSubmitting}
+        onSubmit={onSubmit}
+        register={register}
       />
     </ErrorBoundary>
   );

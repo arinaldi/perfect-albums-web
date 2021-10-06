@@ -38,10 +38,6 @@ const Admin: FC = () => {
   const navigate = useNavigate();
   const { search } = useLocation();
 
-  function handleNavigate() {
-    navigate(`/admin/new${search}`);
-  }
-
   const Content =
     albums?.length === 0 && !isLoading ? (
       <AppMessage type={ALERT_TYPES.INFO} message={MESSAGES.NO_DATA} />
@@ -121,7 +117,10 @@ const Admin: FC = () => {
               <Button marginRight={1} onClick={onClear} variant="outline">
                 Clear
               </Button>
-              <Button onClick={handleNavigate} variant="outline">
+              <Button
+                onClick={() => navigate(`/admin/new${search}`)}
+                variant="outline"
+              >
                 New
               </Button>
             </Flex>

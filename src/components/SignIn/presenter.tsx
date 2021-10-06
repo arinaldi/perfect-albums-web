@@ -1,4 +1,5 @@
-import { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { FC, FormEvent, useState } from 'react';
+import type { UseFormRegister } from 'react-hook-form';
 import {
   Box,
   Container,
@@ -13,36 +14,21 @@ import {
 } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
+import { SignInInput } from '../../utils/types';
 import SubmitButton from '../SubmitButton/presenter';
-import AppMessage from '../AppMessage/presenter';
 
 interface Props {
-  error: string;
   isSubmitting: boolean;
-  onError: (error: string) => void;
+  register: UseFormRegister<SignInInput>;
   onSubmit: (event: FormEvent) => void;
 }
 
-const SignIn: FC<Props> = (props) => {
-  const { error, isSubmitting, onError, onSubmit } = props;
-  const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
-  });
+const SignIn: FC<Props> = ({ isSubmitting, onSubmit, register }) => {
   const [showPassword, setShowPassword] = useState(false);
-
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    const {
-      target: { name, value },
-    } = event;
-
-    if (error) onError('');
-
-    setCredentials({
-      ...credentials,
-      [name]: value,
-    });
-  }
+  const { ref: emailRef, ...emailRest } = register('email', { required: true });
+  const { ref: passwordRef, ...passwordRest } = register('password', {
+    required: true,
+  });
 
   return (
     <Container maxWidth="container.lg" marginBottom={6}>
@@ -59,10 +45,9 @@ const SignIn: FC<Props> = (props) => {
               autoCapitalize="off"
               autoComplete="email"
               isRequired
-              name="email"
-              onChange={handleChange}
+              ref={(e) => emailRef(e)}
               type="email"
-              value={credentials.email}
+              {...emailRest}
             />
           </FormControl>
           <FormControl id="password" isRequired my={4}>
@@ -72,10 +57,9 @@ const SignIn: FC<Props> = (props) => {
                 autoCapitalize="off"
                 autoComplete="current-password"
                 isRequired
-                name="password"
-                onChange={handleChange}
+                ref={(e) => passwordRef(e)}
                 type={showPassword ? 'text' : 'password'}
-                value={credentials.password}
+                {...passwordRest}
               />
               <InputRightElement>
                 <IconButton
@@ -88,13 +72,11 @@ const SignIn: FC<Props> = (props) => {
             </InputGroup>
           </FormControl>
           <SubmitButton
-            isDisabled={isSubmitting}
-            isLoading={isSubmitting}
+            isSubmitting={isSubmitting}
             loadingText="Submitting"
             text="Submit"
           />
         </form>
-        <Box mt={4}>{error ? <AppMessage message={error} /> : null}</Box>
       </Box>
     </Container>
   );

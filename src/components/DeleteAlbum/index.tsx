@@ -20,29 +20,25 @@ const DeleteAlbumContainer: FC = () => {
   const { mutate } = useAdminState();
   useTitle('Delete Album');
 
-  function handleNavigate() {
-    navigate(`/admin${search}`);
-  }
-
   async function submitFn() {
     await api(`/api/albums/${id}`, { method: METHODS.DELETE });
   }
 
   const options = {
-    callbacks: [handleNavigate],
+    callbacks: [() => navigate(`/admin${search}`)],
     mutate,
     submitFn,
     successMessage: `${MESSAGES.ALBUM_PREFIX} deleted`,
   };
-  const { handleSubmit, isSaving } = useSubmit(options);
+  const { isSubmitting, onSubmit } = useSubmit(options);
 
   return (
     <ErrorBoundary>
       <ProgressLoader isVisible={status === STATE_STATUSES.LOADING} />
       <DeleteAlbum
         data={data}
-        isDeleting={isSaving}
-        onSubmit={handleSubmit}
+        isDeleting={isSubmitting}
+        onSubmit={onSubmit}
         status={status}
       />
     </ErrorBoundary>

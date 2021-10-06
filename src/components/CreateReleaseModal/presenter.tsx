@@ -1,4 +1,5 @@
-import { ChangeEvent, FC, FormEvent } from 'react';
+import { FC, FormEvent } from 'react';
+import type { UseFormRegister } from 'react-hook-form';
 import {
   Button,
   FormControl,
@@ -13,34 +14,27 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 
+import { ReleaseInput } from '../../utils/types';
 import SubmitButton from '../SubmitButton/presenter';
-
-interface ReleaseInput {
-  artist: string;
-  title: string;
-  date: string | null;
-}
 
 interface Props {
   header: string;
   isOpen: boolean;
-  isSaving?: boolean;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  isSubmitting: boolean;
   onClose: () => void;
   onSubmit: (event: FormEvent) => void;
-  release: ReleaseInput;
+  register: UseFormRegister<ReleaseInput>;
 }
 
 const CreateReleaseModal: FC<Props> = (props) => {
-  const {
-    header,
-    isOpen,
-    isSaving = false,
-    onChange,
-    onClose,
-    onSubmit,
-    release,
-  } = props;
+  const { header, isOpen, isSubmitting, onClose, onSubmit, register } = props;
+  const { ref: artistRef, ...artistRest } = register('artist', {
+    required: true,
+  });
+  const { ref: titleRef, ...titleRest } = register('title', {
+    required: true,
+  });
+  const { ref: dateRef, ...dateRest } = register('date');
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -52,30 +46,15 @@ const CreateReleaseModal: FC<Props> = (props) => {
           <ModalBody>
             <FormControl id="artist" isRequired>
               <FormLabel>Artist</FormLabel>
-              <Input
-                name="artist"
-                onChange={onChange}
-                type="text"
-                value={release.artist}
-              />
+              <Input ref={(e) => artistRef(e)} type="text" {...artistRest} />
             </FormControl>
             <FormControl id="title" isRequired marginY={4}>
               <FormLabel>Title</FormLabel>
-              <Input
-                name="title"
-                onChange={onChange}
-                type="text"
-                value={release.title}
-              />
+              <Input ref={(e) => titleRef(e)} type="text" {...titleRest} />
             </FormControl>
             <FormControl id="date">
               <FormLabel>Date</FormLabel>
-              <Input
-                name="date"
-                onChange={onChange}
-                type="date"
-                value={release.date || ''}
-              />
+              <Input ref={(e) => dateRef(e)} type="date" {...dateRest} />
             </FormControl>
           </ModalBody>
           <ModalFooter>
@@ -83,8 +62,7 @@ const CreateReleaseModal: FC<Props> = (props) => {
               Close
             </Button>
             <SubmitButton
-              isDisabled={isSaving}
-              isLoading={isSaving}
+              isSubmitting={isSubmitting}
               text="Save"
               loadingText="Saving"
             />

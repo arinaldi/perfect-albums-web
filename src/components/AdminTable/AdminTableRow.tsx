@@ -14,20 +14,12 @@ const AdminTableRow: FC<Props> = ({ item }) => {
   const { search } = useLocation();
   const { id, artist, title, year, cd, aotd, favorite, studio } = item;
 
-  function handleNavigate(path: string) {
-    navigate(`/admin/${path}/${id}${search}`);
-  }
-
   return (
     <Tr data-testid={id}>
       <Td>{artist}</Td>
       <Td>
-        {studio ? (
-          <Box as="span" marginRight={2}>
-            💿
-          </Box>
-        ) : null}
         {title}
+        {studio ? <Box as="span">*</Box> : null}
       </Td>
       <Td>{year}</Td>
       <Td>{cd ? <CheckIcon /> : null}</Td>
@@ -36,7 +28,7 @@ const AdminTableRow: FC<Props> = ({ item }) => {
       <Td>
         <Button
           marginRight={1}
-          onClick={() => handleNavigate('edit')}
+          onClick={() => navigate(`/admin/edit/${id}${search}`)}
           size="sm"
           variant="outline"
         >
@@ -44,7 +36,7 @@ const AdminTableRow: FC<Props> = ({ item }) => {
         </Button>
         <Button
           marginRight={1}
-          onClick={() => handleNavigate('delete')}
+          onClick={() => navigate(`/admin/delete/${id}${search}`)}
           size="sm"
           variant="outline"
         >

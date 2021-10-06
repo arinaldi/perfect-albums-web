@@ -22,7 +22,7 @@ const StudioFilter: FC = () => {
         onClick={onFilter}
         variant="outline"
       >
-        On
+        On*
       </Button>
     </ButtonGroup>
   );

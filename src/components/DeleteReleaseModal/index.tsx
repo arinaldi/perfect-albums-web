@@ -37,16 +37,16 @@ const DeleteReleaseContainer: FC<Props> = ({
     submitFn,
     successMessage: `${MESSAGES.RELEASE_PREFIX} deleted`,
   };
-  const { handleSubmit, isSaving } = useSubmit(options);
+  const { isSubmitting, onSubmit } = useSubmit(options);
 
   return (
     <DeleteDataModal
       data={release}
       dataType={MODAL_DATA_TYPES.RELEASE}
-      isDeleting={isSaving}
+      isDeleting={isSubmitting}
       isOpen={isOpen}
       onClose={onClose}
-      onDelete={handleSubmit}
+      onDelete={onSubmit}
     />
   );
 };

@@ -1,6 +1,6 @@
 {
   "name": "perfect-albums-web",
-  "version": "4.2.2",
+  "version": "4.3.0",
   "scripts": {
     "build": "tsc && vite build",
     "deploy": "npm run build && mv dist/index.html dist/200.html && surge dist --domain perfectalbums.surge.sh",
@@ -22,6 +22,7 @@
     "history": "^5.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.17.1",
     "react-router-dom": "^6.0.0-beta.0",
     "swr": "^1.0.0",
     "zustand": "^3.5.7"

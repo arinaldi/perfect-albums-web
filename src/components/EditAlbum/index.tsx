@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 import { MESSAGES, METHODS, STATE_STATUSES } from '../../constants';
 import useAdminState from '../../hooks/useAdminState';
-import useForm from '../../hooks/useForm';
 import useStateMachine from '../../hooks/useStateMachine';
 import useSubmit from '../../hooks/useSubmit';
 import useTitle from '../../hooks/useTitle';
@@ -18,45 +18,46 @@ const EditAlbumContainer: FC = () => {
   const { search } = useLocation();
   const { id } = useParams();
   const [{ data, status }] = useStateMachine(`/api/albums/${id}`);
-  const { values, handleChange } = useForm<AlbumInput>({
-    aotd: data?.aotd || false,
-    artist: data?.artist || '',
-    cd: data?.cd || false,
-    favorite: data?.favorite || false,
-    studio: data?.studio || false,
-    title: data?.title || '',
-    year: data?.year || '',
-  });
+  const { control, handleSubmit, register, setValue } = useForm<AlbumInput>();
   const isLoading = status === STATE_STATUSES.LOADING;
   const { mutate } = useAdminState();
   useTitle('Edit Album');
 
-  function handleNavigate() {
-    navigate(`/admin${search}`);
-  }
+  useEffect(() => {
+    if (data) {
+      setValue('artist', data.artist);
+      setValue('title', data.title);
+      setValue('year', data.year);
+      setValue('cd', data.cd);
+      setValue('aotd', data.aotd);
+      setValue('favorite', data.favorite);
+      setValue('studio', data.studio);
+    }
+  }, [data, setValue]);
 
-  async function submitFn() {
-    await api(`/api/albums/${id}`, { body: values, method: METHODS.PUT });
+  async function submitFn(album: AlbumInput) {
+    await api(`/api/albums/${id}`, { body: album, method: METHODS.PUT });
   }
 
   const options = {
-    callbacks: [handleNavigate],
+    callbacks: [() => navigate(`/admin${search}`)],
+    handleSubmit,
     mutate,
     submitFn,
     successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,
   };
-  const { handleSubmit, isSaving } = useSubmit(options);
+  const { isSubmitting, onSubmit } = useSubmit(options);
 
   return (
     <ErrorBoundary>
       <ProgressLoader isVisible={isLoading} />
       <CreateEditAlbum
-        data={values}
-        isLoading={isLoading}
-        isSaving={isSaving}
+        control={control}
         header="Edit"
-        onChange={handleChange}
-        onSubmit={handleSubmit}
+        isLoading={isLoading}
+        isSubmitting={isSubmitting}
+        onSubmit={onSubmit}
+        register={register}
         status={status}
       />
     </ErrorBoundary>
