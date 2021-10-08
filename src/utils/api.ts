@@ -1,6 +1,12 @@
 import { createStandaloneToast } from '@chakra-ui/react';
 
-import { ALERT_TYPES, BASE_URL, MESSAGES, METHODS } from '../constants';
+import {
+  ALERT_TYPES,
+  BASE_URL,
+  MESSAGES,
+  METHODS,
+  TOAST_OPTIONS,
+} from '../constants';
 import useStore from '../hooks/useStore';
 
 function logout() {
@@ -8,13 +14,10 @@ function logout() {
 
   useStore.getState().signOut();
   toast({
+    ...TOAST_OPTIONS,
     description: MESSAGES.UNAUTHORIZED,
-    duration: 4000,
-    isClosable: true,
-    position: 'top-right',
     status: ALERT_TYPES.ERROR,
     title: MESSAGES.ERROR,
-    variant: 'left-accent',
   });
 }
 

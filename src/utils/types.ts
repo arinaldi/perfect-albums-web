@@ -1,3 +1,5 @@
+import { ToastPosition } from '@chakra-ui/react';
+
 import { PER_PAGE, SORT_DIRECTION, SORT_VALUE } from '../constants';
 
 export interface AlbumBase {
@@ -111,4 +113,11 @@ export interface SongInput {
   artist: string;
   title: string;
   link: string;
+}
+
+export interface ToastOptions {
+  duration: number;
+  isClosable: boolean;
+  position: ToastPosition;
+  variant: string;
 }

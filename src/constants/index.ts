@@ -1,3 +1,5 @@
+import { ToastOptions } from 'utils/types';
+
 export const BASE_URL = import.meta.env.VITE_API_URL;
 
 export const GQL_URL = `${BASE_URL}/graphql`;
@@ -115,3 +117,10 @@ export const NAV_LINKS = [
   { label: 'Admin', to: '/admin', needsAuth: true },
   { label: 'Sandbox', to: '/sandbox', needsAuth: true },
 ];
+
+export const TOAST_OPTIONS: ToastOptions = {
+  duration: 3000,
+  isClosable: true,
+  position: 'top-right',
+  variant: 'left-accent',
+};

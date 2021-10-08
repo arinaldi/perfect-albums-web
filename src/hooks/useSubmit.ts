@@ -1,8 +1,8 @@
 import { FormEvent, useState } from 'react';
 import type { UseFormHandleSubmit } from 'react-hook-form';
-import { useToast } from '@chakra-ui/react';
+import { useColorMode, useToast } from '@chakra-ui/react';
 
-import { ALERT_TYPES, MESSAGES } from '../constants';
+import { ALERT_TYPES, MESSAGES, TOAST_OPTIONS } from '../constants';
 import { Callback } from '../utils/types';
 
 interface Options {
@@ -22,6 +22,8 @@ function useSubmit(options: Options): Payload {
   const { callbacks, handleSubmit, mutate, submitFn, successMessage } = options;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const toast = useToast();
+  const { colorMode } = useColorMode();
+  const variant = colorMode === 'dark' ? 'solid' : 'left-accent';
 
   async function handler(data?: any) {
     try {
@@ -35,13 +37,11 @@ function useSubmit(options: Options): Payload {
 
       if (successMessage) {
         toast({
+          ...TOAST_OPTIONS,
           description: successMessage,
-          duration: 4000,
-          isClosable: true,
-          position: 'top-right',
           status: ALERT_TYPES.SUCCESS,
           title: MESSAGES.SUCCESS,
-          variant: 'left-accent',
+          variant,
         });
       }
     } catch (error) {
@@ -51,13 +51,11 @@ function useSubmit(options: Options): Payload {
       }
 
       toast({
+        ...TOAST_OPTIONS,
         description: (error as any)?.message || MESSAGES.ERROR_GENERIC,
-        duration: 4000,
-        isClosable: true,
-        position: 'top-right',
         status: ALERT_TYPES.ERROR,
         title: MESSAGES.ERROR,
-        variant: 'left-accent',
+        variant,
       });
     } finally {
       if (mutate) {
