@@ -25,10 +25,6 @@ interface Props {
 
 const SignIn: FC<Props> = ({ isSubmitting, onSubmit, register }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const { ref: emailRef, ...emailRest } = register('email', { required: true });
-  const { ref: passwordRef, ...passwordRest } = register('password', {
-    required: true,
-  });
 
   return (
     <Container maxWidth="container.lg" marginBottom={6}>
@@ -45,9 +41,8 @@ const SignIn: FC<Props> = ({ isSubmitting, onSubmit, register }) => {
               autoCapitalize="off"
               autoComplete="email"
               isRequired
-              ref={(e) => emailRef(e)}
               type="email"
-              {...emailRest}
+              {...register('email', { required: true })}
             />
           </FormControl>
           <FormControl id="password" isRequired my={4}>
@@ -57,9 +52,8 @@ const SignIn: FC<Props> = ({ isSubmitting, onSubmit, register }) => {
                 autoCapitalize="off"
                 autoComplete="current-password"
                 isRequired
-                ref={(e) => passwordRef(e)}
                 type={showPassword ? 'text' : 'password'}
-                {...passwordRest}
+                {...register('password', { required: true })}
               />
               <InputRightElement>
                 <IconButton

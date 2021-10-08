@@ -1,6 +1,7 @@
 import { FC, FormEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Control, Controller, UseFormRegister } from 'react-hook-form';
+import type { Control, UseFormRegister } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import {
   Box,
   Button,
@@ -40,13 +41,6 @@ const CreateEditAlbum: FC<Props> = (props) => {
   } = props;
   const navigate = useNavigate();
   const { search } = useLocation();
-  const { ref: artistRef, ...artistRest } = register('artist', {
-    required: true,
-  });
-  const { ref: titleRef, ...titleRest } = register('title', {
-    required: true,
-  });
-  const { ref: yearRef, ...yearRest } = register('year', { required: true });
 
   function handleCancel() {
     navigate(`/admin${search}`);
@@ -68,27 +62,24 @@ const CreateEditAlbum: FC<Props> = (props) => {
                 <FormLabel>Artist</FormLabel>
                 <Input
                   isRequired
-                  ref={(e) => artistRef(e)}
                   type="text"
-                  {...artistRest}
+                  {...register('artist', { required: true })}
                 />
               </FormControl>
               <FormControl id="title" isRequired marginY={4}>
                 <FormLabel>Title</FormLabel>
                 <Input
                   isRequired
-                  ref={(e) => titleRef(e)}
                   type="text"
-                  {...titleRest}
+                  {...register('title', { required: true })}
                 />
               </FormControl>
               <FormControl id="year" isRequired>
                 <FormLabel>Year</FormLabel>
                 <Input
                   isRequired
-                  ref={(e) => yearRef(e)}
                   type="text"
-                  {...yearRest}
+                  {...register('year', { required: true })}
                 />
               </FormControl>
             </Box>

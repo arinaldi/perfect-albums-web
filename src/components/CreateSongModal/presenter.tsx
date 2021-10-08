@@ -27,15 +27,6 @@ interface Props {
 
 const CreateSongModal: FC<Props> = (props) => {
   const { isOpen, isSubmitting, onClose, onSubmit, register } = props;
-  const { ref: artistRef, ...artistRest } = register('artist', {
-    required: true,
-  });
-  const { ref: titleRef, ...titleRest } = register('title', {
-    required: true,
-  });
-  const { ref: linkRef, ...linkRest } = register('link', {
-    required: true,
-  });
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -47,15 +38,27 @@ const CreateSongModal: FC<Props> = (props) => {
           <ModalBody>
             <FormControl id="artist" isRequired>
               <FormLabel>Artist</FormLabel>
-              <Input ref={(e) => artistRef(e)} type="text" {...artistRest} />
+              <Input
+                isRequired
+                type="text"
+                {...register('artist', { required: true })}
+              />
             </FormControl>
             <FormControl id="title" isRequired my={4}>
               <FormLabel>Title</FormLabel>
-              <Input ref={(e) => titleRef(e)} type="text" {...titleRest} />
+              <Input
+                isRequired
+                type="text"
+                {...register('title', { required: true })}
+              />
             </FormControl>
             <FormControl id="link" isRequired>
               <FormLabel>Link</FormLabel>
-              <Input ref={(e) => linkRef(e)} type="text" {...linkRest} />
+              <Input
+                isRequired
+                type="text"
+                {...register('link', { required: true })}
+              />
             </FormControl>
           </ModalBody>
           <ModalFooter>

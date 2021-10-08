@@ -28,13 +28,6 @@ interface Props {
 
 const CreateReleaseModal: FC<Props> = (props) => {
   const { header, isOpen, isSubmitting, onClose, onSubmit, register } = props;
-  const { ref: artistRef, ...artistRest } = register('artist', {
-    required: true,
-  });
-  const { ref: titleRef, ...titleRest } = register('title', {
-    required: true,
-  });
-  const { ref: dateRef, ...dateRest } = register('date');
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -46,15 +39,23 @@ const CreateReleaseModal: FC<Props> = (props) => {
           <ModalBody>
             <FormControl id="artist" isRequired>
               <FormLabel>Artist</FormLabel>
-              <Input ref={(e) => artistRef(e)} type="text" {...artistRest} />
+              <Input
+                isRequired
+                type="text"
+                {...register('artist', { required: true })}
+              />
             </FormControl>
             <FormControl id="title" isRequired marginY={4}>
               <FormLabel>Title</FormLabel>
-              <Input ref={(e) => titleRef(e)} type="text" {...titleRest} />
+              <Input
+                isRequired
+                type="text"
+                {...register('title', { required: true })}
+              />
             </FormControl>
             <FormControl id="date">
               <FormLabel>Date</FormLabel>
-              <Input ref={(e) => dateRef(e)} type="date" {...dateRest} />
+              <Input type="date" {...register('date')} />
             </FormControl>
           </ModalBody>
           <ModalFooter>
