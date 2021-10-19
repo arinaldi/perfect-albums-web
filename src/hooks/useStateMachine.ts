@@ -19,18 +19,18 @@ function useStateMachine(path: string): [DataState, Dispatch<DataEvent>] {
 
   useEffect(() => {
     const controller = new AbortController();
-    const fetchData = async () => {
+    async function fetchData() {
       try {
         const { data } = await api(path, {
           options: { signal: controller.signal },
         });
 
         dispatch({ type: STATE_EVENTS.RESOLVE, data });
-      } catch (error) {
+      } catch (error: any) {
         if (error.name === 'AbortError') return;
         dispatch({ type: STATE_EVENTS.REJECT, error });
       }
-    };
+    }
 
     if (status === STATE_STATUSES.LOADING) {
       fetchData();

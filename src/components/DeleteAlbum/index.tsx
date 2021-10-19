@@ -15,8 +15,7 @@ const DeleteAlbumContainer: FC = () => {
   const navigate = useNavigate();
   const { search } = useLocation();
   const { id } = useParams();
-  const [state] = useStateMachine(`/api/albums/${id}`);
-  const { data, status } = state;
+  const [{ data, status }] = useStateMachine(`/api/albums/${id}`);
   const { mutate } = useAdminState();
   useTitle('Delete Album');
 
