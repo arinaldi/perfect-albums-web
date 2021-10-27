@@ -30,8 +30,8 @@ const Sandbox: FC<Props> = ({ handleNext, page }) => {
 
   return (
     <Container maxWidth="container.xl" marginBottom={6}>
-      <Flex>
-        <Box flex={1}>
+      <Flex direction={{ base: 'column-reverse', md: 'row' }}>
+        <Box flex={1} marginTop={{ base: 4, md: 0 }}>
           <Heading as="h3" marginBottom={3} size="lg">
             Sandbox 1
           </Heading>
@@ -42,7 +42,7 @@ const Sandbox: FC<Props> = ({ handleNext, page }) => {
           <Button marginTop={3} onClick={handleNext} variant="outline">
             Next
           </Button>
-          <Divider my={4} />
+          <Divider marginY={4} width="95%" />
           {data}
           <Button
             marginTop={3}
@@ -57,9 +57,9 @@ const Sandbox: FC<Props> = ({ handleNext, page }) => {
             Sandbox 2
           </Heading>
           <RandomArtist />
-          <Divider my={4} />
+          <Divider marginY={4} width="95%" />
           <RandomAlbum />
-          <Divider my={4} />
+          <Divider marginY={4} width="95%" />
           <LoadMore />
         </Box>
       </Flex>

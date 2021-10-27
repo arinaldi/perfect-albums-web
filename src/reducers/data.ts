@@ -54,7 +54,7 @@ function loadingReducer(state: DataState, event: DataEvent): DataState {
         error: event.error,
       };
     default:
-      return state;
+      throw new Error(`Unknown event type: ${event.type}`);
   }
 }
 
@@ -67,7 +67,7 @@ function sharedReducer(state: DataState, event: DataEvent): DataState {
         error: null,
       };
     default:
-      return state;
+      throw new Error(`Unknown event type: ${event.type}`);
   }
 }
 
@@ -80,6 +80,6 @@ export function dataReducer(state: DataState, event: DataEvent): DataState {
     case STATE_STATUSES.LOADING:
       return loadingReducer(state, event);
     default:
-      return state;
+      throw new Error(`Unknown status: ${state.status}`);
   }
 }
