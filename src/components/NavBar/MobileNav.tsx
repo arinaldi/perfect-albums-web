@@ -1,9 +1,10 @@
 import { FC } from 'react';
-import { Flex, Link, Stack } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
+import { Flex, Link, Stack } from '@chakra-ui/react';
 
 import { NAV_LINKS } from '../../constants';
 import useStore from '../../hooks/useStore';
+import { NavLinkStyleProps } from '../../utils/types';
 
 interface ItemProps {
   label: string;
@@ -16,20 +17,23 @@ interface NavProps {
   onSignOut: () => void;
 }
 
-const MobileNavItem: FC<ItemProps> = ({ label, onClose, to }) => (
-  <Stack spacing={4}>
-    <Flex align="center" justify="space-between" py={2}>
-      <Link
-        activeStyle={{ borderBottom: '2px solid white' }}
-        as={NavLink}
-        to={to}
-        _hover={{ color: 'white' }}
-      >
-        <span onClick={onClose}>{label}</span>
-      </Link>
-    </Flex>
-  </Stack>
-);
+const MobileNavItem: FC<ItemProps> = ({ label, onClose, to }) => {
+  return (
+    <Stack spacing={4}>
+      <Flex align="center" justify="space-between" py={2}>
+        <NavLink
+          style={({ isActive }: NavLinkStyleProps) => ({
+            borderBottom: isActive ? '2px solid white' : '',
+            paddingBottom: '2px',
+          })}
+          to={to}
+        >
+          <span onClick={onClose}>{label}</span>
+        </NavLink>
+      </Flex>
+    </Stack>
+  );
+};
 
 const MobileNav: FC<NavProps> = ({ onClose, onSignOut }) => {
   const user = useStore((state) => state.user);

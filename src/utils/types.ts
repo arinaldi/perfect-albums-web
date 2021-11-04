@@ -121,3 +121,7 @@ export interface ToastOptions {
   position: ToastPosition;
   variant: string;
 }
+
+export interface NavLinkStyleProps {
+  isActive: boolean;
+}
