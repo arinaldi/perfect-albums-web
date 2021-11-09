@@ -1,4 +1,4 @@
-import { FC, FormEvent } from 'react';
+import { FormEvent } from 'react';
 import {
   Button,
   Modal,
@@ -24,9 +24,14 @@ interface Props {
   onDelete: (event: FormEvent) => void;
 }
 
-const DeleteDataModal: FC<Props> = (props) => {
-  const { data, dataType, isDeleting, isOpen, onClose, onDelete } = props;
-
+export default function DeleteDataModal({
+  data,
+  dataType,
+  isDeleting,
+  isOpen,
+  onClose,
+  onDelete,
+}: Props) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -51,6 +56,4 @@ const DeleteDataModal: FC<Props> = (props) => {
       </ModalContent>
     </Modal>
   );
-};
-
-export default DeleteDataModal;
+}

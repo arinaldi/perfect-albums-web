@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 
 import { Release, Releases } from '../../utils/types';
@@ -12,7 +12,7 @@ import EditReleaseModal from '../EditReleaseModal';
 import DeleteReleaseModal from '../DeleteReleaseModal';
 import NewReleases from './presenter';
 
-const NewReleasesContainer: FC = () => {
+export default function NewReleasesContainer() {
   const { data, hasError, isLoading } = useQuery<Releases>(GET_RELEASES);
   useTitle('New Releases');
   const [currentRelease, setCurrentRelease] = useState<Release>({
@@ -70,6 +70,4 @@ const NewReleasesContainer: FC = () => {
       />
     </ErrorBoundary>
   );
-};
-
-export default NewReleasesContainer;
+}

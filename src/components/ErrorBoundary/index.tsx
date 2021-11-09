@@ -7,7 +7,7 @@ interface State {
   error: string;
 }
 
-class ErrorBoundary extends Component {
+export default class ErrorBoundary extends Component {
   state: State = {
     hasError: false,
     error: '',
@@ -30,5 +30,3 @@ class ErrorBoundary extends Component {
     return this.props.children;
   }
 }
-
-export default ErrorBoundary;

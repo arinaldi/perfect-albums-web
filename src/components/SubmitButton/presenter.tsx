@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Button } from '@chakra-ui/react';
 
 interface Props {
@@ -7,9 +6,11 @@ interface Props {
   text: string;
 }
 
-const SubmitButton: FC<Props> = (props) => {
-  const { isSubmitting, loadingText = 'Loading', text } = props;
-
+export default function SubmitButton({
+  isSubmitting,
+  loadingText = 'Loading',
+  text,
+}: Props) {
   return (
     <Button
       isDisabled={isSubmitting}
@@ -21,6 +22,4 @@ const SubmitButton: FC<Props> = (props) => {
       {text}
     </Button>
   );
-};
-
-export default SubmitButton;
+}

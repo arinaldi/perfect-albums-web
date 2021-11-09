@@ -1,4 +1,4 @@
-import { FC, FormEvent } from 'react';
+import { FormEvent } from 'react';
 import type { UseFormRegister } from 'react-hook-form';
 import {
   Button,
@@ -26,9 +26,14 @@ interface Props {
   register: UseFormRegister<ReleaseInput>;
 }
 
-const CreateReleaseModal: FC<Props> = (props) => {
-  const { header, isOpen, isSubmitting, onClose, onSubmit, register } = props;
-
+export default function CreateReleaseModal({
+  header,
+  isOpen,
+  isSubmitting,
+  onClose,
+  onSubmit,
+  register,
+}: Props) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -72,6 +77,4 @@ const CreateReleaseModal: FC<Props> = (props) => {
       </ModalContent>
     </Modal>
   );
-};
-
-export default CreateReleaseModal;
+}

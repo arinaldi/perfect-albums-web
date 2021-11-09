@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { MESSAGES, MODAL_DATA_TYPES } from '../../constants';
 import useQuery from '../../hooks/useQuery';
 import { graphQLClient } from '../../hooks/useStore';
@@ -15,7 +13,11 @@ interface Props {
   onClose: () => void;
 }
 
-const DeleteSongContainer: FC<Props> = ({ data: song, isOpen, onClose }) => {
+export default function DeleteSongContainer({
+  data: song,
+  isOpen,
+  onClose,
+}: Props) {
   const { data, mutate } = useQuery<Songs>(GET_SONGS);
 
   async function submitFn() {
@@ -45,6 +47,4 @@ const DeleteSongContainer: FC<Props> = ({ data: song, isOpen, onClose }) => {
       onDelete={onSubmit}
     />
   );
-};
-
-export default DeleteSongContainer;
+}

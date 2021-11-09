@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Alert, AlertIcon } from '@chakra-ui/react';
 
 import { ALERT_TYPES, MESSAGES } from '../../constants';
@@ -8,14 +7,14 @@ interface Props {
   type?: ALERT_TYPES;
 }
 
-const AppMessage: FC<Props> = ({
+export default function AppMessage({
   message = MESSAGES.ERROR_GENERIC,
   type = ALERT_TYPES.ERROR,
-}) => (
-  <Alert status={type} variant="left-accent">
-    <AlertIcon />
-    {message}
-  </Alert>
-);
-
-export default AppMessage;
+}: Props) {
+  return (
+    <Alert status={type} variant="left-accent">
+      <AlertIcon />
+      {message}
+    </Alert>
+  );
+}

@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Box, Table, Thead, Tbody, Th, Tr } from '@chakra-ui/react';
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
 
@@ -6,6 +5,8 @@ import { SORT_DIRECTION, SORT_VALUE } from '../../constants';
 import { Album } from '../../utils/types';
 import AdminTableRow from '../AdminTable/AdminTableRow';
 import AdminTableSkeleton from '../AdminTable/AdminTableSkeleton';
+
+const { ARTIST, TITLE, YEAR } = SORT_VALUE;
 
 interface Props {
   data: Album[];
@@ -25,10 +26,13 @@ function getSortIcon(direction: SORT_DIRECTION) {
     return <ArrowDownIcon mr={1} verticalAlign="text-bottom" />;
 }
 
-const AdminTable: FC<Props> = (props) => {
-  const { data, direction, isLoading, onSort, sort } = props;
-  const { ARTIST, TITLE, YEAR } = SORT_VALUE;
-
+export default function AdminTable({
+  data,
+  direction,
+  isLoading,
+  onSort,
+  sort,
+}: Props) {
   return (
     <Box overflowX="auto">
       <Table size="sm" variant="striped">
@@ -64,6 +68,4 @@ const AdminTable: FC<Props> = (props) => {
       </Table>
     </Box>
   );
-};
-
-export default AdminTable;
+}

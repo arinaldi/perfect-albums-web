@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import useSWR from 'swr';
 import { ListItem, Text, UnorderedList } from '@chakra-ui/react';
 
@@ -11,8 +10,12 @@ interface Props {
   sort?: string;
 }
 
-const Page: FC<Props> = (props) => {
-  const { direction = '', page, perPage, sort = '' } = props;
+export default function Page({
+  direction = '',
+  page,
+  perPage,
+  sort = '',
+}: Props) {
   const { data, error } = useSWR(
     `/api/albums?page=${page}&per_page=${perPage}&sort=${sort}&direction=${direction}`,
     { dedupingInterval: 5000 },
@@ -30,6 +33,4 @@ const Page: FC<Props> = (props) => {
       ))}
     </UnorderedList>
   );
-};
-
-export default Page;
+}

@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { PER_PAGE } from '../../constants';
@@ -6,7 +6,7 @@ import useTitle from '../../hooks/useTitle';
 import ErrorBoundary from '../ErrorBoundary';
 import Admin from './presenter';
 
-const AdminContainer: FC = () => {
+export default function AdminContainer() {
   const navigate = useNavigate();
   const { search } = useLocation();
   useTitle('Admin');
@@ -25,6 +25,4 @@ const AdminContainer: FC = () => {
       <Admin />
     </ErrorBoundary>
   );
-};
-
-export default AdminContainer;
+}

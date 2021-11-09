@@ -1,4 +1,4 @@
-import { FC, FormEvent } from 'react';
+import { FormEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Button, Container, Heading, Text } from '@chakra-ui/react';
 
@@ -14,12 +14,12 @@ interface Props {
   status: string;
 }
 
-const DeleteAlbum: FC<Props> = ({
+export default function DeleteAlbum({
   data,
   isDeleting = false,
   onSubmit,
   status,
-}) => {
+}: Props) {
   const navigate = useNavigate();
   const { search } = useLocation();
 
@@ -52,6 +52,4 @@ const DeleteAlbum: FC<Props> = ({
       {status === STATE_STATUSES.FAILURE ? <AppMessage /> : null}
     </Container>
   );
-};
-
-export default DeleteAlbum;
+}

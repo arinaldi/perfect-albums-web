@@ -1,9 +1,8 @@
-import { FC } from 'react';
 import { Button, ButtonGroup } from '@chakra-ui/react';
 
 import useAdminState from '../../hooks/useAdminState';
 
-const StudioFilter: FC = () => {
+export default function StudioFilter() {
   const { handlers, studio } = useAdminState();
   const { onFilter } = handlers;
 
@@ -26,6 +25,4 @@ const StudioFilter: FC = () => {
       </Button>
     </ButtonGroup>
   );
-};
-
-export default StudioFilter;
+}

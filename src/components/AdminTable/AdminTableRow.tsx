@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Button, Td, Tr } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
@@ -9,7 +8,7 @@ interface Props {
   item: Album;
 }
 
-const AdminTableRow: FC<Props> = ({ item }) => {
+export default function AdminTableRow({ item }: Props) {
   const navigate = useNavigate();
   const { search } = useLocation();
   const { id, artist, title, year, cd, aotd, favorite, studio } = item;
@@ -45,6 +44,4 @@ const AdminTableRow: FC<Props> = ({ item }) => {
       </Td>
     </Tr>
   );
-};
-
-export default AdminTableRow;
+}

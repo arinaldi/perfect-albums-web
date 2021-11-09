@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import {
   Box,
   Heading,
@@ -18,8 +17,12 @@ interface Props {
   onDeleteOpen: (release: Release) => void;
 }
 
-const DateCol: FC<Props> = (props) => {
-  const { data, date, onEditOpen, onDeleteOpen } = props;
+export default function DateCol({
+  data,
+  date,
+  onDeleteOpen,
+  onEditOpen,
+}: Props) {
   const user = useStore((state) => state.user);
 
   return (
@@ -56,6 +59,4 @@ const DateCol: FC<Props> = (props) => {
       </UnorderedList>
     </Box>
   );
-};
-
-export default DateCol;
+}

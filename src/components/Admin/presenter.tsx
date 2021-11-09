@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Badge,
@@ -20,7 +19,7 @@ import Pagination from './Pagination';
 import PerPageSelector from './PerPageSelector';
 import StudioFilter from './StudioFilter';
 
-const Admin: FC = () => {
+export default function Admin() {
   const {
     albums,
     artistSearch,
@@ -142,6 +141,4 @@ const Admin: FC = () => {
       </Container>
     </>
   );
-};
-
-export default Admin;
+}

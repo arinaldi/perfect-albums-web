@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Badge, Container, Flex, Heading, SimpleGrid } from '@chakra-ui/react';
 
 import { formatFavorites, sortDesc } from '../../utils';
@@ -12,7 +11,7 @@ interface Props {
   hasError: boolean;
 }
 
-const TopAlbums: FC<Props> = ({ data, hasError }) => {
+export default function TopAlbums({ data, hasError }: Props) {
   return (
     <>
       <Container maxWidth="container.xl" marginBottom={6}>
@@ -50,6 +49,4 @@ const TopAlbums: FC<Props> = ({ data, hasError }) => {
       <TopLink />
     </>
   );
-};
-
-export default TopAlbums;
+}

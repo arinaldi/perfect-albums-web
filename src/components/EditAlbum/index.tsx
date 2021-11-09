@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
@@ -13,7 +13,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import CreateEditAlbum from '../CreateAlbum/presenter';
 
-const EditAlbumContainer: FC = () => {
+export default function EditAlbumContainer() {
   const navigate = useNavigate();
   const { search } = useLocation();
   const { id } = useParams();
@@ -62,6 +62,4 @@ const EditAlbumContainer: FC = () => {
       />
     </ErrorBoundary>
   );
-};
-
-export default EditAlbumContainer;
+}

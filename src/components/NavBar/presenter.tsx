@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import {
   Box,
   Collapse,
@@ -19,7 +18,7 @@ import useStore from '../../hooks/useStore';
 import LinkWrapper from './LinkWrapper';
 import MobileNav from './MobileNav';
 
-const NavBar: FC = () => {
+export default function NavBar() {
   const user = useStore((state) => state.user);
   const signOut = useStore((state) => state.signOut);
   const { colorMode, toggleColorMode } = useColorMode();
@@ -108,6 +107,4 @@ const NavBar: FC = () => {
       </Collapse>
     </Box>
   );
-};
-
-export default NavBar;
+}

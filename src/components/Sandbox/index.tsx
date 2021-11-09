@@ -1,11 +1,11 @@
-import { FC, useReducer } from 'react';
+import { useReducer } from 'react';
 
 import useTitle from '../../hooks/useTitle';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import Sandbox from './presenter';
 
-const SandboxContainer: FC = () => {
+export default function SandboxContainer() {
   const [page, setPage] = useReducer((page) => page + 1, 1);
   useTitle('Sandbox');
 
@@ -15,6 +15,4 @@ const SandboxContainer: FC = () => {
       <Sandbox handleNext={setPage} page={page} />
     </ErrorBoundary>
   );
-};
-
-export default SandboxContainer;
+}

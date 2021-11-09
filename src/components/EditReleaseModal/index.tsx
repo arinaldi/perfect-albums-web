@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { MESSAGES } from '../../constants';
@@ -17,11 +17,11 @@ interface Props {
   onClose: () => void;
 }
 
-const EditReleaseContainer: FC<Props> = ({
+export default function EditReleaseContainer({
   data: release,
   isOpen,
   onClose,
-}) => {
+}: Props) {
   const { data, mutate } = useQuery<Releases>(GET_RELEASES);
   const { handleSubmit, register, setValue } = useForm<ReleaseInput>({});
 
@@ -65,6 +65,4 @@ const EditReleaseContainer: FC<Props> = ({
       register={register}
     />
   );
-};
-
-export default EditReleaseContainer;
+}

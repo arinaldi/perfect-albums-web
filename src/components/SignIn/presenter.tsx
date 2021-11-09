@@ -1,4 +1,4 @@
-import { FC, FormEvent, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import type { UseFormRegister } from 'react-hook-form';
 import {
   Box,
@@ -23,7 +23,7 @@ interface Props {
   onSubmit: (event: FormEvent) => void;
 }
 
-const SignIn: FC<Props> = ({ isSubmitting, onSubmit, register }) => {
+export default function SignIn({ isSubmitting, onSubmit, register }: Props) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -74,6 +74,4 @@ const SignIn: FC<Props> = ({ isSubmitting, onSubmit, register }) => {
       </Box>
     </Container>
   );
-};
-
-export default SignIn;
+}

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import useSWR from 'swr';
 
+import { MESSAGES } from '../constants/index';
+
 interface Data {
   data: string[] | undefined;
   hasError: boolean;
@@ -18,11 +20,13 @@ async function customFetcher() {
     quotesData = [...data, ...quotesData];
     return quotesData;
   } catch (error) {
-    throw new Error(error);
+    const message =
+      error instanceof Error ? error.message : MESSAGES.ERROR_GENERIC;
+    throw new Error(message);
   }
 }
 
-function useBufferedData(): Data {
+export default function useBufferedData(): Data {
   const { data, error } = useSWR('quotes', customFetcher);
   const [buffer, setBuffer] = useState(data);
 
@@ -35,5 +39,3 @@ function useBufferedData(): Data {
     update: () => setBuffer(data),
   };
 }
-
-export default useBufferedData;

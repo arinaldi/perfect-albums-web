@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { MESSAGES } from '../../constants';
@@ -15,7 +14,7 @@ interface Props {
   onClose: () => void;
 }
 
-const CreateSongContainer: FC<Props> = ({ isOpen, onClose }) => {
+export default function CreateSongContainer({ isOpen, onClose }: Props) {
   const { data, mutate } = useQuery<Songs>(GET_SONGS);
   const { handleSubmit, register, reset } = useForm<SongInput>();
 
@@ -51,6 +50,4 @@ const CreateSongContainer: FC<Props> = ({ isOpen, onClose }) => {
       register={register}
     />
   );
-};
-
-export default CreateSongContainer;
+}

@@ -1,9 +1,8 @@
-import { FC } from 'react';
 import { Box, Button, ListItem, Text, UnorderedList } from '@chakra-ui/react';
 
 import useBufferedData from '../../hooks/useBufferedData';
 
-const LoadMore: FC = () => {
+export default function LoadMore() {
   const { data, hasError, isStale, update } = useBufferedData();
 
   if (!data) return <Text>Loading...</Text>;
@@ -23,6 +22,4 @@ const LoadMore: FC = () => {
       </UnorderedList>
     </Box>
   );
-};
-
-export default LoadMore;
+}

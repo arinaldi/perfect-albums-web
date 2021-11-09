@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
@@ -10,7 +9,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import SignIn from './presenter';
 
-const SignInContainer: FC = () => {
+export default function SignInContainer() {
   const navigate = useNavigate();
   const signIn = useStore((state) => state.signIn);
   useTitle('Sign In');
@@ -37,6 +36,4 @@ const SignInContainer: FC = () => {
       />
     </ErrorBoundary>
   );
-};
-
-export default SignInContainer;
+}

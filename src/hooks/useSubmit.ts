@@ -18,7 +18,7 @@ interface Payload {
   onSubmit: (event: FormEvent) => Promise<void>;
 }
 
-function useSubmit(options: Options): Payload {
+export default function useSubmit(options: Options): Payload {
   const { callbacks, handleSubmit, mutate, submitFn, successMessage } = options;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const toast = useToast();
@@ -74,5 +74,3 @@ function useSubmit(options: Options): Payload {
     onSubmit: handleSubmit ? handleSubmit(handler) : formSubmit,
   };
 }
-
-export default useSubmit;

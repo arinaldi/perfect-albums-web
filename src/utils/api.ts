@@ -53,7 +53,10 @@ interface Config {
   method: METHODS;
 }
 
-async function api(endpoint: string, options: Options = {}): Promise<any> {
+export default async function api(
+  endpoint: string,
+  options: Options = {},
+): Promise<any> {
   const { body, ...customConfig } = options;
   const token = useStore.getState().getSessionToken();
   // eslint-disable-next-line no-undef
@@ -81,5 +84,3 @@ async function api(endpoint: string, options: Options = {}): Promise<any> {
   const response = await window.fetch(`${BASE_URL}${endpoint}`, config);
   return handleResponse(response);
 }
-
-export default api;

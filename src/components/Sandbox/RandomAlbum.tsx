@@ -1,9 +1,10 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { Box, Button, Text } from '@chakra-ui/react';
 
+import { MESSAGES } from '../../constants/index';
 import api from '../../utils/api';
 
-const RandomAlbum: FC = () => {
+export default function RandomAlbum() {
   const [data, setData] = useState({
     artist: 'Artist',
     title: 'Title',
@@ -18,7 +19,9 @@ const RandomAlbum: FC = () => {
       const { data: album } = await api('/api/random');
       setData(album);
     } catch (error) {
-      setError(error.message);
+      const message =
+        error instanceof Error ? error.message : MESSAGES.ERROR_GENERIC;
+      setError(message);
     }
   }
 
@@ -36,6 +39,4 @@ const RandomAlbum: FC = () => {
       </Button>
     </Box>
   );
-};
-
-export default RandomAlbum;
+}

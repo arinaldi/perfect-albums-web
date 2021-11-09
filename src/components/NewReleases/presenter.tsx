@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import {
   Button,
   Container,
@@ -26,12 +25,11 @@ interface Props {
   modal: Modal;
 }
 
-const NewReleases: FC<Props> = (props) => {
-  const {
-    data,
-    hasError,
-    modal: { onCreateOpen, onDeleteOpen, onEditOpen },
-  } = props;
+export default function NewReleases({
+  data,
+  hasError,
+  modal: { onCreateOpen, onDeleteOpen, onEditOpen },
+}: Props) {
   const user = useStore((state) => state.user);
 
   return (
@@ -65,6 +63,4 @@ const NewReleases: FC<Props> = (props) => {
       ) : null}
     </Container>
   );
-};
-
-export default NewReleases;
+}

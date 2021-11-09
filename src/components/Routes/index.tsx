@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import ErrorBoundary from '../ErrorBoundary';
@@ -14,26 +13,26 @@ import DeleteAlbum from '../DeleteAlbum';
 import AuthRoute from '../AuthRoute';
 import Sandbox from '../Sandbox';
 
-const NestedRoutes = () => (
-  <ErrorBoundary>
-    <Routes>
-      <Route path="top-albums" element={<TopAlbums />} />
-      <Route path="featured-songs" element={<FeaturedSongs />} />
-      <Route path="new-releases" element={<NewReleases />} />
-      <AuthRoute path="admin" element={<Admin />} />
-      <AuthRoute path="admin/new" element={<CreateAlbum />} />
-      <AuthRoute path="admin/edit/:id" element={<EditAlbum />} />
-      <AuthRoute path="admin/delete/:id" element={<DeleteAlbum />} />
-      <AuthRoute path="sandbox" element={<Sandbox />} />
-      <Route path="signin" element={<SignIn />} />
-      <Route>
-        <Navigate to="top-albums" />
-      </Route>
-    </Routes>
-  </ErrorBoundary>
-);
+function NestedRoutes() {
+  return (
+    <ErrorBoundary>
+      <Routes>
+        <Route path="top-albums" element={<TopAlbums />} />
+        <Route path="featured-songs" element={<FeaturedSongs />} />
+        <Route path="new-releases" element={<NewReleases />} />
+        <AuthRoute path="admin" element={<Admin />} />
+        <AuthRoute path="admin/new" element={<CreateAlbum />} />
+        <AuthRoute path="admin/edit/:id" element={<EditAlbum />} />
+        <AuthRoute path="admin/delete/:id" element={<DeleteAlbum />} />
+        <AuthRoute path="sandbox" element={<Sandbox />} />
+        <Route path="signin" element={<SignIn />} />
+        <Route path="*" element={<Navigate to="top-albums" />} />
+      </Routes>
+    </ErrorBoundary>
+  );
+}
 
-const AppRoutes: FC = () => {
+export default function AppRoutes() {
   return (
     <BrowserRouter>
       <>
@@ -42,6 +41,4 @@ const AppRoutes: FC = () => {
       </>
     </BrowserRouter>
   );
-};
-
-export default AppRoutes;
+}

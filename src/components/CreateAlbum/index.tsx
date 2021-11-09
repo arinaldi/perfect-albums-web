@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
@@ -12,7 +11,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import CreateEditAlbum from './presenter';
 
-const CreateAlbumContainer: FC = () => {
+export default function CreateAlbumContainer() {
   const navigate = useNavigate();
   const { search } = useLocation();
   const { control, handleSubmit, register } = useForm<AlbumInput>({
@@ -54,6 +53,4 @@ const CreateAlbumContainer: FC = () => {
       />
     </ErrorBoundary>
   );
-};
-
-export default CreateAlbumContainer;
+}

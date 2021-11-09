@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -18,7 +18,7 @@ interface Props {
   page: number;
 }
 
-const Sandbox: FC<Props> = ({ handleNext, page }) => {
+export default function Sandbox({ handleNext, page }: Props) {
   const [dataPage, setDataPage] = useState(1);
   const data = [];
 
@@ -65,6 +65,4 @@ const Sandbox: FC<Props> = ({ handleNext, page }) => {
       </Flex>
     </Container>
   );
-};
-
-export default Sandbox;
+}

@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { PER_PAGE, SORT_DIRECTION, SORT_VALUE } from '../constants';
 import { QueryParams } from '../utils/types';
 
-function useQueryParams(): QueryParams {
+export default function useQueryParams(): QueryParams {
   const { search } = useLocation();
   const params: QueryParams = {
     direction: SORT_DIRECTION.NONE,
@@ -24,5 +24,3 @@ function useQueryParams(): QueryParams {
 
   return params;
 }
-
-export default useQueryParams;

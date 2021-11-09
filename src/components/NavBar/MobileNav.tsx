@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Flex, Link, Stack } from '@chakra-ui/react';
 
@@ -17,7 +16,7 @@ interface NavProps {
   onSignOut: () => void;
 }
 
-const MobileNavItem: FC<ItemProps> = ({ label, onClose, to }) => {
+function MobileNavItem({ label, onClose, to }: ItemProps) {
   return (
     <Stack spacing={4}>
       <Flex align="center" justify="space-between" py={2}>
@@ -33,9 +32,9 @@ const MobileNavItem: FC<ItemProps> = ({ label, onClose, to }) => {
       </Flex>
     </Stack>
   );
-};
+}
 
-const MobileNav: FC<NavProps> = ({ onClose, onSignOut }) => {
+export default function MobileNav({ onClose, onSignOut }: NavProps) {
   const user = useStore((state) => state.user);
 
   function handleClick() {
@@ -78,6 +77,4 @@ const MobileNav: FC<NavProps> = ({ onClose, onSignOut }) => {
       )}
     </Stack>
   );
-};
-
-export default MobileNav;
+}

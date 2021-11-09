@@ -1,10 +1,11 @@
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Button, Text } from '@chakra-ui/react';
 
+import { MESSAGES } from '../../constants/index';
 import { getRandomInt } from '../../utils';
 import api from '../../utils/api';
 
-const RandomArtist: FC = () => {
+export default function RandomArtist() {
   const [data, setData] = useState([]);
   const [text, setText] = useState('Get random artist');
 
@@ -19,7 +20,9 @@ const RandomArtist: FC = () => {
         const { data: artists } = await api('/api/artists');
         setData(artists);
       } catch (error) {
-        setText(error.message);
+        const message =
+          error instanceof Error ? error.message : MESSAGES.ERROR_GENERIC;
+        setText(message);
       }
     }
 
@@ -39,6 +42,4 @@ const RandomArtist: FC = () => {
       </Button>
     </Box>
   );
-};
-
-export default RandomArtist;
+}

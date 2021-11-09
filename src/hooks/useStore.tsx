@@ -49,6 +49,8 @@ const useStore = create<AuthState>(
   import.meta.env.DEV ? devtools(store) : store,
 );
 
+export default useStore;
+
 auth.onAuthStateChange((_, session) => {
   const user = session?.user || null;
   supabaseSession = session;
@@ -94,5 +96,3 @@ export const SWRProvider: FC = ({ children }) => {
 
   return <SWRConfig value={{ fetcher }}>{children}</SWRConfig>;
 };
-
-export default useStore;

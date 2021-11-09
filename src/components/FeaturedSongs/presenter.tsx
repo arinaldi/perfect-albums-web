@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import {
   Button,
   Container,
@@ -24,12 +23,11 @@ interface Props {
   modal: Modal;
 }
 
-const FeaturedSongs: FC<Props> = (props) => {
-  const {
-    data,
-    hasError,
-    modal: { onCreateOpen, onDeleteOpen },
-  } = props;
+export default function FeaturedSongs({
+  data,
+  hasError,
+  modal: { onCreateOpen, onDeleteOpen },
+}: Props) {
   const user = useStore((state) => state.user);
 
   return (
@@ -59,6 +57,4 @@ const FeaturedSongs: FC<Props> = (props) => {
       ) : null}
     </Container>
   );
-};
-
-export default FeaturedSongs;
+}

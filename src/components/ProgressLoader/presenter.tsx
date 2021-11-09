@@ -1,11 +1,10 @@
-import { FC } from 'react';
 import { Progress } from '@chakra-ui/react';
 
 interface Props {
   isVisible?: boolean;
 }
 
-const ProgressLoader: FC<Props> = ({ isVisible = false }) => {
+export default function ProgressLoader({ isVisible = false }: Props) {
   const visibility = isVisible ? 'visible' : 'hidden';
 
   return (
@@ -18,6 +17,4 @@ const ProgressLoader: FC<Props> = ({ isVisible = false }) => {
       value={100}
     />
   );
-};
-
-export default ProgressLoader;
+}

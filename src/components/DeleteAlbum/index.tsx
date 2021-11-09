@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { MESSAGES, METHODS, STATE_STATUSES } from '../../constants';
@@ -11,7 +10,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
 import DeleteAlbum from './presenter';
 
-const DeleteAlbumContainer: FC = () => {
+export default function DeleteAlbumContainer() {
   const navigate = useNavigate();
   const { search } = useLocation();
   const { id } = useParams();
@@ -42,6 +41,4 @@ const DeleteAlbumContainer: FC = () => {
       />
     </ErrorBoundary>
   );
-};
-
-export default DeleteAlbumContainer;
+}

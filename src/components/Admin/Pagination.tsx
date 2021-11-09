@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Button, ButtonGroup } from '@chakra-ui/react';
 import {
   ArrowBackIcon,
@@ -9,7 +8,7 @@ import {
 
 import useAdminState from '../../hooks/useAdminState';
 
-const Pagination: FC = () => {
+export default function Pagination() {
   const { handlers, isFirstPage, isLastPage, page } = useAdminState();
   const { onFirst, onLast, onNext, onPrevious } = handlers;
 
@@ -35,6 +34,4 @@ const Pagination: FC = () => {
       </Button>
     </ButtonGroup>
   );
-};
-
-export default Pagination;
+}

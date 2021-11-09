@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Box, Flex, Heading, IconButton, Link, Text } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 
@@ -10,7 +9,7 @@ interface Props {
   song: Song;
 }
 
-const CardWrapper: FC<Props> = ({ onDeleteOpen, song }) => {
+export default function CardWrapper({ onDeleteOpen, song }: Props) {
   const user = useStore((state) => state.user);
 
   function handleClick() {
@@ -38,6 +37,4 @@ const CardWrapper: FC<Props> = ({ onDeleteOpen, song }) => {
       </Flex>
     </Box>
   );
-};
-
-export default CardWrapper;
+}

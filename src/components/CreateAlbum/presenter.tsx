@@ -1,4 +1,4 @@
-import { FC, FormEvent } from 'react';
+import { FormEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import type { Control, UseFormRegister } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
@@ -29,16 +29,15 @@ interface Props {
   status?: STATE_STATUSES;
 }
 
-const CreateEditAlbum: FC<Props> = (props) => {
-  const {
-    control,
-    header,
-    isLoading = false,
-    isSubmitting,
-    onSubmit,
-    register,
-    status,
-  } = props;
+export default function CreateEditAlbum({
+  control,
+  header,
+  isLoading = false,
+  isSubmitting,
+  onSubmit,
+  register,
+  status,
+}: Props) {
   const navigate = useNavigate();
   const { search } = useLocation();
 
@@ -141,6 +140,4 @@ const CreateEditAlbum: FC<Props> = (props) => {
       {status === STATE_STATUSES.FAILURE ? <AppMessage /> : null}
     </Container>
   );
-};
-
-export default CreateEditAlbum;
+}

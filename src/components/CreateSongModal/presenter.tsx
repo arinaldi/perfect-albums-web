@@ -1,4 +1,4 @@
-import { FC, FormEvent } from 'react';
+import { FormEvent } from 'react';
 import type { UseFormRegister } from 'react-hook-form';
 import {
   Button,
@@ -25,9 +25,13 @@ interface Props {
   register: UseFormRegister<SongInput>;
 }
 
-const CreateSongModal: FC<Props> = (props) => {
-  const { isOpen, isSubmitting, onClose, onSubmit, register } = props;
-
+export default function CreateSongModal({
+  isOpen,
+  isSubmitting,
+  onClose,
+  onSubmit,
+  register,
+}: Props) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -75,6 +79,4 @@ const CreateSongModal: FC<Props> = (props) => {
       </ModalContent>
     </Modal>
   );
-};
-
-export default CreateSongModal;
+}

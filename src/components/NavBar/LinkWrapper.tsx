@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Box } from '@chakra-ui/react';
 
@@ -9,7 +8,7 @@ interface Props {
   to: string;
 }
 
-const LinkWrapper: FC<Props> = ({ label, to }) => {
+export default function LinkWrapper({ label, to }: Props) {
   return (
     <Box>
       <NavLink
@@ -23,6 +22,4 @@ const LinkWrapper: FC<Props> = ({ label, to }) => {
       </NavLink>
     </Box>
   );
-};
-
-export default LinkWrapper;
+}

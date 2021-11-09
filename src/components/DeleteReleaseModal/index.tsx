@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import { MESSAGES, MODAL_DATA_TYPES } from '../../constants';
 import useQuery from '../../hooks/useQuery';
 import { graphQLClient } from '../../hooks/useStore';
@@ -15,11 +13,11 @@ interface Props {
   onClose: () => void;
 }
 
-const DeleteReleaseContainer: FC<Props> = ({
+export default function DeleteReleaseContainer({
   data: release,
   isOpen,
   onClose,
-}) => {
+}: Props) {
   const { data, mutate } = useQuery<Releases>(GET_RELEASES);
 
   async function submitFn() {
@@ -49,6 +47,4 @@ const DeleteReleaseContainer: FC<Props> = ({
       onDelete={onSubmit}
     />
   );
-};
-
-export default DeleteReleaseContainer;
+}

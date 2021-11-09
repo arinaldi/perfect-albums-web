@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Button, ButtonGroup } from '@chakra-ui/react';
 
 import { PER_PAGE } from '../../constants';
@@ -6,7 +5,7 @@ import useAdminState from '../../hooks/useAdminState';
 
 const { SMALL, MEDIUM, LARGE } = PER_PAGE;
 
-const PerPageSelector: FC = () => {
+export default function PerPageSelector() {
   const { handlers, perPage } = useAdminState();
   const { onPerPageChange } = handlers;
 
@@ -40,6 +39,4 @@ const PerPageSelector: FC = () => {
       </Button>
     </ButtonGroup>
   );
-};
-
-export default PerPageSelector;
+}
