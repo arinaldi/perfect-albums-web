@@ -39,7 +39,6 @@ interface Payload {
   isFirstPage: boolean;
   isLastPage: boolean;
   isLoading: boolean;
-  mutate: () => void;
   page: number;
   perPage: PER_PAGE;
   sort: SORT_VALUE;
@@ -65,8 +64,10 @@ export default function useAdminState(): Payload {
   const preventFetch =
     (!debouncedArtist && Boolean(artistSearch)) ||
     (!debouncedTitle && Boolean(titleSearch));
-  const { albums, cdTotal, hasError, isLoading, mutate, total } =
-    useAdminAlbums(url, preventFetch);
+  const { albums, cdTotal, hasError, isLoading, total } = useAdminAlbums(
+    url,
+    preventFetch,
+  );
   const isFirstPage = page === 1;
   const isLastPage = page === Math.ceil(total / perPage);
 
@@ -177,7 +178,6 @@ export default function useAdminState(): Payload {
     isFirstPage,
     isLastPage,
     isLoading,
-    mutate,
     page,
     perPage,
     sort,
