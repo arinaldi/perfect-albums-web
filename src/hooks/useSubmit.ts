@@ -8,7 +8,6 @@ import { Callback } from '../utils/types';
 interface Options {
   callbacks: Callback[];
   handleSubmit?: UseFormHandleSubmit<any>;
-  mutate?: () => void;
   submitFn: (data?: any) => Promise<void>;
   successMessage?: string;
 }
@@ -19,7 +18,7 @@ interface Payload {
 }
 
 export default function useSubmit(options: Options): Payload {
-  const { callbacks, handleSubmit, mutate, submitFn, successMessage } = options;
+  const { callbacks, handleSubmit, submitFn, successMessage } = options;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const toast = useToast();
   const { colorMode } = useColorMode();
@@ -57,10 +56,6 @@ export default function useSubmit(options: Options): Payload {
         title: MESSAGES.ERROR,
         variant,
       });
-    } finally {
-      if (mutate) {
-        mutate();
-      }
     }
   }
 

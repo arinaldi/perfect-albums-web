@@ -3,11 +3,10 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import { MESSAGES, METHODS, STATE_STATUSES } from '../../constants';
-import useAdminState from '../../hooks/useAdminState';
+import useApiMutation from '../../hooks/useApiMutation';
 import useStateMachine from '../../hooks/useStateMachine';
 import useSubmit from '../../hooks/useSubmit';
 import useTitle from '../../hooks/useTitle';
-import api from '../../utils/api';
 import { AlbumInput } from '../../utils/types';
 import ErrorBoundary from '../ErrorBoundary';
 import ProgressLoader from '../ProgressLoader/presenter';
@@ -20,7 +19,7 @@ export default function EditAlbumContainer() {
   const [{ data, status }] = useStateMachine(`/api/albums/${id}`);
   const { control, handleSubmit, register, setValue } = useForm<AlbumInput>();
   const isLoading = status === STATE_STATUSES.LOADING;
-  const { mutate } = useAdminState();
+  const editAlbum = useApiMutation(`/api/albums/${id}`);
   useTitle('Edit Album');
 
   useEffect(() => {
@@ -35,15 +34,11 @@ export default function EditAlbumContainer() {
     }
   }, [data, setValue]);
 
-  async function submitFn(album: AlbumInput) {
-    await api(`/api/albums/${id}`, { body: album, method: METHODS.PUT });
-  }
-
   const options = {
     callbacks: [() => navigate(`/admin${search}`)],
     handleSubmit,
-    mutate,
-    submitFn,
+    submitFn: async (album: AlbumInput) =>
+      await editAlbum({ body: album, method: METHODS.PUT }),
     successMessage: `${MESSAGES.ALBUM_PREFIX} edited`,
   };
   const { isSubmitting, onSubmit } = useSubmit(options);
