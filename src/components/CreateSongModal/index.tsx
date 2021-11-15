@@ -1,12 +1,10 @@
 import { useForm } from 'react-hook-form';
 
 import { MESSAGES } from '../../constants';
-import useQuery from '../../hooks/useQuery';
-import { graphQLClient } from '../../hooks/useStore';
+import useGqlMutation from '../../hooks/useGqlMutation';
 import useSubmit from '../../hooks/useSubmit';
 import { CREATE_SONG } from '../../mutations';
-import { GET_SONGS } from '../../queries';
-import { SongInput, Songs } from '../../utils/types';
+import { SongInput } from '../../utils/types';
 import CreateSongModal from './presenter';
 
 interface Props {
@@ -15,7 +13,7 @@ interface Props {
 }
 
 export default function CreateSongContainer({ isOpen, onClose }: Props) {
-  const { data, mutate } = useQuery<Songs>(GET_SONGS);
+  const createSong = useGqlMutation(CREATE_SONG);
   const { handleSubmit, register, reset } = useForm<SongInput>();
 
   function handleClose() {
@@ -23,20 +21,10 @@ export default function CreateSongContainer({ isOpen, onClose }: Props) {
     reset();
   }
 
-  async function submitFn(song: SongInput) {
-    if (data?.songs) {
-      const newSong = { ...song, id: Date.now().toString() };
-      mutate({ songs: [newSong, ...data.songs] }, false);
-    }
-
-    await graphQLClient.request(CREATE_SONG, song);
-  }
-
   const options = {
     callbacks: [handleClose],
     handleSubmit,
-    mutate,
-    submitFn,
+    submitFn: async (song: SongInput) => await createSong(song),
     successMessage: `${MESSAGES.SONG_PREFIX} created`,
   };
   const { isSubmitting, onSubmit } = useSubmit(options);

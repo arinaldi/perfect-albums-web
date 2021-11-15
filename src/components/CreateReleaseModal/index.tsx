@@ -1,12 +1,10 @@
 import { useForm } from 'react-hook-form';
 
 import { MESSAGES } from '../../constants';
-import useQuery from '../../hooks/useQuery';
-import { graphQLClient } from '../../hooks/useStore';
+import useGqlMutation from '../../hooks/useGqlMutation';
 import useSubmit from '../../hooks/useSubmit';
 import { CREATE_RELEASE } from '../../mutations';
-import { GET_RELEASES } from '../../queries';
-import { ReleaseInput, Releases } from '../../utils/types';
+import { ReleaseInput } from '../../utils/types';
 import CreateReleaseModal from './presenter';
 
 interface Props {
@@ -15,7 +13,7 @@ interface Props {
 }
 
 export default function CreateReleaseContainer({ isOpen, onClose }: Props) {
-  const { data, mutate } = useQuery<Releases>(GET_RELEASES);
+  const createRelease = useGqlMutation(CREATE_RELEASE);
   const { handleSubmit, register, reset } = useForm<ReleaseInput>();
 
   function handleClose() {
@@ -23,20 +21,10 @@ export default function CreateReleaseContainer({ isOpen, onClose }: Props) {
     reset();
   }
 
-  async function submitFn(release: ReleaseInput) {
-    if (data?.releases) {
-      const newRelease = { ...release, id: Date.now().toString() };
-      mutate({ releases: [...data.releases, newRelease] }, false);
-    }
-
-    await graphQLClient.request(CREATE_RELEASE, release);
-  }
-
   const options = {
     callbacks: [handleClose],
     handleSubmit,
-    mutate,
-    submitFn,
+    submitFn: async (release: ReleaseInput) => await createRelease(release),
     successMessage: `${MESSAGES.RELEASE_PREFIX} created`,
   };
   const { isSubmitting, onSubmit } = useSubmit(options);

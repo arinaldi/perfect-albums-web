@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import create, { SetState } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { SWRConfig } from 'swr';
+import { Fetcher, Key, mutate, SWRConfig } from 'swr';
 import { Provider, Session, User } from '@supabase/supabase-js';
 import { GraphQLClient, request } from 'graphql-request';
 
@@ -82,6 +82,30 @@ export function gqlFetcher(query: string): Promise<any> {
   return request(GQL_URL, query);
 }
 
+const liveQueries = new Set();
+
+function trackLiveQueries(useSWRNext: any) {
+  return (key: Key, fetcher: Fetcher<any> | null, config: any) => {
+    const swr = useSWRNext(key, fetcher, config);
+
+    useEffect(() => {
+      liveQueries.add(key);
+
+      return () => {
+        liveQueries.delete(key);
+      };
+    }, [key]);
+
+    return swr;
+  };
+}
+
+export async function revalidateLiveQueries() {
+  const promises = [...liveQueries.values()].map((key) => mutate(key as Key));
+
+  return Promise.all(promises);
+}
+
 export const SWRProvider: FC = ({ children }) => {
   const user = useStore((state) => state.user);
   const setUser = useStore((state) => state.setUser);
@@ -94,5 +118,9 @@ export const SWRProvider: FC = ({ children }) => {
 
   if (user === undefined) return null;
 
-  return <SWRConfig value={{ fetcher }}>{children}</SWRConfig>;
+  return (
+    <SWRConfig value={{ fetcher, use: [trackLiveQueries] }}>
+      {children}
+    </SWRConfig>
+  );
 };

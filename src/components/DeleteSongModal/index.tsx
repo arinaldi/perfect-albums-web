@@ -1,10 +1,8 @@
 import { MESSAGES, MODAL_DATA_TYPES } from '../../constants';
-import useQuery from '../../hooks/useQuery';
-import { graphQLClient } from '../../hooks/useStore';
+import useGqlMutation from '../../hooks/useGqlMutation';
 import useSubmit from '../../hooks/useSubmit';
-import { Song, Songs } from '../../utils/types';
+import { Song } from '../../utils/types';
 import { DELETE_SONG } from '../../mutations';
-import { GET_SONGS } from '../../queries';
 import DeleteDataModal from '../DeleteDataModal/presenter';
 
 interface Props {
@@ -18,21 +16,11 @@ export default function DeleteSongContainer({
   isOpen,
   onClose,
 }: Props) {
-  const { data, mutate } = useQuery<Songs>(GET_SONGS);
-
-  async function submitFn() {
-    if (data?.songs) {
-      const songs = data.songs.filter((s) => s.id !== song.id);
-      mutate({ songs }, false);
-    }
-
-    await graphQLClient.request(DELETE_SONG, { id: song.id });
-  }
+  const deleteSong = useGqlMutation(DELETE_SONG);
 
   const options = {
     callbacks: [onClose],
-    mutate,
-    submitFn,
+    submitFn: async () => await deleteSong({ id: song.id }),
     successMessage: `${MESSAGES.SONG_PREFIX} deleted`,
   };
   const { isSubmitting, onSubmit } = useSubmit(options);

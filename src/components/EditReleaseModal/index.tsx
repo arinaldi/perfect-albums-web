@@ -2,13 +2,11 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { MESSAGES } from '../../constants';
-import useQuery from '../../hooks/useQuery';
-import { graphQLClient } from '../../hooks/useStore';
+import useGqlMutation from '../../hooks/useGqlMutation';
 import useSubmit from '../../hooks/useSubmit';
 import { EDIT_RELEASE } from '../../mutations';
-import { GET_RELEASES } from '../../queries';
 import { formatDate } from '../../utils';
-import { Release, ReleaseInput, Releases } from '../../utils/types';
+import { Release, ReleaseInput } from '../../utils/types';
 import EditReleaseModal from '../CreateReleaseModal/presenter';
 
 interface Props {
@@ -22,7 +20,7 @@ export default function EditReleaseContainer({
   isOpen,
   onClose,
 }: Props) {
-  const { data, mutate } = useQuery<Releases>(GET_RELEASES);
+  const editRelease = useGqlMutation(EDIT_RELEASE);
   const { handleSubmit, register, setValue } = useForm<ReleaseInput>({});
 
   useEffect(() => {
@@ -33,24 +31,11 @@ export default function EditReleaseContainer({
     }
   }, [release, setValue]);
 
-  async function submitFn(values: ReleaseInput) {
-    const updatedRelease = { ...values, id: release.id };
-
-    if (data?.releases) {
-      const releases = data.releases.map((r) =>
-        r.id === release.id ? updatedRelease : r,
-      );
-      mutate({ releases }, false);
-    }
-
-    await graphQLClient.request(EDIT_RELEASE, updatedRelease);
-  }
-
   const options = {
     callbacks: [onClose],
     handleSubmit,
-    mutate,
-    submitFn,
+    submitFn: async (values: ReleaseInput) =>
+      await editRelease({ ...values, id: release.id }),
     successMessage: `${MESSAGES.RELEASE_PREFIX} edited`,
   };
   const { isSubmitting, onSubmit } = useSubmit(options);
