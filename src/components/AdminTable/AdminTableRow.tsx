@@ -17,8 +17,8 @@ export default function AdminTableRow({ item }: Props) {
     <Tr data-testid={id}>
       <Td>{artist}</Td>
       <Td>
-        {title}
         {studio ? <Box as="span">*</Box> : null}
+        {title}
       </Td>
       <Td>{year}</Td>
       <Td>{cd ? <CheckIcon /> : null}</Td>
